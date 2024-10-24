@@ -24,7 +24,7 @@ Sam: My role is the task manager. I will lead the delegation of tasks to help ke
 
 
 Sarah:
-
+My role in this project is the client interfacer. I will be responsible for communicating with the client, ensuring we have the information we need to complete the project and addressing any pertinent issues from our end. Beyond client communication, I plan to contribute actively to the development process. I will maintain clear and timely communication with both the client and the team, ensuring that we stay aligned with the project’s objectives and timeline.
 
 
 Colten:
