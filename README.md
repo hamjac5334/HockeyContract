@@ -19,7 +19,7 @@ Beta Test Organizer: Eliana
 
 
 
-Sam:
+Sam: My role is the task manager. I will lead the delegation of tasks to help keep our team on pace and imoprove the efficiancy of our project. My goal is to help people have roles they can succeed in. I plan on working with my team and being reachable as well as staying up to date on my assigments and asking for help when I need it.
 
 
 
