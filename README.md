@@ -27,11 +27,7 @@ Sarah:
 My role in this project is the client interfacer. I will be responsible for communicating with the client, ensuring we have the information we need to complete the project and addressing any pertinent issues from our end. Beyond client communication, I plan to contribute actively to the development process. I will maintain clear and timely communication with both the client and the team, ensuring that we stay aligned with the project’s objectives and timeline.
 
 
-Colten:
-
-
-<u>Jack: <u>
-
+<u>Jack: <u> 
 I plan on being proactive and completing my share of work for this project.I am the integration tester, so I am in charge of ensuring that all of the components of our app are compatible with each other. I understand my role for the team as well the neccessary measures that I need to take to ensure that our group creates a functional app that works as intended for our client. Communication, organization, and time management will be major determinants in how well our project will go, so our group will try our best to make sure these are all in check.
 
 
