@@ -35,7 +35,7 @@ Colten:
 I plan on being proactive and completing my share of work for this project.I am the integration tester, so I am in charge of ensuring that all of the components of our app are compatible with each other. I understand my role for the team as well the neccessary measures that I need to take to ensure that our group creates a functional app that works as intended for our client. Communication, organization, and time management will be major determinants in how well our project will go, so our group will try our best to make sure these are all in check.
 
 
-Eliana:
+Eliana: My role in this project is the beta test organizer. My role comes into work towards the end of the project to ensure the code runs as expected and without substantial bugs through the process of beta-testing the code with real users to get feedback before publishing a final product. I will work with our project partners to find real users to beta test the product and provide feedback on what needs to be changed or ideas to improve quality before finishing the project. I plan on communicating with my team and attending regular meetings to work on the project together and discuss progress. I plan on being open if I need assitance on a portion of my tasks and willing to assist others if they need it. Collaboration will be a huge part of out success in this project, so we will ensure to work together ina productive and effective way to meet deadlines and make progress.
 
 
 
