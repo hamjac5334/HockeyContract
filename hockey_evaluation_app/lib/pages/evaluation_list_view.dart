@@ -29,11 +29,27 @@ class EvaluationListViewState extends State<EvaluationListView>
     super.dispose();
   }
 
-  List<Evaluation> getEvaluationList() {
+  void _handleEvaluationHighlighted(Evaluation evaluation) {
+    setState(() {
+      evaluation.set_highlighted();
+    });
+  }
+
+  List<Evaluation> getOpenEvaluationsList() {
     List<Evaluation> evals = [];
     for (Evaluation e in widget.items) {
-      if (e.completed) {
+      if (!e.completed) {
         evals.add(e);
+      }
+    }
+    return evals;
+  }
+
+  List<Evaluation> getHighlightedEvaluationsList() {
+    List<Evaluation> evals = [];
+    for (Evaluation evaluation in widget.items) {
+      if (evaluation.highlighted) {
+        evals.add(evaluation);
       }
     }
     return evals;
@@ -63,8 +79,8 @@ class EvaluationListViewState extends State<EvaluationListView>
             labelColor: Colors.black,
             controller: _tabController,
             tabs: const [
-              Text("Open Evaluations"),
               Text("All Evaluations"),
+              Text("Open Evaluations"),
               Text("Highlighted")
             ]),
       ),
@@ -75,23 +91,39 @@ class EvaluationListViewState extends State<EvaluationListView>
             itemBuilder: (BuildContext context, int index) {
               final evaluation = widget.items[index];
 
-              return EvaluationItem(evaluation: evaluation);
+              return EvaluationItem(
+                evaluation: evaluation,
+                onEvaluationHighlighted: _handleEvaluationHighlighted,
+              );
             }),
         ListView.builder(
             //This is a temporary solution, but I guess this works. It is ugly but it does the job.
-            itemCount: getEvaluationList().length,
+            itemCount: getOpenEvaluationsList().length,
             itemBuilder: (BuildContext context, int index) {
-              List<Evaluation> lst = getEvaluationList();
+              List<Evaluation> lst = getOpenEvaluationsList();
 
               if (index < lst.length) {
                 final evaluation = lst[index];
 
-                return EvaluationItem(evaluation: evaluation);
+                return EvaluationItem(
+                  evaluation: evaluation,
+                  onEvaluationHighlighted: _handleEvaluationHighlighted,
+                );
               } else {
                 return const Text("Something is Wrong!!!");
               }
             }),
-        Text("Howdy")
+        ListView.builder(
+            itemCount: getHighlightedEvaluationsList().length,
+            itemBuilder: (BuildContext context, int index) {
+              List<Evaluation> lst = getHighlightedEvaluationsList();
+
+              final evaluation = lst[index];
+              return EvaluationItem(
+                evaluation: evaluation,
+                onEvaluationHighlighted: _handleEvaluationHighlighted,
+              );
+            })
       ]),
       floatingActionButton: FloatingActionButton(onPressed: () {
         //pull up the add new evaluation page.

@@ -3,6 +3,7 @@ class Evaluation {
   DateTime evaluationDate;
   String evaluationType;
   bool completed = false;
+  bool highlighted = false;
 
   Evaluation({
     required this.name,
@@ -12,5 +13,9 @@ class Evaluation {
 
   void set_completed() {
     completed = true;
+  }
+
+  void set_highlighted() {
+    highlighted = !highlighted;
   }
 }
