@@ -20,7 +20,11 @@ class EvaluationItem extends StatelessWidget {
       child: ListTile(
         title: Text(evaluation.name),
         leading: Text(evaluation.name),
-        subtitle: Text(evaluation.evaluationType),
+        subtitle:
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(evaluation.evaluationType),
+          Text(DateFormat('yyyy-MM-dd').format(evaluation.evaluationDate))
+        ]),
         trailing: IconButton(
             onPressed: () {
               onEvaluationHighlighted(evaluation);
@@ -28,7 +32,10 @@ class EvaluationItem extends StatelessWidget {
               //     content: Text(
               //         'Pretend there was some kind of animation and this was now on the highlighted list')));
             },
-            icon: const Icon(Icons.star)),
+            icon: Icon(
+              Icons.star,
+              color: evaluation.highlighted ? Colors.yellow : Colors.black,
+            )),
       ),
     );
     // return SizedBox(
