@@ -47,14 +47,14 @@ class EvaluationListViewState extends State<EvaluationListView>
         actions: [
           IconButton(
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('This is a snackbar')));
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Pretend this brought up a way to filter')));
               },
               icon: const Icon(Icons.filter_alt_sharp)),
           IconButton(
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('This is a snackbar')));
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Pretend this brought up a searchbar')));
               },
               icon: const Icon(Icons.search))
         ],
@@ -93,6 +93,11 @@ class EvaluationListViewState extends State<EvaluationListView>
             }),
         Text("Howdy")
       ]),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        //pull up the add new evaluation page.
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Pretend this goes to the create evaluation page")));
+      }),
     );
   }
 }
