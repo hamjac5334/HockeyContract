@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Hockey Evaluation App',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Hockey Evaluation App'),
     );
   }
 }
@@ -77,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
 
     Evaluation e = Evaluation(
-        name: "Tester",
+        name: "Closed Evaluation 1",
         evaluationDate: DateTime.now(),
         evaluationType: "Howdy");
 
@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
     evaluations.add(e);
 
     e = Evaluation(
-        name: "Tester 2",
+        name: "Closed Evaluation 2",
         evaluationDate: DateTime.now(),
         evaluationType: "evaluationType");
     e.set_completed();
