@@ -59,7 +59,7 @@ class EvaluationListViewState extends State<EvaluationListView>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Goalie Evaluation"),
+        title: const Text("Evaluations Page"),
         actions: [
           IconButton(
               onPressed: () {
