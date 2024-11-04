@@ -72,6 +72,27 @@ class _MyHomePageState extends State<MyHomePage> {
         evaluationType: "I guess he's alright")
   ];
 
+  @override
+  void initState() {
+    super.initState();
+
+    Evaluation e = Evaluation(
+        name: "Tester",
+        evaluationDate: DateTime.now(),
+        evaluationType: "Howdy");
+
+    e.set_completed();
+
+    evaluations.add(e);
+
+    e = Evaluation(
+        name: "Tester 2",
+        evaluationDate: DateTime.now(),
+        evaluationType: "evaluationType");
+    e.set_completed();
+    evaluations.add(e);
+  }
+
   Widget returnScreen() {
     if (current_screen_index == 0) {
       //return the page.
