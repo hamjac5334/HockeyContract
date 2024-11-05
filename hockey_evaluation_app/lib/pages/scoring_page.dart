@@ -13,7 +13,24 @@ class EvaluationUI extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Evaluation'),
+        // This is the theme of your application.
+        //
+        // TRY THIS: Try running your application with "flutter run". You'll see
+        // the application has a purple toolbar. Then, without quitting the app,
+        // try changing the seedColor in the colorScheme below to Colors.green
+        // and then invoke "hot reload" (save your changes or press the "hot
+        // reload" button in a Flutter-supported IDE, or press "r" if you used
+        // the command line to start the app).
+        //
+        // Notice that the counter didn't reset back to zero; the application
+        // state is not lost during the reload. To reset the state, use hot
+        // restart instead.
+        //
+        // This works for code too, not just values: Most code changes can be
+        // tested with just a hot reload.
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        
+        title: Text('Hockey Evaluation App'),
         actions: [
           IconButton(
             onPressed: () {},
@@ -22,19 +39,26 @@ class EvaluationUI extends StatelessWidget {
         ],
       ),
       body: ListView(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(21),
         children: [
-          ElevatedButton(
-            onPressed: () {},
-            child: Text("Calculate Scores"),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromARGB(255, 207, 174, 221),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {},
+              child: Text("Calculate Scores"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 207, 174, 221),
+                padding: EdgeInsets.symmetric(horizontal:20, vertical: 10), 
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8), 
+                ),
+              ),
             ),
           ),
+          
           SizedBox(height: 22),
 
           //Only put values in for Run bc I don't know the other features
-          EvaluationCategory(title: "See", subItems: ["Example1", "Example2", "Example3", "Example4"] ),
+          EvaluationCategory(title: "See", subItems: ["Example1", "Example2", "Example3", "Example4"]),
 
           EvaluationCategory(title: "Understand", subItems: ["Example1", "Example2", "Example3", "Example4"]),
           EvaluationCategory(title:"Drive", subItems: ["Example1", "Example2", "Example3", "Example4"]),
@@ -69,7 +93,6 @@ class _EvaluationCategoryState extends State<EvaluationCategory> {
   // Map to hold ScoreList instances for each subItem
   final Map<String, ScoreList> subItemCounters = {};
 
-
   //controls the dropdown items
   @override
   void initState() {
@@ -78,7 +101,6 @@ class _EvaluationCategoryState extends State<EvaluationCategory> {
       subItemCounters[item] = ScoreList(name: item);
     }
   }
-
 
   //dropdown menu: https://www.youtube.com/watch?v=6_Azs3fq9O4
   //https://api.flutter.dev/flutter/material/DropdownMenu-class.html
@@ -138,8 +160,7 @@ class _EvaluationCategoryState extends State<EvaluationCategory> {
                   ],
                 ),
               );
-            }
-            ).toList(),
+            }).toList(),
           ),
       ],
     );
