@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
-import 'package:hockey_evaluation_app/objects/goalie.dart';
+import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/pages/evaluation_list_view.dart';
 import 'package:hockey_evaluation_app/pages/goaltender_list_view.dart';
 
@@ -74,10 +74,10 @@ class _MyHomePageState extends State<MyHomePage> {
         evaluationType: "I guess he's alright")
   ];
 
-  List<Goalie> goalies = [
-    Goalie(name: "Colten Berry"),
-    Goalie(name: "JAck"),
-    Goalie(name: "Sarah")
+  List<Goaltender> goalies = [
+    Goaltender(name: "Colten Berry"),
+    Goaltender(name: "JAck"),
+    Goaltender(name: "Sarah")
   ];
 
   @override
@@ -151,7 +151,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ListTile(
                 title: Text("Evaluations"),
                 onTap: () {
-                  print("Pretend this opened the evaluations page");
+                  setState(() {
+                    current_screen_index = 0;
+                  });
                 },
               ),
               ListTile(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hockey_evaluation_app/objects/goalie.dart';
-import 'package:hockey_evaluation_app/widgets/goalie_item.dart';
+import 'package:hockey_evaluation_app/objects/goaltender.dart';
+import 'package:hockey_evaluation_app/objects/goaltender.dart';
+import 'package:hockey_evaluation_app/widgets/goaltender_item.dart';
 
 class GoaltenderListView extends StatefulWidget {
   final List items;
@@ -26,6 +27,22 @@ class GoaltenderListViewState extends State<GoaltenderListView>
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  void _handleGoaltenderWatchlistAdded(Goaltender goaltender) {
+    setState(() {
+      goaltender.toggleWatchlist();
+    });
+  }
+
+  List<Goaltender> getGoaltenderWatchList() {
+    List<Goaltender> watchlist_goaltenders = [];
+    for (Goaltender goaltender in widget.items) {
+      if (goaltender.watchlist) {
+        watchlist_goaltenders.add(goaltender);
+      }
+    }
+    return watchlist_goaltenders;
   }
 
   @override
@@ -65,10 +82,23 @@ class GoaltenderListViewState extends State<GoaltenderListView>
                 final goalie = widget.items[index];
 
                 //return a goalie item
-                return GoalieItem(goalie: goalie);
+                return GoaltenderItem(
+                  goaltender: goalie,
+                  onGoaltenderWatchlist: _handleGoaltenderWatchlistAdded,
+                );
               }),
           const Text("I have no clue how to do this"),
-          const Text("Ill get this later")
+          ListView.builder(
+              itemCount: getGoaltenderWatchList().length,
+              itemBuilder: (BuildContext context, int index) {
+                List<Goaltender> lst = getGoaltenderWatchList();
+
+                final goaltender = lst[index];
+
+                return GoaltenderItem(
+                    goaltender: goaltender,
+                    onGoaltenderWatchlist: _handleGoaltenderWatchlistAdded);
+              })
         ]));
   }
 }
