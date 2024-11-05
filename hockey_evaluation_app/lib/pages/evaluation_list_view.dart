@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
+import 'package:hockey_evaluation_app/pages/new_eval.dart';
 import 'package:hockey_evaluation_app/widgets/evaluation_item.dart';
 
 class EvaluationListView extends StatefulWidget {
@@ -125,11 +126,18 @@ class EvaluationListViewState extends State<EvaluationListView>
               );
             })
       ]),
-      floatingActionButton: FloatingActionButton(onPressed: () {
+      floatingActionButton: FloatingActionButton(onPressed: () async {await Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => NewEval(
+                ),
+              ),
+            );
+            },
+       child: const Text('Add New Evaluation')
         //pull up the add new evaluation page.
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text("Pretend this goes to the create evaluation page")));
-      }),
+        /*ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Pretend this goes to the create evaluation page")));*/
+      ),
     );
   }
 }
