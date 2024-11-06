@@ -50,8 +50,12 @@ String selectedvalue = "Game";
               ),
             ),
             onPressed: () {
-                AlertDialog(title: const Text('Add Goaltender'),
-                 content: Column(children: [
+                showDialog(
+                context: context,
+                builder: (ctx) =>
+                AlertDialog(
+                title: const Text('Add Goaltender'),
+                content: Column(children: [
                 TextField(
                 onChanged: (value) {
                  setState(() {
@@ -62,10 +66,23 @@ String selectedvalue = "Game";
             decoration: const InputDecoration(hintText: "Name"),),
             ],
             ),
-            );
+            actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(ctx).pop();
+                      },
+                      child: Container(
+                        color: Colors.green,
+                        padding: const EdgeInsets.all(14),
+                        child: const Text("OK"),
+                      ),
+            )
+            ]
+            ));
+            
             },
             child: Text(valuetext,
-              style: TextStyle(fontSize: 10),
+              style: TextStyle(fontSize: 15),
             ),
           ),),
           const SizedBox(height: 10),
@@ -83,6 +100,9 @@ String selectedvalue = "Game";
               ),
             ),
             onPressed: () {
+                showDialog(
+                context: context,
+                builder: (ctx) =>
                 AlertDialog(title: const Text('Add Evaluator'),
                  content: Column(children: [
                 TextField(
@@ -95,10 +115,22 @@ String selectedvalue = "Game";
             decoration: const InputDecoration(hintText: "Name"),),
             ],
             ),
-            );
+            actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(ctx).pop();
+                      },
+                      child: Container(
+                        color: Colors.green,
+                        padding: const EdgeInsets.all(14),
+                        child: const Text("OK"),
+                      ),
+            )
+            ]
+            ));
             },
             child: Text(evaltext,
-              style: TextStyle(fontSize: 10),
+              style: TextStyle(fontSize: 15),
             ),
           ),),
           const SizedBox(height:10),
@@ -115,7 +147,7 @@ String selectedvalue = "Game";
             });
             },
             items: gameTypeItems,
-            style: TextStyle(fontSize: 15, color: Colors.black),
+            style: TextStyle(fontSize: 15, color: Colors.deepPurple),
             ),),
             const SizedBox(height:10),
             const Paragraph("Evaluation Date"),
@@ -141,14 +173,14 @@ String selectedvalue = "Game";
               Container(
                 margin: EdgeInsets.all(10),
                 height: (80),
-                child: TextFormField(
-                
+                child: 
+                TextField(
                 onChanged: (value) {
                  setState(() {
                 addinfotext = value;
                 });
                 },
-                style: TextStyle(fontSize: 10),
+                style: TextStyle(fontSize: 13, color: Colors.deepPurple),
                 decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4.0),
@@ -156,12 +188,6 @@ String selectedvalue = "Game";
       ),
       
     ),
-    validator: (value) {
-      if (value!.isEmpty) {
-        return 'Add relevant notes such as teams playing, drills conducted, etc';
-      }
-      return null;
-    },
                 
 
                 ),
