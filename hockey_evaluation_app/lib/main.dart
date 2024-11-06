@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
+import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/pages/evaluation_list_view.dart';
+import 'package:hockey_evaluation_app/pages/goaltender_list_view.dart';
 
 void main() {
   runApp(MyApp());
@@ -72,10 +74,15 @@ class _MyHomePageState extends State<MyHomePage> {
         evaluationType: "I guess he's alright")
   ];
 
+  List<Goaltender> goalies = [
+    Goaltender(name: "Colten Berry"),
+    Goaltender(name: "JAck"),
+    Goaltender(name: "Sarah")
+  ];
+
   @override
   void initState() {
     super.initState();
-
     Evaluation e = Evaluation(
         name: "Closed Evaluation 1",
         evaluationDate: DateTime.now(),
@@ -97,6 +104,8 @@ class _MyHomePageState extends State<MyHomePage> {
     if (current_screen_index == 0) {
       //return the page.
       return EvaluationListView(items: evaluations);
+    } else if (current_screen_index == 1) {
+      return GoaltenderListView(items: goalies);
     } else {
       return EvaluationListView(items: evaluations);
     }
@@ -119,6 +128,66 @@ class _MyHomePageState extends State<MyHomePage> {
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
           title: Text(widget.title),
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              ListTile(
+                title: const Text("Home"),
+                onTap: () {
+                  print("tapped");
+                  current_screen_index = 0;
+                },
+              ),
+              ListTile(
+                title: const Text("Goaltenders"),
+                onTap: () {
+                  setState(() {
+                    current_screen_index = 1;
+                  });
+                },
+              ),
+              ListTile(
+                title: Text("Evaluations"),
+                onTap: () {
+                  setState(() {
+                    current_screen_index = 0;
+                  });
+                },
+              ),
+              ListTile(
+                title: Text("Notifications"),
+                onTap: () {
+                  print("Pretend this opened a notifications page");
+                },
+              ),
+              ListTile(
+                title: Text("Orginization"),
+                onTap: () {
+                  print("Pretend this opened an organization page");
+                },
+              ),
+              ListTile(
+                title: Text("Account"),
+                onTap: () {
+                  print("Pretend this opened an accout page");
+                },
+              ),
+              ListTile(
+                title: Text("Settings"),
+                onTap: () {
+                  print("Pretend this opened a settings page");
+                },
+              ),
+              ListTile(
+                title: Text("Logout"),
+                onTap: () {
+                  print("Pretend this opened the logout page");
+                },
+              )
+            ],
+          ),
         ),
         body: returnScreen()
         // Center is a layout widget. It takes a single child and positions it

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
-import 'package:hockey_evaluation_app/pages/new_eval.dart';
 import 'package:hockey_evaluation_app/widgets/evaluation_item.dart';
 
 class EvaluationListView extends StatefulWidget {
@@ -60,7 +59,7 @@ class EvaluationListViewState extends State<EvaluationListView>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Evaluations Page"),
+        title: const Text("Goalie Evaluation"),
         actions: [
           IconButton(
               onPressed: () {
@@ -126,18 +125,11 @@ class EvaluationListViewState extends State<EvaluationListView>
               );
             })
       ]),
-      floatingActionButton: FloatingActionButton(onPressed: () async {await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => NewEval(
-                ),
-              ),
-            );
-            },
-       child: const Text('Add New Evaluation')
+      floatingActionButton: FloatingActionButton(onPressed: () {
         //pull up the add new evaluation page.
-        /*ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text("Pretend this goes to the create evaluation page")));*/
-      ),
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Pretend this goes to the create evaluation page")));
+      }),
     );
   }
 }
