@@ -75,10 +75,17 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
 
   List<Goaltender> goalies = [
-    Goaltender(name: "Colten Berry"),
-    Goaltender(name: "JAck"),
-    Goaltender(name: "Sarah")
+    Goaltender(
+        name: "Colten Berry", levelAge: "21", organization: "Hendrix College"),
+    Goaltender(name: "Jack", levelAge: "21", organization: "Hendrix College"),
+    Goaltender(name: "Sarah", levelAge: "21", organization: "Hendrix College")
   ];
+
+  void _handleNewGoaltender(Goaltender goaltender) {
+    setState(() {
+      goalies.add(goaltender);
+    });
+  }
 
   @override
   void initState() {
@@ -105,7 +112,10 @@ class _MyHomePageState extends State<MyHomePage> {
       //return the page.
       return EvaluationListView(items: evaluations);
     } else if (current_screen_index == 1) {
-      return GoaltenderListView(items: goalies);
+      return GoaltenderListView(
+        items: goalies,
+        onGoaltenderListChanged: _handleNewGoaltender,
+      );
     } else {
       return EvaluationListView(items: evaluations);
     }
