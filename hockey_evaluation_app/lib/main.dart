@@ -162,6 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   print("tapped");
                   current_screen_index = 0;
                 },
+                leading: const Icon(Icons.home),
               ),
               ListTile(
                 title: const Text("Goaltenders"),
@@ -170,6 +171,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     current_screen_index = 1;
                   });
                 },
+                leading: const Icon(Icons.people),
               ),
               ListTile(
                 title: Text("Evaluations"),
@@ -178,36 +180,42 @@ class _MyHomePageState extends State<MyHomePage> {
                     current_screen_index = 0;
                   });
                 },
+                leading: const Icon(Icons.note),
               ),
               ListTile(
                 title: Text("Notifications"),
                 onTap: () {
                   print("Pretend this opened a notifications page");
                 },
+                leading: const Icon(Icons.notifications),
               ),
               ListTile(
                 title: Text("Orginization"),
                 onTap: () {
                   print("Pretend this opened an organization page");
                 },
+                leading: const Icon(Icons.roofing),
               ),
               ListTile(
                 title: Text("Account"),
                 onTap: () {
                   print("Pretend this opened an accout page");
                 },
+                leading: const Icon(Icons.person),
               ),
               ListTile(
                 title: Text("Settings"),
                 onTap: () {
                   print("Pretend this opened a settings page");
                 },
+                leading: const Icon(Icons.settings),
               ),
               ListTile(
                 title: Text("Logout"),
                 onTap: () {
                   print("Pretend this opened the logout page");
                 },
+                leading: const Icon(Icons.logout),
               )
             ],
           ),
