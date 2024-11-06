@@ -3,10 +3,14 @@ import 'package:hockey_evaluation_app/objects/evaluation.dart';
 import 'package:hockey_evaluation_app/pages/new_eval.dart';
 import 'package:hockey_evaluation_app/widgets/evaluation_item.dart';
 
+typedef EvaluationListChangedCallback = Function(Evaluation evaluation);
+
 class EvaluationListView extends StatefulWidget {
   final List items;
+  final EvaluationHighlightedCallback onEvaluationListChanged;
 
-  const EvaluationListView({super.key, required this.items});
+  const EvaluationListView(
+      {super.key, required this.items, required this.onEvaluationListChanged});
 
   @override
   State<StatefulWidget> createState() {
@@ -126,18 +130,21 @@ class EvaluationListViewState extends State<EvaluationListView>
               );
             })
       ]),
-      floatingActionButton: FloatingActionButton(onPressed: () async {await Navigator.of(context).push(
+      floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            await Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => NewEval(
+                  onEvaluationListChanged: widget.onEvaluationListChanged,
                 ),
               ),
             );
-            },
-       child: const Text('Add Eval')
-        //pull up the add new evaluation page.
-        /*ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          },
+          child: const Text('Add Eval')
+          //pull up the add new evaluation page.
+          /*ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text("Pretend this goes to the create evaluation page")));*/
-      ),
+          ),
     );
   }
 }

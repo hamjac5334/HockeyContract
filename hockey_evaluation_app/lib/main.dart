@@ -87,6 +87,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _handleNewEvaluation(Evaluation evaluation) {
+    setState(() {
+      evaluations.add(evaluation);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -110,14 +116,21 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget returnScreen() {
     if (current_screen_index == 0) {
       //return the page.
-      return EvaluationListView(items: evaluations);
+      return EvaluationListView(
+        items: evaluations,
+        onEvaluationListChanged: _handleNewEvaluation,
+      );
     } else if (current_screen_index == 1) {
       return GoaltenderListView(
         items: goalies,
         onGoaltenderListChanged: _handleNewGoaltender,
       );
     } else {
-      return EvaluationListView(items: evaluations);
+      print("Something is wrong. Main Line 126");
+      return EvaluationListView(
+        items: evaluations,
+        onEvaluationListChanged: _handleNewEvaluation,
+      );
     }
   }
 
