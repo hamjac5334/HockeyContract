@@ -104,12 +104,15 @@ class GoaltenderListViewState extends State<GoaltenderListView>
                   onGoaltenderWatchlist: _handleGoaltenderWatchlistAdded);
             })
       ]),
-      floatingActionButton: FloatingActionButton(onPressed: () async {
-        await Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => NewGoaltenderPage(
-                  onGoaltenderListChanged: widget.onGoaltenderListChanged,
-                )));
-      }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => NewGoaltenderPage(
+                    onGoaltenderListChanged: widget.onGoaltenderListChanged,
+                  )));
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

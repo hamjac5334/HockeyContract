@@ -25,39 +25,48 @@ class NewGoaltenderPageState extends State<NewGoaltenderPage> {
       appBar: AppBar(
         title: const Text("New Goaltender"),
       ),
-      body: Column(
-        children: [
-          TextField(
-            onChanged: (value) {
-              setState(() {
-                goaltenderName = value;
-              });
-            },
-            decoration: const InputDecoration(labelText: "Goaltender Name"),
+      body: Center(
+        child: SizedBox(
+          width: 200,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextField(
+                onChanged: (value) {
+                  setState(() {
+                    goaltenderName = value;
+                  });
+                },
+                decoration: const InputDecoration(labelText: "Goaltender Name"),
+              ),
+              TextField(
+                onChanged: (value) {
+                  setState(() {
+                    levelAge = value;
+                  });
+                },
+                decoration: const InputDecoration(labelText: "Level/Age"),
+              ),
+              TextField(
+                onChanged: (value) {
+                  organization = value;
+                },
+                decoration: const InputDecoration(labelText: "Organization"),
+              )
+            ],
           ),
-          TextField(
-            onChanged: (value) {
-              setState(() {
-                levelAge = value;
-              });
-            },
-            decoration: const InputDecoration(labelText: "Level/Age"),
-          ),
-          TextField(
-            onChanged: (value) {
-              organization = value;
-            },
-            decoration: const InputDecoration(labelText: "Organization"),
-          )
-        ],
+        ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        widget.onGoaltenderListChanged(Goaltender(
-            name: goaltenderName,
-            levelAge: levelAge,
-            organization: organization));
-        Navigator.pop(context);
-      }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          widget.onGoaltenderListChanged(Goaltender(
+              name: goaltenderName,
+              levelAge: levelAge,
+              organization: organization));
+          Navigator.pop(context);
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
