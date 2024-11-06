@@ -38,21 +38,5 @@ class EvaluationItem extends StatelessWidget {
             )),
       ),
     );
-    // return SizedBox(
-    //   child: Container(
-    //     constraints: const BoxConstraints(maxWidth: 50, maxHeight: 200),
-    //     alignment: Alignment.centerLeft,
-    //     margin: const EdgeInsets.all(8),
-    //     decoration: BoxDecoration(
-    //         border: Border.all(color: Colors.black), color: Colors.red),
-    //     child: Column(
-    //       children: [
-    //         Text(evaluation.name),
-    //         Text(DateFormat('MM-dd-yy').format(evaluation.evaluationDate)),
-    //         Text(evaluation.evaluationType),
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 }
