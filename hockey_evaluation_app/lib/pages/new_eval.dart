@@ -14,7 +14,7 @@ class _MyWidgetState extends State<NewEval> {
 final TextEditingController _goalController = TextEditingController();
 final TextEditingController _evalController = TextEditingController();
 String valuetext = "+";
-String valuetexte = "+";
+String evaltext = "+";
 String selectedDate = "Select Date";
 String addinfotext = "Add relevant notes such as teams playing, drills conducted, etc.";
 List<DropdownMenuItem<String>> get gameTypeItems{
@@ -34,14 +34,17 @@ String selectedvalue = "Game";
         title: const Text('New Evaluation'),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [const Paragraph("Select a goaltender"),
         const SizedBox(height: 5),
           Container(
-          margin: EdgeInsets.all(10),
-          height: 20.0,
+          margin: EdgeInsets.all(1),
+          height: 40.0,
+          width: double.infinity,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(// text color
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(5),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(0.0),
               ),
@@ -62,18 +65,19 @@ String selectedvalue = "Game";
             );
             },
             child: Text(valuetext,
-              style: TextStyle(fontSize: 15),
+              style: TextStyle(fontSize: 10),
             ),
           ),),
           const SizedBox(height: 10),
           const Paragraph("Select an Evaluator"),
           const SizedBox(height: 5),
           Container(
-          margin: EdgeInsets.all(10),
-          height: 20.0,
+          margin: EdgeInsets.all(1),
+          height: 40.0,
+          width: double.infinity,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(// text color
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(5),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(0.0),
               ),
@@ -84,7 +88,7 @@ String selectedvalue = "Game";
                 TextField(
                 onChanged: (value) {
                  setState(() {
-                valuetexte = value;
+                evaltext = value;
                 });
                 },
             controller: _evalController,
@@ -93,23 +97,29 @@ String selectedvalue = "Game";
             ),
             );
             },
-            child: Text(valuetexte,
-              style: TextStyle(fontSize: 15),
+            child: Text(evaltext,
+              style: TextStyle(fontSize: 10),
             ),
           ),),
           const SizedBox(height:10),
+          
           const Paragraph("Evaluation Type"),
+          Center(child: 
            DropdownButton(
             value: selectedvalue,
+            
+            menuWidth: double.infinity,
             onChanged: (String? newValue){
             setState(() {
             selectedvalue = newValue!;
             });
             },
-            items: gameTypeItems
-            ),
+            items: gameTypeItems,
+            style: TextStyle(fontSize: 15, color: Colors.black),
+            ),),
             const SizedBox(height:10),
             const Paragraph("Evaluation Date"),
+            Center(child: 
             ElevatedButton(
                 onPressed: () async {
                   final DateTime? date = await showDatePicker(
@@ -125,17 +135,34 @@ String selectedvalue = "Game";
                   }
                 },
                 child: Text(selectedDate),
-              ),
+              ),),
               const SizedBox(height: 10),
               const Paragraph("Additional Notes"),
               Container(
                 margin: EdgeInsets.all(10),
-                height: 40.0,
-                child: TextField(onChanged: (value) {
+                height: (80),
+                child: TextFormField(
+                
+                onChanged: (value) {
                  setState(() {
                 addinfotext = value;
                 });
                 },
+                style: TextStyle(fontSize: 10),
+                decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(4.0),
+                
+      ),
+      
+    ),
+    validator: (value) {
+      if (value!.isEmpty) {
+        return 'Add relevant notes such as teams playing, drills conducted, etc';
+      }
+      return null;
+    },
+                
 
                 ),
               )

@@ -10,7 +10,7 @@ class Paragraph extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         child: Text(
           content,
-          style: const TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 10),
         ),
       );
 }
