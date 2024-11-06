@@ -17,7 +17,13 @@ class GoaltenderItem extends StatelessWidget {
         child: ListTile(
             title: Text(goaltender.name),
             leading: Text(goaltender.name),
-            subtitle: const Text("Subtitle information"),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(goaltender.levelAge),
+                Text(goaltender.organization)
+              ],
+            ),
             trailing: IconButton(
                 onPressed: () {
                   onGoaltenderWatchlist(goaltender);
