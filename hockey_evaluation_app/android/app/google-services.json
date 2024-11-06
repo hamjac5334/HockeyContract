@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "777914018372",
+    "project_id": "goaltender-evaluation-app",
+    "storage_bucket": "goaltender-evaluation-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777914018372:android:c6c6a1ea2c4aeb9db16a11",
+        "android_client_info": {
+          "package_name": "com.example.hockey_evaluation_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEzjVGKV9zeywNGT7v-8Nt8VCoreTeRwM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
