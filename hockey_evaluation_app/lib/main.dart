@@ -3,7 +3,9 @@ import 'package:hockey_evaluation_app/objects/evaluation.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/pages/evaluation_list_view.dart';
 import 'package:hockey_evaluation_app/pages/goaltender_list_view.dart';
+import 'package:hockey_evaluation_app/objects/theme.dart';
 
+Color redtheme = const Color.fromRGBO(254, 48, 60, 1);
 void main() {
   runApp(MyApp());
 }
@@ -15,25 +17,27 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Hockey Evaluation App',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      //theme: ThemeData(
+      // This is the theme of your application.
+      //
+      // TRY THIS: Try running your application with "flutter run". You'll see
+      // the application has a purple toolbar. Then, without quitting the app,
+      // try changing the seedColor in the colorScheme below to Colors.green
+      // and then invoke "hot reload" (save your changes or press the "hot
+      // reload" button in a Flutter-supported IDE, or press "r" if you used
+      // the command line to start the app).
+      //
+      // Notice that the counter didn't reset back to zero; the application
+      // state is not lost during the reload. To reset the state, use hot
+      // restart instead.
+      //
+      // This works for code too, not just values: Most code changes can be
+      // tested with just a hot reload.
+      //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      //useMaterial3: true,
+      // ),
+      theme: appTheme,
+
       home: MyHomePage(title: 'Hockey Evaluation App'),
     );
   }
@@ -150,22 +154,31 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
+          title: Text(
+            widget.title,
+            style: Theme.of(context).textTheme.displayLarge,
+          ),
         ),
         drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
               ListTile(
-                title: const Text("Home"),
+                title: Text(
+                  "Home",
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
                 onTap: () {
                   print("tapped");
                   current_screen_index = 0;
                 },
-                leading: const Icon(Icons.home),
+                leading: Icon(Icons.home),
               ),
               ListTile(
-                title: const Text("Goaltenders"),
+                title: Text(
+                  "Goaltenders",
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
                 onTap: () {
                   setState(() {
                     current_screen_index = 1;
@@ -174,7 +187,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 leading: const Icon(Icons.people),
               ),
               ListTile(
-                title: Text("Evaluations"),
+                title: Text(
+                  "Evaluations",
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
                 onTap: () {
                   setState(() {
                     current_screen_index = 0;
@@ -183,35 +199,50 @@ class _MyHomePageState extends State<MyHomePage> {
                 leading: const Icon(Icons.note),
               ),
               ListTile(
-                title: Text("Notifications"),
+                title: Text(
+                  "Notifications",
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
                 onTap: () {
                   print("Pretend this opened a notifications page");
                 },
                 leading: const Icon(Icons.notifications),
               ),
               ListTile(
-                title: Text("Orginization"),
+                title: Text(
+                  "Orginization",
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
                 onTap: () {
                   print("Pretend this opened an organization page");
                 },
                 leading: const Icon(Icons.roofing),
               ),
               ListTile(
-                title: Text("Account"),
+                title: Text(
+                  "Account",
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
                 onTap: () {
                   print("Pretend this opened an accout page");
                 },
                 leading: const Icon(Icons.person),
               ),
               ListTile(
-                title: Text("Settings"),
+                title: Text(
+                  "Settings",
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
                 onTap: () {
                   print("Pretend this opened a settings page");
                 },
                 leading: const Icon(Icons.settings),
               ),
               ListTile(
-                title: Text("Logout"),
+                title: Text(
+                  "Logout",
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
                 onTap: () {
                   print("Pretend this opened the logout page");
                 },

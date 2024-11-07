@@ -135,7 +135,7 @@ class _MyWidgetState extends State<NewEval> {
                                     Navigator.of(ctx).pop();
                                   },
                                   child: Container(
-                                    color: Colors.green,
+                                    color: Colors.red,
                                     padding: const EdgeInsets.all(14),
                                     child: const Text("OK"),
                                   ),
@@ -160,7 +160,7 @@ class _MyWidgetState extends State<NewEval> {
                   });
                 },
                 items: gameTypeItems,
-                style: TextStyle(fontSize: 15, color: Colors.deepPurple),
+                style: TextStyle(fontSize: 15, color: Colors.red),
               ),
             ),
             const SizedBox(height: 10),
@@ -194,7 +194,7 @@ class _MyWidgetState extends State<NewEval> {
                     addinfotext = value;
                   });
                 },
-                style: TextStyle(fontSize: 13, color: Colors.deepPurple),
+                style: TextStyle(fontSize: 13, color: Colors.red),
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4.0),

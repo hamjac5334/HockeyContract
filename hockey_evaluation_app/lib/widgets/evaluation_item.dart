@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hockey_evaluation_app/main.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
 import 'package:intl/intl.dart';
 
@@ -16,26 +17,39 @@ class EvaluationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        title: Text(evaluation.name),
-        leading: Text(evaluation.name),
-        subtitle:
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(evaluation.evaluationType),
-          Text(DateFormat('yyyy-MM-dd').format(evaluation.evaluationDate))
-        ]),
-        trailing: IconButton(
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+            color: const Color.fromARGB(104, 224, 59, 48),
+            width: 1), // Add red border
+        borderRadius:
+            BorderRadius.circular(4), // Optional: match Card's corner radius
+      ),
+      child: Card(
+        elevation:
+            0, // Optional: remove Card's default shadow to highlight the border
+        child: ListTile(
+          title: Text(evaluation.name),
+          leading: Text(evaluation.name),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(evaluation.evaluationType),
+              Text(DateFormat('yyyy-MM-dd').format(evaluation.evaluationDate)),
+            ],
+          ),
+          trailing: IconButton(
             onPressed: () {
               onEvaluationHighlighted(evaluation);
-              // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              //     content: Text(
-              //         'Pretend there was some kind of animation and this was now on the highlighted list')));
             },
             icon: Icon(
               Icons.star,
-              color: evaluation.highlighted ? Colors.yellow : Colors.black,
-            )),
+              color: evaluation.highlighted
+                  ? const Color.fromARGB(255, 141, 40, 33)
+                  : Colors.black,
+            ),
+          ),
+        ),
       ),
     );
   }

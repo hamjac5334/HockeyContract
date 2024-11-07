@@ -94,3 +94,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: lib/fonts/Inter-Regular.ttf
+        - asset: lib/fonts/Inter-Italic.ttf
+          style: italic
