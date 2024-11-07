@@ -101,3 +101,10 @@ flutter:
         - asset: lib/fonts/Inter-Regular.ttf
         - asset: lib/fonts/Inter-Italic.ttf
           style: italic
+
+     # The following line ensures that the Material Icons font is
+     # included with your application, so that you can use the icons in
+     # the material Icons class.
+
+  assets:
+    - lib/image/logo.png
