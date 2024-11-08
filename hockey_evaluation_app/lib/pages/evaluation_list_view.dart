@@ -3,6 +3,8 @@ import 'package:hockey_evaluation_app/objects/evaluation.dart';
 import 'package:hockey_evaluation_app/pages/new_eval.dart';
 import 'package:hockey_evaluation_app/widgets/evaluation_item.dart';
 
+//TODO: Make sure that list items are spaced properly. For example, the names should be aligned
+
 typedef EvaluationListChangedCallback = Function(Evaluation evaluation);
 
 class EvaluationListView extends StatefulWidget {
