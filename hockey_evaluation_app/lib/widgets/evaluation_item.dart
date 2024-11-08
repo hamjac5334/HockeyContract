@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/main.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
+import 'package:hockey_evaluation_app/pages/open_evaluation_info_page.dart';
 import 'package:intl/intl.dart';
 
 typedef EvaluationHighlightedCallback = Function(Evaluation evaluation);
@@ -38,6 +39,11 @@ class EvaluationItem extends StatelessWidget {
               Text(DateFormat('yyyy-MM-dd').format(evaluation.evaluationDate)),
             ],
           ),
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) =>
+                    OpenEvaluationInfoPage(evaluation: evaluation)));
+          },
           trailing: IconButton(
             onPressed: () {
               onEvaluationHighlighted(evaluation);
