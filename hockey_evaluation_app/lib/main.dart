@@ -4,6 +4,7 @@ import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/pages/evaluation_list_view.dart';
 import 'package:hockey_evaluation_app/pages/goaltender_list_view.dart';
 import 'package:hockey_evaluation_app/objects/theme.dart';
+import 'package:hockey_evaluation_app/widgets/wrapper.dart';
 
 Color redtheme = const Color.fromRGBO(254, 48, 60, 1);
 void main() {
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       // ),
       theme: appTheme,
 
-      home: MyHomePage(title: 'Hockey Evaluation App'),
+      home: Wrapper(),
     );
   }
 }
