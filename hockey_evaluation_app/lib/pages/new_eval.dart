@@ -6,7 +6,9 @@ import 'package:hockey_evaluation_app/widgets/widgets.dart';
 typedef EvaluationListChangedCallback = Function(Evaluation evaluation);
 
 class NewEval extends StatefulWidget {
+  
   EvaluationHighlightedCallback onEvaluationListChanged;
+
   NewEval({super.key, required this.onEvaluationListChanged});
 
   @override
@@ -35,9 +37,29 @@ class _MyWidgetState extends State<NewEval> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
         appBar: AppBar(
-          title: const Text('New Evaluation'),
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Row(
+            children: [
+              // Add spacing between image and title
+              Flexible(
+                // This prevents the overflow
+                child: Text(
+                  "Hockey Evaluation App",
+                  style: Theme.of(context).textTheme.labelLarge,
+                  //overflow: TextOverflow
+                  //   .ellipsis, // Adds ellipsis if text is too long
+                ),
+              ),
+              SizedBox(width: 14),
+              Image.asset(
+                'lib/image/logo.png', // Path to image file
+                height: 40, // Adjust height as needed
+              ),
+            ],
+          ),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -212,6 +234,7 @@ class _MyWidgetState extends State<NewEval> {
                   name: valuetext,
                   evaluationDate: DateTime.now(),
                   evaluationType: evaltext));
+                  //change this to navigate to scoring page
               Navigator.pop(context);
             },
             //go to open eval and add to list with new info
