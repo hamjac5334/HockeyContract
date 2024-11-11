@@ -4,18 +4,26 @@ import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/pages/evaluation_list_view.dart';
 import 'package:hockey_evaluation_app/pages/goaltender_list_view.dart';
 import 'package:hockey_evaluation_app/objects/theme.dart';
+import 'package:hockey_evaluation_app/widgets/auth.dart';
+import 'package:hockey_evaluation_app/widgets/wrapper.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 Color redtheme = const Color.fromRGBO(254, 48, 60, 1);
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
+  bool loggedin = false;
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return 
+      MaterialApp(
       title: 'Hockey Evaluation App',
       //theme: ThemeData(
       // This is the theme of your application.
@@ -38,7 +46,7 @@ class MyApp extends StatelessWidget {
       // ),
       theme: appTheme,
 
-      home: MyHomePage(title: 'Hockey Evaluation App'),
+      home: Wrapper(),
     );
   }
 }
@@ -62,6 +70,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final AuthService _auth = AuthService();
   int current_screen_index = 0;
   List<Evaluation> evaluations = [
     Evaluation(
@@ -155,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 'lib/image/logo.png', // Path to image file
                 height: 40, // Adjust height as needed
               ),
-              SizedBox(width: 6), // Spacing between image and title
+              SizedBox(width: 1), // Spacing between image and title
               Text(
                 widget.title,
                 style: Theme.of(context).textTheme.displayLarge,
@@ -170,7 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ListTile(
                 title: Text(
                   "Home",
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {
                   print("tapped");
@@ -181,7 +190,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ListTile(
                 title: Text(
                   "Goaltenders",
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {
                   setState(() {
@@ -193,7 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ListTile(
                 title: Text(
                   "Evaluations",
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {
                   setState(() {
@@ -205,7 +214,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ListTile(
                 title: Text(
                   "Notifications",
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {
                   print("Pretend this opened a notifications page");
@@ -215,7 +224,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ListTile(
                 title: Text(
                   "Orginization",
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {
                   print("Pretend this opened an organization page");
@@ -225,7 +234,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ListTile(
                 title: Text(
                   "Account",
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {
                   print("Pretend this opened an accout page");
@@ -235,7 +244,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ListTile(
                 title: Text(
                   "Settings",
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {
                   print("Pretend this opened a settings page");
@@ -245,10 +254,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ListTile(
                 title: Text(
                   "Logout",
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
-                onTap: () {
-                  print("Pretend this opened the logout page");
+                onTap: () async {
+                  await _auth.signOut();
+                  print("This should log out");
                 },
                 leading: const Icon(Icons.logout),
               )

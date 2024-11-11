@@ -38,7 +38,7 @@ final ThemeData appTheme = ThemeData(
       // Used for regular body text.
       color: Colors.black,
       fontFamily: 'Inter',
-      fontSize: 8,
+      fontSize: 10,
     ),
     labelLarge: TextStyle(
       // Used for dropdown menu text and search bar labels.
