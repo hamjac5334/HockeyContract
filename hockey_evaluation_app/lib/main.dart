@@ -228,7 +228,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ListTile(
                 title: Text(
-                  "Orginization",
+                  "Organization",
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {
