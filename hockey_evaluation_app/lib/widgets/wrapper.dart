@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class Wrapper extends StatelessWidget {
   Wrapper({super.key});
 
-bool loggedin = false;
+bool loggedin = true;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ bool loggedin = false;
       loggedin = true;
     }
   });
-
+  //need to set this up to listeners.
   if (loggedin == true){
     return MyHomePage(title: 'Hockey Evaluation App');
   }
