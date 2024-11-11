@@ -53,6 +53,7 @@ class OpenEvaluationCommentsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _controller.text = evaluation.comments; // initialize the text
     return Column(
       children: [
         TextField(
