@@ -4,6 +4,7 @@ class Evaluation {
   String evaluationType;
   bool completed = false;
   bool highlighted = false;
+  String comments = "";
 
   Evaluation({
     required this.name,

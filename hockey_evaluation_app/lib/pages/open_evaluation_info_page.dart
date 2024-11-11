@@ -22,34 +22,51 @@ class OpenEvaluationInfoPage extends StatelessWidget {
           ]),
         ),
         body: TabBarView(children: [
-          Text("Return Info page"),
-          EvaluationUI(),
           Column(
             children: [
-              TextField(
-                minLines: 10,
-                maxLines: 10,
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    print("Pretent this saved the comment");
-                  },
-                  child: const Text("Save comment"))
+              Text("GoalTender: "),
+              Text("Evaluation Type: "),
+              Text("Evaluation Date: "),
+              Text("Additional Notes: "),
             ],
           ),
+          EvaluationUI(),
+          OpenEvaluationCommentsPage(evaluation: evaluation),
           Column(
             children: [
               Text("Review Evaluation"),
               Text("Pretend there is a table here"),
-              ElevatedButton(
-                  onPressed: () {
-                    print("Pretend this submitted and closed the evaluation");
-                  },
-                  child: Text("Submit"))
             ],
           )
         ]),
       ),
+    );
+  }
+}
+
+class OpenEvaluationCommentsPage extends StatelessWidget {
+  Evaluation evaluation;
+
+  OpenEvaluationCommentsPage({super.key, required this.evaluation});
+
+  final _controller = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TextField(
+          controller: _controller,
+          minLines: 10,
+          maxLines: 10,
+        ),
+        ElevatedButton(
+            onPressed: () {
+              evaluation.comments = _controller.text;
+              print(evaluation.comments);
+            },
+            child: const Text("Save comment")),
+      ],
     );
   }
 }
