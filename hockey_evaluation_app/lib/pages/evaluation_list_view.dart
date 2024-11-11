@@ -94,6 +94,16 @@ class EvaluationListViewState extends State<EvaluationListView>
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  setState(() {
+                     widget.displayitems = widget.items;
+                  });
+                  _searchController.clear();
+                },
+                child: Text('Clear'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
                   _searchController.clear();
                 },
                 child: Text('Cancel'),
