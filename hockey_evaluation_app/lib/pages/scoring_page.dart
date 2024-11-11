@@ -3,12 +3,14 @@ import 'package:hockey_evaluation_app/objects/score_list.dart';
 
 //put in a main function to run page individually
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: EvaluationUI(),
   ));
 }
 
 class EvaluationUI extends StatelessWidget {
+  const EvaluationUI({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +31,7 @@ class EvaluationUI extends StatelessWidget {
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        
+
         title: Text('Hockey Evaluation App'),
         actions: [
           IconButton(
@@ -47,26 +49,42 @@ class EvaluationUI extends StatelessWidget {
               child: Text("Calculate Scores"),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 207, 174, 221),
-                padding: EdgeInsets.symmetric(horizontal:20, vertical: 10), 
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8), 
+                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
             ),
           ),
-          
+
           SizedBox(height: 22),
 
           //Only put values in for Run bc I don't know the other features
-          EvaluationCategory(title: "See", subItems: ["Example1", "Example2", "Example3", "Example4"]),
+          EvaluationCategory(
+              title: "See",
+              subItems: ["Example1", "Example2", "Example3", "Example4"]),
 
-          EvaluationCategory(title: "Understand", subItems: ["Example1", "Example2", "Example3", "Example4"]),
-          EvaluationCategory(title:"Drive", subItems: ["Example1", "Example2", "Example3", "Example4"]),
-          EvaluationCategory(title: "Adapt", subItems: ["Example1", "Example2", "Example3", "Example4"]),
-          EvaluationCategory(title: "Move", subItems: ["Energy", "Skating", "Range", "Coordination"]),
-          EvaluationCategory(title: "Save", subItems: ["Example1", "Example2", "Example3", "Example4"]),
-          EvaluationCategory(title: "Learn", subItems: ["Example1", "Example2", "Example3", "Example4"]),
-          EvaluationCategory(title: "Grow", subItems: ["Example1", "Example2", "Example3", "Example4"]),
+          EvaluationCategory(
+              title: "Understand",
+              subItems: ["Example1", "Example2", "Example3", "Example4"]),
+          EvaluationCategory(
+              title: "Drive",
+              subItems: ["Example1", "Example2", "Example3", "Example4"]),
+          EvaluationCategory(
+              title: "Adapt",
+              subItems: ["Example1", "Example2", "Example3", "Example4"]),
+          EvaluationCategory(
+              title: "Move",
+              subItems: ["Energy", "Skating", "Range", "Coordination"]),
+          EvaluationCategory(
+              title: "Save",
+              subItems: ["Example1", "Example2", "Example3", "Example4"]),
+          EvaluationCategory(
+              title: "Learn",
+              subItems: ["Example1", "Example2", "Example3", "Example4"]),
+          EvaluationCategory(
+              title: "Grow",
+              subItems: ["Example1", "Example2", "Example3", "Example4"]),
         ],
       ),
     );
@@ -123,7 +141,8 @@ class _EvaluationCategoryState extends State<EvaluationCategory> {
           Column(
             children: widget.subItems.map((subItem) {
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
+import 'package:hockey_evaluation_app/pages/scoring_page.dart';
+import 'package:hockey_evaluation_app/widgets/goaltender_item.dart';
 
 class OpenEvaluationInfoPage extends StatelessWidget {
   Evaluation evaluation;
@@ -19,11 +21,33 @@ class OpenEvaluationInfoPage extends StatelessWidget {
             Text("Submit")
           ]),
         ),
-        body: const TabBarView(children: [
-          Text("Return evaluation info page"),
-          Text("Return Jack's Scoring page"),
-          Text("Return Comments Page"),
-          Text("Return submit page")
+        body: TabBarView(children: [
+          Text("Return Info page"),
+          EvaluationUI(),
+          Column(
+            children: [
+              TextField(
+                minLines: 10,
+                maxLines: 10,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    print("Pretent this saved the comment");
+                  },
+                  child: const Text("Save comment"))
+            ],
+          ),
+          Column(
+            children: [
+              Text("Review Evaluation"),
+              Text("Pretend there is a table here"),
+              ElevatedButton(
+                  onPressed: () {
+                    print("Pretend this submitted and closed the evaluation");
+                  },
+                  child: Text("Submit"))
+            ],
+          )
         ]),
       ),
     );
