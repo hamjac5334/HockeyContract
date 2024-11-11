@@ -21,6 +21,10 @@ class EvaluationListView extends StatefulWidget {
 class EvaluationListViewState extends State<EvaluationListView>
     with TickerProviderStateMixin {
   late final TabController _tabController;
+  // for searching stuff
+  String searchQuery = '';
+  final TextEditingController _searchController = TextEditingController();
+
 
   @override
   void initState() {
@@ -32,6 +36,16 @@ class EvaluationListViewState extends State<EvaluationListView>
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  List<Evaluation> _searchEvals(String search){
+    List<Evaluation> searched_evals = [];
+    for (Evaluation e in widget.items) {
+      if (e.name.toLowerCase().contains(search.toLowerCase())){
+        searched_evals.add(e);
+      }
+    }
+    return searched_evals;
   }
 
   void _handleEvaluationHighlighted(Evaluation evaluation) {
@@ -60,6 +74,40 @@ class EvaluationListViewState extends State<EvaluationListView>
     return evals;
   }
 
+  void showSearchDialog(BuildContext context) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            alignment:  Alignment.topCenter,
+            title: Text('Search'),
+            content: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: 'Enter Eval name',
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _searchController.clear();
+                },
+                child: Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () {
+                  // Perform search action
+                  Navigator.of(context).pop();
+                },
+                child: Text('Search'),
+              ),
+            ],
+          );
+        },
+      );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,8 +122,7 @@ class EvaluationListViewState extends State<EvaluationListView>
               icon: const Icon(Icons.filter_alt_sharp)),
           IconButton(
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Pretend this brought up a searchbar')));
+                showSearchDialog(context);
               },
               icon: const Icon(Icons.search))
         ],
