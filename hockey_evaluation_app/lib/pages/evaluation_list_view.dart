@@ -7,10 +7,13 @@ typedef EvaluationListChangedCallback = Function(Evaluation evaluation);
 
 class EvaluationListView extends StatefulWidget {
   final List items;
+  List displayitems= [];
   final EvaluationHighlightedCallback onEvaluationListChanged;
 
-  const EvaluationListView(
-      {super.key, required this.items, required this.onEvaluationListChanged});
+  EvaluationListView(
+      {super.key, required this.items, required this.onEvaluationListChanged}){
+        displayitems = items;
+      }
 
   @override
   State<StatefulWidget> createState() {
@@ -97,8 +100,14 @@ class EvaluationListViewState extends State<EvaluationListView>
               ),
               TextButton(
                 onPressed: () {
-                  // Perform search action
                   Navigator.of(context).pop();
+                  print(_searchController.text);
+                  setState(() {
+                     widget.displayitems =_searchEvals(_searchController.text);
+                  });
+                  print(_searchEvals(_searchController.text));
+                   _searchController.clear();
+                   
                 },
                 child: Text('Search'),
               ),
@@ -139,9 +148,9 @@ class EvaluationListViewState extends State<EvaluationListView>
       body: //It may be easier to have each tabbarview return a different screen... or maybe just do it all here. I am not sure
           TabBarView(controller: _tabController, children: [
         ListView.builder(
-            itemCount: widget.items.length,
+            itemCount: widget.displayitems.length,
             itemBuilder: (BuildContext context, int index) {
-              final evaluation = widget.items[index];
+              final evaluation = widget.displayitems[index];
 
               return EvaluationItem(
                 evaluation: evaluation,
