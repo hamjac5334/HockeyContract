@@ -257,7 +257,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: Theme.of(context).textTheme.displaySmall,
                 ),
                 onTap: () async {
-                  await _auth.signOut;
+                  await _auth.signOut();
                   print("This should log out");
                 },
                 leading: const Icon(Icons.logout),
