@@ -22,9 +22,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-      MaterialApp(
-      title: 'Hockey Evaluation App',
+    return MaterialApp(
+      title: 'Hockey Evaluations',
       //theme: ThemeData(
       // This is the theme of your application.
       //
@@ -160,21 +159,27 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Row(
             children: [
+              // Add spacing between image and title
+              Flexible(
+                // This prevents the overflow
+                child: Text(
+                  widget.title,
+                  style: Theme.of(context).textTheme.labelLarge,
+                  //overflow: TextOverflow
+                  //   .ellipsis, // Adds ellipsis if text is too long
+                ),
+              ),
+              SizedBox(width: 14),
               Image.asset(
                 'lib/image/logo.png', // Path to image file
                 height: 40, // Adjust height as needed
-              ),
-              SizedBox(width: 1), // Spacing between image and title
-              Text(
-                widget.title,
-                style: Theme.of(context).textTheme.displayLarge,
               ),
             ],
           ),
         ),
         drawer: Drawer(
           child: ListView(
-            padding: EdgeInsets.zero,
+            // padding: EdgeInsets.zero,
             children: [
               ListTile(
                 title: Text(
