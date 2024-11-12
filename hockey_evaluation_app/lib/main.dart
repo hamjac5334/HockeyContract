@@ -364,15 +364,16 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         body: 
-        Consumer<ApplicationState>(
+        //consumer leads to authentication, cannot figure out how to route to app when logged in, can route to pages through go route
+        /*Consumer<ApplicationState>(
             builder: (context, appState, _) => AuthFunc(
                 loggedIn: appState.loggedIn,
                 signOut: () {
                   FirebaseAuth.instance.signOut();
                 }),
                 
-          ),
-         //returnScreen()
+          ),*/
+         returnScreen()
         
         
         
