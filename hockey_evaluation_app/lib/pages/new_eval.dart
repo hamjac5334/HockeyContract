@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
 import 'package:hockey_evaluation_app/widgets/evaluation_item.dart';
 import 'package:hockey_evaluation_app/widgets/widgets.dart';
+import 'package:hockey_evaluation_app/pages/scoring_page.dart';
 
 import 'package:firebase_auth/firebase_auth.dart'; 
 
@@ -331,7 +332,14 @@ class _MyWidgetState extends State<NewEval> {
                   evaluationDate: DateTime.now(),
                   evaluationType: evaltext));
               //change this to navigate to scoring page
-              Navigator.pop(context);
+              //Navigator.pop(context);
+              Navigator.push(
+          context,
+          MaterialPageRoute(
+            //keep this temp and then replace with open form
+            builder: (context) => EvaluationUI(), 
+          ),
+        );
             },
             //go to open eval and add to list with new info
             child: Text("Open Evaluation"),
