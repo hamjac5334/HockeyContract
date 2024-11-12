@@ -17,16 +17,25 @@ class GoaltenderItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-            color: const Color.fromARGB(104, 224, 59, 48),
-            width: 1), // Red border
-        borderRadius:
-            BorderRadius.circular(4), // Match Card's corner radius if desired
+          color: const Color.fromARGB(104, 224, 59, 48),
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(4),
       ),
       child: Card(
-        elevation: 0, // Optional: remove Card's shadow to emphasize the border
+        elevation: 0,
         child: ListTile(
+          leading: ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: 100,
+              maxWidth: 100,
+            ),
+            child: Text(
+              goaltender.name,
+              overflow: TextOverflow.ellipsis, // Truncate text if too long
+            ),
+          ),
           title: Text(goaltender.name),
-          leading: Text(goaltender.name),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
