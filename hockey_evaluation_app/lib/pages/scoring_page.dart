@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/score_list.dart';
+import 'package:hockey_evaluation_app/objects/theme.dart';
 
 //put in a main function to run page individually
 void main() {
   runApp(MaterialApp(
+    theme: appTheme,
     home: EvaluationUI(),
   ));
 }
@@ -28,9 +30,31 @@ class EvaluationUI extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
+        // theme: appTheme,
+
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        
-        title: Text('Hockey Evaluation App'),
+
+        //title: Text('Hockey Evaluation App'),
+        title: Row(
+          children: [
+            // Add spacing between image and title
+            Flexible(
+              // This prevents the overflow
+              child: Text(
+                'Hockey Evaluation App',
+                style: Theme.of(context).textTheme.labelLarge,
+                //overflow: TextOverflow
+                //   .ellipsis, // Adds ellipsis if text is too long
+              ),
+            ),
+            SizedBox(width: 14),
+            Image.asset(
+              'lib/image/logo.png', // Path to image file
+              height: 40, // Adjust height as needed
+            ),
+          ],
+        ),
+
         actions: [
           IconButton(
             onPressed: () {},
@@ -46,27 +70,44 @@ class EvaluationUI extends StatelessWidget {
               onPressed: () {},
               child: Text("Calculate Scores"),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 207, 174, 221),
-                padding: EdgeInsets.symmetric(horizontal:20, vertical: 10), 
+                backgroundColor: const Color.fromARGB(255, 145, 4, 4),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8), 
+                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
             ),
           ),
-          
+
           SizedBox(height: 22),
 
           //Only put values in for Run bc I don't know the other features
-          EvaluationCategory(title: "See", subItems: ["Acquisition", "Tracking", "Focus"]),
+          EvaluationCategory(
+              title: "See", subItems: ["Acquisition", "Tracking", "Focus"]),
 
-          EvaluationCategory(title: "Understand", subItems: ["Play Reading", "Pattern Recognition", "Awareness"]),
-          EvaluationCategory(title:"Drive", subItems: ["Compete Level", "Motivation", "Confidence"]),
-          EvaluationCategory(title: "Adapt", subItems: ["Creativity", "Save Selection", "Playmaking"]),
-          EvaluationCategory(title: "Move", subItems: ["Energy", "Skating", "Range", "Coordination"]),
-          EvaluationCategory(title: "Save", subItems: ["Positioning", "Stance", "Rebound Control"]),
-          EvaluationCategory(title: "Learn", subItems: ["Team Orientation", "Work Ethic", "Maturity"]),
-          EvaluationCategory(title: "Grow", subItems: ["Athletic Habits", "Emotional Habits", "Practice Habits"]),
+          EvaluationCategory(
+              title: "Understand",
+              subItems: ["Play Reading", "Pattern Recognition", "Awareness"]),
+          EvaluationCategory(
+              title: "Drive",
+              subItems: ["Compete Level", "Motivation", "Confidence"]),
+          EvaluationCategory(
+              title: "Adapt",
+              subItems: ["Creativity", "Save Selection", "Playmaking"]),
+          EvaluationCategory(
+              title: "Move",
+              subItems: ["Energy", "Skating", "Range", "Coordination"]),
+          EvaluationCategory(
+              title: "Save",
+              subItems: ["Positioning", "Stance", "Rebound Control"]),
+          EvaluationCategory(
+              title: "Learn",
+              subItems: ["Team Orientation", "Work Ethic", "Maturity"]),
+          EvaluationCategory(title: "Grow", subItems: [
+            "Athletic Habits",
+            "Emotional Habits",
+            "Practice Habits"
+          ]),
         ],
       ),
     );
@@ -123,7 +164,8 @@ class _EvaluationCategoryState extends State<EvaluationCategory> {
           Column(
             children: widget.subItems.map((subItem) {
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

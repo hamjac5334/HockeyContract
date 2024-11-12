@@ -7,13 +7,13 @@ typedef EvaluationListChangedCallback = Function(Evaluation evaluation);
 
 class EvaluationListView extends StatefulWidget {
   final List items;
-  List displayitems= [];
+  List displayitems = [];
   final EvaluationHighlightedCallback onEvaluationListChanged;
 
   EvaluationListView(
-      {super.key, required this.items, required this.onEvaluationListChanged}){
-        displayitems = items;
-      }
+      {super.key, required this.items, required this.onEvaluationListChanged}) {
+    displayitems = items;
+  }
 
   @override
   State<StatefulWidget> createState() {
@@ -28,7 +28,6 @@ class EvaluationListViewState extends State<EvaluationListView>
   String searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
 
-
   @override
   void initState() {
     super.initState();
@@ -41,10 +40,10 @@ class EvaluationListViewState extends State<EvaluationListView>
     super.dispose();
   }
 
-  List<Evaluation> _searchEvals(String search){
+  List<Evaluation> _searchEvals(String search) {
     List<Evaluation> searched_evals = [];
     for (Evaluation e in widget.items) {
-      if (e.name.toLowerCase().contains(search.toLowerCase())){
+      if (e.name.toLowerCase().contains(search.toLowerCase())) {
         searched_evals.add(e);
       }
     }
@@ -78,53 +77,52 @@ class EvaluationListViewState extends State<EvaluationListView>
   }
 
   void showSearchDialog(BuildContext context) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            alignment:  Alignment.topCenter,
-            title: Text('Search'),
-            content: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: 'Enter Eval name',
-              ),
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          alignment: Alignment.topCenter,
+          title: Text('Search'),
+          content: TextField(
+            controller: _searchController,
+            decoration: InputDecoration(
+              hintText: 'Enter Eval name',
             ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  setState(() {
-                     widget.displayitems = widget.items;
-                  });
-                  _searchController.clear();
-                },
-                child: Text('Clear'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  _searchController.clear();
-                },
-                child: Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  print(_searchController.text);
-                  setState(() {
-                     widget.displayitems =_searchEvals(_searchController.text);
-                  });
-                  print(_searchEvals(_searchController.text));
-                   _searchController.clear();
-                   
-                },
-                child: Text('Search'),
-              ),
-            ],
-          );
-        },
-      );
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {
+                  widget.displayitems = widget.items;
+                });
+                _searchController.clear();
+              },
+              child: Text('Clear'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _searchController.clear();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                print(_searchController.text);
+                setState(() {
+                  widget.displayitems = _searchEvals(_searchController.text);
+                });
+                print(_searchEvals(_searchController.text));
+                _searchController.clear();
+              },
+              child: Text('Search'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -146,6 +144,7 @@ class EvaluationListViewState extends State<EvaluationListView>
               icon: const Icon(Icons.search))
         ],
         centerTitle: true,
+        //shadowColor: Colors.black,
         bottom: TabBar(
             labelColor: Colors.black,
             controller: _tabController,

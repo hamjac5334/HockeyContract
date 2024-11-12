@@ -29,10 +29,11 @@ class EvaluationItem extends StatelessWidget {
         elevation:
             0, // Optional: remove Card's default shadow to highlight the border
         child: ListTile(
-          title: Text(evaluation.name),
-          leading: Text(evaluation.name),
+          title: Text(evaluation.name), // Left-aligned by default
+          leading: Text(evaluation.name), // Leading text also left-aligned
           subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment:
+                CrossAxisAlignment.start, // Aligns children to the left
             children: [
               Text(evaluation.evaluationType),
               Text(DateFormat('yyyy-MM-dd').format(evaluation.evaluationDate)),
