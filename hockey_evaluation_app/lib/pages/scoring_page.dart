@@ -138,16 +138,7 @@ class _EvaluationUIState extends State<EvaluationUI> {
                 },
                 leading: const Icon(Icons.roofing),
               ),
-              ListTile(
-                title: Text(
-                  "Account",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  print("Pretend this opened an accout page");
-                },
-                leading: const Icon(Icons.person),
-              ),
+  
               ListTile(
                 title: Text(
                   "Settings",
@@ -293,6 +284,7 @@ class _EvaluationCategoryState extends State<EvaluationCategory> {
                     Row(
                       children: [
                         IconButton(
+                          color: Colors.black,
                           icon: Icon(Icons.remove),
                           onPressed: () {
                             setState(() {
@@ -301,6 +293,7 @@ class _EvaluationCategoryState extends State<EvaluationCategory> {
                           },
                         ),
                         IconButton(
+                          color: Colors.black,
                           icon: Icon(Icons.add),
                           onPressed: () {
                             setState(() {

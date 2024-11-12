@@ -78,6 +78,7 @@ class _MyWidgetState extends State<NewEval> {
                 onTap: () {
                   print("tapped");
                   current_screen_index = 0;
+                  //takes you home
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => MyApp()), 
                     (Route<dynamic> route) => false, 
@@ -129,16 +130,7 @@ class _MyWidgetState extends State<NewEval> {
                 },
                 leading: const Icon(Icons.roofing),
               ),
-              ListTile(
-                title: Text(
-                  "Account",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  print("Pretend this opened an accout page");
-                },
-                leading: const Icon(Icons.person),
-              ),
+              
               ListTile(
                 title: Text(
                   "Settings",

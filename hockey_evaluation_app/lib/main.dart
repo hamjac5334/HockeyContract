@@ -241,16 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 leading: const Icon(Icons.roofing),
               ),
-              ListTile(
-                title: Text(
-                  "Account",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  print("Pretend this opened an accout page");
-                },
-                leading: const Icon(Icons.person),
-              ),
+              //make sure to include account information Settings
               ListTile(
                 title: Text(
                   "Settings",
