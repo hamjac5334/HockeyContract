@@ -130,6 +130,10 @@ class EvaluationListViewState extends State<EvaluationListView>
     return Scaffold(
       appBar: AppBar(
         title: const Text("Evaluations Page"),
+        titleTextStyle: TextStyle(
+          fontSize: 22,
+          color: Color.fromARGB(255, 80, 78, 78),
+        ),
         actions: [
           IconButton(
               onPressed: () {
@@ -146,13 +150,19 @@ class EvaluationListViewState extends State<EvaluationListView>
         centerTitle: true,
         //shadowColor: Colors.black,
         bottom: TabBar(
-            labelColor: Colors.black,
-            controller: _tabController,
-            tabs: const [
-              Text("All Evaluations"),
-              Text("Open Evaluations"),
-              Text("Highlighted")
-            ]),
+          labelColor: Colors.black,
+          controller: _tabController,
+          labelStyle: TextStyle(fontSize: 12.0),
+          tabs: const [
+            Tab(text: "All Evaluations"), // Wrap each Text in a Tab widget
+            Tab(text: "Open Evaluations"),
+            Tab(text: "Highlighted"),
+          ],
+          indicatorSize:
+              TabBarIndicatorSize.label, // Aligns indicator with label width
+          labelPadding: EdgeInsets.symmetric(
+              horizontal: 16.0), // Optional: adjusts spacing between tabs
+        ),
       ),
       body: //It may be easier to have each tabbarview return a different screen... or maybe just do it all here. I am not sure
           TabBarView(controller: _tabController, children: [
