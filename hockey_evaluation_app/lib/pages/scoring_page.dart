@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/score_list.dart';
 import 'package:hockey_evaluation_app/objects/theme.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hockey_evaluation_app/main.dart';
+
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 //put in a main function to run page individually
 void main() {
@@ -10,7 +15,14 @@ void main() {
   ));
 }
 
-class EvaluationUI extends StatelessWidget {
+class EvaluationUI extends StatefulWidget {
+  @override
+  _EvaluationUIState createState() => _EvaluationUIState();
+}
+class _EvaluationUIState extends State<EvaluationUI> {
+
+
+  int current_screen_index = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,6 +74,105 @@ class EvaluationUI extends StatelessWidget {
           ),
         ],
       ),
+      drawer: Drawer(
+          child: ListView(
+            // padding: EdgeInsets.zero,
+            children: [
+              ListTile(
+                title: Text(
+                  "Home",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () {
+                  print("tapped");
+                  current_screen_index = 0;
+                  //takes you home
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => MyApp()), 
+                    (Route<dynamic> route) => false, 
+                  );
+                },
+                leading: Icon(Icons.home),
+              ),
+              ListTile(
+                title: Text(
+                  "Goaltenders",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () {
+                  setState(() {
+                    current_screen_index = 1;
+                  });
+                },
+                leading: const Icon(Icons.people),
+              ),
+              ListTile(
+                title: Text(
+                  "Evaluations",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () {
+                  setState(() {
+                    current_screen_index = 0;
+                  });
+                },
+                leading: const Icon(Icons.note),
+              ),
+              ListTile(
+                title: Text(
+                  "Notifications",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () {
+                  print("Pretend this opened a notifications page");
+                },
+                leading: const Icon(Icons.notifications),
+              ),
+              ListTile(
+                title: Text(
+                  "Organization",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () {
+                  print("Pretend this opened an organization page");
+                },
+                leading: const Icon(Icons.roofing),
+              ),
+              ListTile(
+                title: Text(
+                  "Account",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () {
+                  print("Pretend this opened an accout page");
+                },
+                leading: const Icon(Icons.person),
+              ),
+              ListTile(
+                title: Text(
+                  "Settings",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () {
+                  print("Pretend this opened a settings page");
+                },
+                leading: const Icon(Icons.settings),
+              ),
+              ListTile(
+                title: Text(
+                  "Logout",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () async {
+                  await _auth.signOut();
+                  print("This should log out");
+                },
+                leading: const Icon(Icons.logout),
+              )
+            ],
+          ),
+        ),
+
       body: ListView(
         padding: EdgeInsets.all(21),
         children: [
@@ -81,7 +192,7 @@ class EvaluationUI extends StatelessWidget {
 
           SizedBox(height: 22),
 
-          //Only put values in for Run bc I don't know the other features
+          
           EvaluationCategory(
               title: "See", subItems: ["Acquisition", "Tracking", "Focus"]),
 
