@@ -189,6 +189,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 onTap: () {
                   print("tapped");
                   current_screen_index = 0;
+                  //takes you home
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => MyApp()), 
+                    (Route<dynamic> route) => false, 
+                  );
                 },
                 leading: Icon(Icons.home),
               ),
