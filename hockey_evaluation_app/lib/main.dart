@@ -67,15 +67,15 @@ class _MyHomePageState extends State<MyHomePage> {
     Evaluation(
         name: "Colten Berry",
         evaluationDate: DateTime.now(),
-        evaluationType: "Epic"),
+        evaluationType: "Game"),
     Evaluation(
         name: "Jack Hamilton",
         evaluationDate: DateTime.now(),
-        evaluationType: "Pretty Cool"),
+        evaluationType: "Game"),
     Evaluation(
         name: "Sam LastName",
         evaluationDate: DateTime.now(),
-        evaluationType: "I guess he's alright")
+        evaluationType: "Practice")
   ];
 
   List<Goaltender> goalies = [

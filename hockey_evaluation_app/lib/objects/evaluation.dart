@@ -5,6 +5,7 @@ class Evaluation {
   bool completed = false;
   bool highlighted = false;
   String comments = "";
+  String evaluator = "";
 
   Evaluation({
     required this.name,
