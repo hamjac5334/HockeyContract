@@ -31,7 +31,7 @@ class AuthFunc extends StatelessWidget {
             padding: const EdgeInsets.only(left: 24, bottom: 8),
             child: StyledButton(
                 onPressed: () {
-                  context.push('/home');
+                  context.push('/evaluations');
                 },
                 child: const Text('home')),
           ),

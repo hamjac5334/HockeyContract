@@ -298,6 +298,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {
+                  context.go('/goalies');
                   setState(() {
                     current_screen_index = 1;
                   });
@@ -311,6 +312,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {
+                  context.go('/evaluations');
                   setState(() {
                     current_screen_index = 0;
                   });
@@ -365,15 +367,15 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: 
         //consumer leads to authentication, cannot figure out how to route to app when logged in, can route to pages through go route
-        /*Consumer<ApplicationState>(
+        Consumer<ApplicationState>(
             builder: (context, appState, _) => AuthFunc(
                 loggedIn: appState.loggedIn,
                 signOut: () {
                   FirebaseAuth.instance.signOut();
                 }),
                 
-          ),*/
-         returnScreen()
+          ),
+         //returnScreen()
         
         
         
