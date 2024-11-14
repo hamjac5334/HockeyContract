@@ -232,8 +232,6 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Review Evaluation"),
-        Text("Pretend there is a table here"),
         DataTable(
             border: TableBorder(verticalInside: BorderSide(width: 1)),
             columns: const [
