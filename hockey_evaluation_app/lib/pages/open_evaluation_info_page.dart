@@ -33,12 +33,7 @@ class OpenEvaluationInfoPage extends StatelessWidget {
           //change this to be a actual widget
           EvaluationUI(),
           OpenEvaluationCommentsPage(evaluation: evaluation),
-          Column(
-            children: [
-              Text("Review Evaluation"),
-              Text("Pretend there is a table here"),
-            ],
-          )
+          OpenEvaluationSubmitPage(evaluation: evaluation)
         ]),
       ),
     );
@@ -216,6 +211,71 @@ class OpenEvaluationCommentsPage extends StatelessWidget {
               print(evaluation.comments);
             },
             child: const Text("Save comment")),
+      ],
+    );
+  }
+}
+
+class OpenEvaluationSubmitPage extends StatefulWidget {
+  final Evaluation evaluation;
+  const OpenEvaluationSubmitPage({super.key, required this.evaluation});
+
+  @override
+  State<StatefulWidget> createState() {
+    return OpenEvaluationSubmitPageState();
+  }
+}
+
+class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Review Evaluation"),
+        Text("Pretend there is a table here"),
+        DataTable(
+            border: TableBorder(verticalInside: BorderSide(width: 1)),
+            columns: const [
+              DataColumn(label: Text("Skill")),
+              DataColumn(label: Text("Average")),
+            ],
+            rows: const [
+              DataRow(cells: [
+                DataCell(Text("See")),
+                DataCell(Text("Value")),
+              ]),
+              DataRow(cells: [
+                DataCell(Text("Understand")),
+                DataCell(Text("Value")),
+              ]),
+              DataRow(cells: [
+                DataCell(Text("Drive")),
+                DataCell(Text("Value")),
+              ]),
+              DataRow(cells: [
+                DataCell(Text("Adapt")),
+                DataCell(Text("Value")),
+              ]),
+              DataRow(cells: [
+                DataCell(Text("Move")),
+                DataCell(Text("Value")),
+              ]),
+              DataRow(cells: [
+                DataCell(Text("Save")),
+                DataCell(Text("Value")),
+              ]),
+              DataRow(cells: [
+                DataCell(Text("Learn")),
+                DataCell(Text("Value")),
+              ]),
+              DataRow(cells: [
+                DataCell(Text("Grow")),
+                DataCell(Text("Value")),
+              ]),
+            ]),
+        Text("Comments: "),
+        Paragraph(widget.evaluation.comments)
       ],
     );
   }
