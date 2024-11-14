@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/main.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
+import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/pages/open_evaluation_info_page.dart';
 import 'package:intl/intl.dart';
 
@@ -10,11 +11,13 @@ class EvaluationItem extends StatelessWidget {
   const EvaluationItem(
       {super.key,
       required this.evaluation,
-      required this.onEvaluationHighlighted});
+      required this.onEvaluationHighlighted,
+      required this.goaltenders});
 
   final EvaluationHighlightedCallback onEvaluationHighlighted;
 
   final Evaluation evaluation;
+  final List<Goaltender> goaltenders;
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +33,8 @@ class EvaluationItem extends StatelessWidget {
         elevation:
             0, // Optional: remove Card's default shadow to highlight the border
         child: ListTile(
-          title: Text(evaluation.name),
-          leading: Text(evaluation.name),
+          title: Text(evaluation.goaltender.name),
+          leading: Text(evaluation.goaltender.name),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -41,8 +44,10 @@ class EvaluationItem extends StatelessWidget {
           ),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) =>
-                    OpenEvaluationInfoPage(evaluation: evaluation)));
+                builder: (context) => OpenEvaluationInfoPage(
+                      evaluation: evaluation,
+                      goaltenders: goaltenders,
+                    )));
           },
           trailing: IconButton(
             onPressed: () {

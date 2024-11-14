@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
+import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/pages/scoring_page.dart';
 import 'package:hockey_evaluation_app/widgets/goaltender_item.dart';
 import 'package:hockey_evaluation_app/widgets/widgets.dart';
 
 class OpenEvaluationInfoPage extends StatelessWidget {
   Evaluation evaluation;
-  OpenEvaluationInfoPage({super.key, required this.evaluation});
+  final List<Goaltender> goaltenders;
+  OpenEvaluationInfoPage(
+      {super.key, required this.evaluation, required this.goaltenders});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,7 @@ class OpenEvaluationInfoPage extends StatelessWidget {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(evaluation.name),
+          title: Text(evaluation.goaltender.name),
           bottom: const TabBar(tabs: [
             Text("Evaluation Info"),
             Text("Scoring"),
@@ -25,6 +28,7 @@ class OpenEvaluationInfoPage extends StatelessWidget {
         body: TabBarView(children: [
           OpenEvaluationEvaluationInfoPage(
             evaluation: evaluation,
+            goaltenders: goaltenders,
           ),
           //change this to be a actual widget
           EvaluationUI(),
@@ -43,7 +47,9 @@ class OpenEvaluationInfoPage extends StatelessWidget {
 
 class OpenEvaluationEvaluationInfoPage extends StatefulWidget {
   final Evaluation evaluation;
-  const OpenEvaluationEvaluationInfoPage({super.key, required this.evaluation});
+  final List<Goaltender> goaltenders;
+  const OpenEvaluationEvaluationInfoPage(
+      {super.key, required this.evaluation, required this.goaltenders});
 
   @override
   State<StatefulWidget> createState() {
@@ -63,6 +69,7 @@ class OpenEvaluationEvaluationInfoPageState
     return menuItems;
   }
 
+  late Goaltender? selectedGoaltender;
   String selectedvalue = "";
   DateTime selectedDate =
       DateTime.now(); //temporarily like this until initState is called
@@ -71,6 +78,7 @@ class OpenEvaluationEvaluationInfoPageState
   void initState() {
     selectedvalue = widget.evaluation.evaluationType;
     selectedDate = widget.evaluation.evaluationDate;
+    selectedGoaltender = widget.evaluation.goaltender;
   }
 
   @override
@@ -83,26 +91,43 @@ class OpenEvaluationEvaluationInfoPageState
         const SizedBox(
           height: 5,
         ),
-        Container(
-          margin: EdgeInsets.all(1),
-          height: 40.0,
-          width: double.infinity,
-          child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                // text color
-                padding: EdgeInsets.all(5),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0.0),
-                ),
-              ),
-              onPressed: () {
-                print("Pretend this did something");
-              },
-              child: Text(
-                widget.evaluation.name,
-                style: TextStyle(fontSize: 15),
-              )),
-        ),
+        DropdownMenu<Goaltender>(
+            width:
+                500, // TODO: Make this the screen size-ish. idk how to do that
+            enableSearch: true,
+            initialSelection: widget.evaluation.goaltender,
+            enableFilter: false,
+            requestFocusOnTap: true,
+            onSelected: (Goaltender? goaltender) {
+              setState(() {
+                selectedGoaltender = goaltender;
+              });
+            },
+            dropdownMenuEntries:
+                widget.goaltenders.map((Goaltender goaltender) {
+              return DropdownMenuEntry(
+                  value: goaltender, label: goaltender.name);
+            }).toList()),
+        // Container(
+        //   margin: EdgeInsets.all(1),
+        //   height: 40.0,
+        //   width: double.infinity,
+        //   child: ElevatedButton(
+        //       style: ElevatedButton.styleFrom(
+        //         // text color
+        //         padding: EdgeInsets.all(5),
+        //         shape: RoundedRectangleBorder(
+        //           borderRadius: BorderRadius.circular(0.0),
+        //         ),
+        //       ),
+        //       onPressed: () {
+        //         print("Pretend this did something");
+        //       },
+        //       child: Text(
+        //         widget.evaluation.name,
+        //         style: TextStyle(fontSize: 15),
+        //       )),
+        // ),
         Paragraph("Reassign evaluator"),
         const SizedBox(
           height: 5,

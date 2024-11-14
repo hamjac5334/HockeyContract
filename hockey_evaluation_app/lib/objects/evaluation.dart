@@ -1,5 +1,7 @@
+import 'package:hockey_evaluation_app/objects/goaltender.dart';
+
 class Evaluation {
-  String name;
+  Goaltender goaltender;
   DateTime evaluationDate;
   String evaluationType;
   bool completed = false;
@@ -8,7 +10,7 @@ class Evaluation {
   String evaluator = "";
 
   Evaluation({
-    required this.name,
+    required this.goaltender,
     required this.evaluationDate,
     required this.evaluationType,
   });

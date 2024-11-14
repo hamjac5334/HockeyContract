@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
+import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/pages/new_eval.dart';
 import 'package:hockey_evaluation_app/widgets/evaluation_item.dart';
 
@@ -10,9 +11,13 @@ typedef EvaluationListChangedCallback = Function(Evaluation evaluation);
 class EvaluationListView extends StatefulWidget {
   final List items;
   final EvaluationHighlightedCallback onEvaluationListChanged;
+  final List<Goaltender> goaltenders;
 
   const EvaluationListView(
-      {super.key, required this.items, required this.onEvaluationListChanged});
+      {super.key,
+      required this.items,
+      required this.onEvaluationListChanged,
+      required this.goaltenders});
 
   @override
   State<StatefulWidget> createState() {
@@ -99,6 +104,7 @@ class EvaluationListViewState extends State<EvaluationListView>
               final evaluation = widget.items[index];
 
               return EvaluationItem(
+                goaltenders: widget.goaltenders,
                 evaluation: evaluation,
                 onEvaluationHighlighted: _handleEvaluationHighlighted,
               );
@@ -113,6 +119,7 @@ class EvaluationListViewState extends State<EvaluationListView>
                 final evaluation = lst[index];
 
                 return EvaluationItem(
+                  goaltenders: widget.goaltenders,
                   evaluation: evaluation,
                   onEvaluationHighlighted: _handleEvaluationHighlighted,
                 );
@@ -127,6 +134,7 @@ class EvaluationListViewState extends State<EvaluationListView>
 
               final evaluation = lst[index];
               return EvaluationItem(
+                goaltenders: widget.goaltenders,
                 evaluation: evaluation,
                 onEvaluationHighlighted: _handleEvaluationHighlighted,
               );
