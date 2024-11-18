@@ -31,9 +31,9 @@ class _MyWidgetState extends State<NewEval> {
       "Add relevant notes such as teams playing, drills conducted, etc.";
   List<DropdownMenuItem<String>> get gameTypeItems {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("Game"), value: "Game"),
+      DropdownMenuItem(child: Text("Game/Scrimmage"), value: "Game"),
       DropdownMenuItem(child: Text("Practice"), value: "Practice"),
-      DropdownMenuItem(child: Text("Scrimmage"), value: "Scrimmage"),
+      //DropdownMenuItem(child: Text("Scrimmage"), value: "Scrimmage"),
       DropdownMenuItem(child: Text("Other"), value: "Other"),
     ];
     return menuItems;
