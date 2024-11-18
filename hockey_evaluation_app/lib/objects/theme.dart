@@ -27,24 +27,26 @@ final ThemeData appTheme = ThemeData(
     headlineLarge: TextStyle(
       color: Colors.black,
       fontWeight: FontWeight.bold,
+      fontFamily: 'Inter',
       fontSize: 25,
     ),
     headlineMedium: TextStyle(
       color: Colors.black,
       fontWeight: FontWeight.w600,
+      fontFamily: 'Inter',
       fontSize: 16,
     ),
     bodySmall: TextStyle(
       // Used for regular body text.
       color: Colors.black,
       fontFamily: 'Inter',
-      fontSize: 10,
+      fontSize: 12,
     ),
     labelLarge: TextStyle(
       // Used for dropdown menu text and search bar labels.
-      color: Colors.white,
+      color: Colors.black,
       fontFamily: 'Inter',
-      fontSize: 15,
+      fontSize: 13,
     ),
   ),
   iconTheme: const IconThemeData(
