@@ -14,12 +14,11 @@ class EvaluationListView extends StatefulWidget {
   final EvaluationHighlightedCallback onEvaluationListChanged;
   final List<Goaltender> goaltenders;
 
-  const EvaluationListView(
+  EvaluationListView(
       {super.key,
       required this.items,
       required this.onEvaluationListChanged,
       required this.goaltenders});
-
 
   @override
   State<StatefulWidget> createState() {
@@ -49,7 +48,7 @@ class EvaluationListViewState extends State<EvaluationListView>
   List<Evaluation> _searchEvals(String search) {
     List<Evaluation> searched_evals = [];
     for (Evaluation e in widget.items) {
-      if (e.name.toLowerCase().contains(search.toLowerCase())) {
+      if (e.goaltender.name.toLowerCase().contains(search.toLowerCase())) {
         searched_evals.add(e);
       }
     }

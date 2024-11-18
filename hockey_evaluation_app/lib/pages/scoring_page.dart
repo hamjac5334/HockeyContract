@@ -4,7 +4,6 @@ import 'package:hockey_evaluation_app/objects/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hockey_evaluation_app/main.dart';
 
-
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 //put in a main function to run page individually
@@ -20,54 +19,49 @@ class EvaluationUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.all(21),
-      children: [
-        Center(
-          child: ElevatedButton(
-            onPressed: () {},
-            child: Text("Calculate Scores"),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromARGB(255, 207, 174, 221),
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
+    return ListView(padding: EdgeInsets.all(21), children: [
+      Center(
+        child: ElevatedButton(
+          onPressed: () {},
+          child: Text("Calculate Scores"),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color.fromARGB(255, 207, 174, 221),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
             ),
           ),
         ),
+      ),
 
-        SizedBox(height: 22),
+      SizedBox(height: 22),
 
-        //Only put values in for Run bc I don't know the other features
-                 EvaluationCategory(
-              title: "See", subItems: ["Acquisition", "Tracking", "Focus"]),
+      //Only put values in for Run bc I don't know the other features
+      EvaluationCategory(
+          title: "See", subItems: ["Acquisition", "Tracking", "Focus"]),
 
-          EvaluationCategory(
-              title: "Understand",
-              subItems: ["Play Reading", "Pattern Recognition", "Awareness"]),
-          EvaluationCategory(
-              title: "Drive",
-              subItems: ["Compete Level", "Motivation", "Confidence"]),
-          EvaluationCategory(
-              title: "Adapt",
-              subItems: ["Creativity", "Save Selection", "Playmaking"]),
-          EvaluationCategory(
-              title: "Move",
-              subItems: ["Energy", "Skating", "Range", "Coordination"]),
-          EvaluationCategory(
-              title: "Save",
-              subItems: ["Positioning", "Stance", "Rebound Control"]),
-          EvaluationCategory(
-              title: "Learn",
-              subItems: ["Team Orientation", "Work Ethic", "Maturity"]),
-          EvaluationCategory(title: "Grow", subItems: [
-            "Athletic Habits",
-            "Emotional Habits",
-            "Practice Habits"
-          ]),
-
-    );
+      EvaluationCategory(
+          title: "Understand",
+          subItems: ["Play Reading", "Pattern Recognition", "Awareness"]),
+      EvaluationCategory(
+          title: "Drive",
+          subItems: ["Compete Level", "Motivation", "Confidence"]),
+      EvaluationCategory(
+          title: "Adapt",
+          subItems: ["Creativity", "Save Selection", "Playmaking"]),
+      EvaluationCategory(
+          title: "Move",
+          subItems: ["Energy", "Skating", "Range", "Coordination"]),
+      EvaluationCategory(
+          title: "Save",
+          subItems: ["Positioning", "Stance", "Rebound Control"]),
+      EvaluationCategory(
+          title: "Learn",
+          subItems: ["Team Orientation", "Work Ethic", "Maturity"]),
+      EvaluationCategory(
+          title: "Grow",
+          subItems: ["Athletic Habits", "Emotional Habits", "Practice Habits"]),
+    ]);
   }
 }
 

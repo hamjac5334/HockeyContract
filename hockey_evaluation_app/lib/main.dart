@@ -7,19 +7,15 @@ import 'package:hockey_evaluation_app/objects/theme.dart';
 import 'package:hockey_evaluation_app/widgets/auth.dart';
 import 'package:hockey_evaluation_app/widgets/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart'; 
-import 'package:go_router/go_router.dart';              
-import 'package:provider/provider.dart';  
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart' 
-    hide EmailAuthProvider, PhoneAuthProvider;    
+import 'package:firebase_auth/firebase_auth.dart'
+    hide EmailAuthProvider, PhoneAuthProvider;
 import 'package:hockey_evaluation_app/objects/authentication.dart';
-import 'package:hockey_evaluation_app/widgets/app_state.dart';   
-                       // new
-
-
-                                         
-
+import 'package:hockey_evaluation_app/widgets/app_state.dart';
+// new
 
 Color redtheme = const Color.fromRGBO(254, 48, 60, 1);
 void main() async {
@@ -38,32 +34,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-      MaterialApp.router(
-      title: 'Hockey Evaluation App',
-      //theme: ThemeData(
-      // This is the theme of your application.
-      //
-      // TRY THIS: Try running your application with "flutter run". You'll see
-      // the application has a purple toolbar. Then, without quitting the app,
-      // try changing the seedColor in the colorScheme below to Colors.green
-      // and then invoke "hot reload" (save your changes or press the "hot
-      // reload" button in a Flutter-supported IDE, or press "r" if you used
-      // the command line to start the app).
-      //
-      // Notice that the counter didn't reset back to zero; the application
-      // state is not lost during the reload. To reset the state, use hot
-      // restart instead.
-      //
-      // This works for code too, not just values: Most code changes can be
-      // tested with just a hot reload.
-      //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      //useMaterial3: true,
-      // ),
-      theme: appTheme,
-
-      routerConfig: _router
-    );
+    return MaterialApp.router(
+        title: 'Hockey Evaluation App',
+        //theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // TRY THIS: Try running your application with "flutter run". You'll see
+        // the application has a purple toolbar. Then, without quitting the app,
+        // try changing the seedColor in the colorScheme below to Colors.green
+        // and then invoke "hot reload" (save your changes or press the "hot
+        // reload" button in a Flutter-supported IDE, or press "r" if you used
+        // the command line to start the app).
+        //
+        // Notice that the counter didn't reset back to zero; the application
+        // state is not lost during the reload. To reset the state, use hot
+        // restart instead.
+        //
+        // This works for code too, not just values: Most code changes can be
+        // tested with just a hot reload.
+        //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        //useMaterial3: true,
+        // ),
+        theme: appTheme,
+        routerConfig: _router);
   }
 }
 
@@ -71,7 +64,7 @@ final _router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) =>  MyHomePage( title: 'Hockey Evaluation App'),
+      builder: (context, state) => MyHomePage(title: 'Hockey Evaluation App'),
       routes: [
         GoRoute(
           path: 'sign-in',
@@ -127,23 +120,26 @@ final _router = GoRouter(
         GoRoute(
           path: '/evaluations',
           builder: (context, state) {
-            return EvaluationListView(items: _MyHomePageState().evaluations, onEvaluationListChanged: _MyHomePageState()._handleNewEvaluation);
+            return EvaluationListView(
+                goaltenders: _MyHomePageState().goaltenders,
+                items: _MyHomePageState().evaluations,
+                onEvaluationListChanged:
+                    _MyHomePageState()._handleNewEvaluation);
           },
         ),
         GoRoute(
           path: '/goalies',
           builder: (context, state) {
-            return GoaltenderListView(items: _MyHomePageState().goalies, onGoaltenderListChanged: _MyHomePageState()._handleNewGoaltender);
+            return GoaltenderListView(
+                items: _MyHomePageState().goaltenders,
+                onGoaltenderListChanged:
+                    _MyHomePageState()._handleNewGoaltender);
           },
-          ),
+        ),
       ],
     ),
   ],
-
 );
-
-
-
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({super.key, required this.title});
@@ -236,150 +232,147 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Row(
-            children: [
-              // Add spacing between image and title
-              Flexible(
-                // This prevents the overflow
-                child: Text(
-                  widget.title,
-                  style: Theme.of(context).textTheme.labelLarge,
-                  //overflow: TextOverflow
-                  //   .ellipsis, // Adds ellipsis if text is too long
-                ),
-              ),
-              SizedBox(width: 14),
-              Image.asset(
-                'lib/image/logo.png', // Path to image file
-                height: 40, // Adjust height as needed
-              ),
-              SizedBox(width: 1), // Spacing between image and title
-              Text(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Row(
+          children: [
+            // Add spacing between image and title
+            Flexible(
+              // This prevents the overflow
+              child: Text(
                 widget.title,
-                style: Theme.of(context).textTheme.displayLarge,
+                style: Theme.of(context).textTheme.labelLarge,
+                //overflow: TextOverflow
+                //   .ellipsis, // Adds ellipsis if text is too long
               ),
-            ],
-          ),
+            ),
+            SizedBox(width: 14),
+            Image.asset(
+              'lib/image/logo.png', // Path to image file
+              height: 40, // Adjust height as needed
+            ),
+            SizedBox(width: 1), // Spacing between image and title
+            Text(
+              widget.title,
+              style: Theme.of(context).textTheme.displayLarge,
+            ),
+          ],
         ),
-        drawer: Drawer(
-          child: ListView(
-            // padding: EdgeInsets.zero,
-            children: [
-              ListTile(
-                title: Text(
-                  "Home",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  print("tapped");
+      ),
+      drawer: Drawer(
+        child: ListView(
+          // padding: EdgeInsets.zero,
+          children: [
+            ListTile(
+              title: Text(
+                "Home",
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              onTap: () {
+                print("tapped");
+                current_screen_index = 0;
+              },
+              leading: Icon(Icons.home),
+            ),
+            ListTile(
+              title: Text(
+                "Goaltenders",
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              onTap: () {
+                context.go('/goalies');
+                setState(() {
+                  current_screen_index = 1;
+                });
+                //context.go('/goalies');
+              },
+              leading: const Icon(Icons.people),
+            ),
+            ListTile(
+              title: Text(
+                "Evaluations",
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              onTap: () {
+                context.go('/evaluations');
+                setState(() {
                   current_screen_index = 0;
-                },
-                leading: Icon(Icons.home),
+                });
+                //context.go('/evaluations');
+              },
+              leading: const Icon(Icons.note),
+            ),
+            ListTile(
+              title: Text(
+                "Notifications",
+                style: Theme.of(context).textTheme.bodySmall,
               ),
-              ListTile(
-                title: Text(
-                  "Goaltenders",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  context.go('/goalies');
-                  setState(() {
-                    current_screen_index = 1;
-                  });
-                  //context.go('/goalies');
-                },
-                leading: const Icon(Icons.people),
+              onTap: () {
+                print("Pretend this opened a notifications page");
+              },
+              leading: const Icon(Icons.notifications),
+            ),
+            ListTile(
+              title: Text(
+                "Organization",
+                style: Theme.of(context).textTheme.bodySmall,
               ),
-              ListTile(
-                title: Text(
-                  "Evaluations",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  context.go('/evaluations');
-                  setState(() {
-                    current_screen_index = 0;
-                  });
-                  //context.go('/evaluations');
-                },
-                leading: const Icon(Icons.note),
+              onTap: () {
+                print("Pretend this opened an organization page");
+              },
+              leading: const Icon(Icons.roofing),
+            ),
+            //make sure to include account information Settings
+            ListTile(
+              title: Text(
+                "Settings",
+                style: Theme.of(context).textTheme.bodySmall,
               ),
-              ListTile(
-                title: Text(
-                  "Notifications",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  print("Pretend this opened a notifications page");
-                },
-                leading: const Icon(Icons.notifications),
+              onTap: () {
+                print("Pretend this opened a settings page");
+              },
+              leading: const Icon(Icons.settings),
+            ),
+            ListTile(
+              title: Text(
+                "Logout",
+                style: Theme.of(context).textTheme.bodySmall,
               ),
-              ListTile(
-                title: Text(
-                  "Organization",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  print("Pretend this opened an organization page");
-                },
-                leading: const Icon(Icons.roofing),
-              ),
-              //make sure to include account information Settings
-              ListTile(
-                title: Text(
-                  "Settings",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  print("Pretend this opened a settings page");
-                },
-                leading: const Icon(Icons.settings),
-              ),
-              ListTile(
-                title: Text(
-                  "Logout",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () async {
-                  await _auth.signOut();
-                  print("This should log out");
-                },
-                leading: const Icon(Icons.logout),
-              )
-            ],
-          ),
+              onTap: () async {
+                await _auth.signOut();
+                print("This should log out");
+              },
+              leading: const Icon(Icons.logout),
+            )
+          ],
         ),
-        body: 
-        //consumer leads to authentication, cannot figure out how to route to app when logged in, can route to pages through go route
-        Consumer<ApplicationState>(
-            builder: (context, appState, _) => AuthFunc(
-                loggedIn: appState.loggedIn,
-                signOut: () {
-                  FirebaseAuth.instance.signOut();
-                }),
-                
-          ),
-         //returnScreen()
-        
-        
-        
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        // Column is also a layout widget. It takes a list of children and
-        // arranges them vertically. By default, it sizes itself to fit its
-        // children horizontally, and tries to be as tall as its parent.
-        //
-        // Column has various properties to control how it sizes itself and
-        // how it positions its children. Here we use mainAxisAlignment to
-        // center the children vertically; the main axis here is the vertical
-        // axis because Columns are vertical (the cross axis would be
-        // horizontal).
-        //
-        // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-        // action in the IDE, or press "p" in the console), to see the
-        // wireframe for each widget.
-        );
+      ),
+      body:
+          //consumer leads to authentication, cannot figure out how to route to app when logged in, can route to pages through go route
+          Consumer<ApplicationState>(
+        builder: (context, appState, _) => AuthFunc(
+            loggedIn: appState.loggedIn,
+            signOut: () {
+              FirebaseAuth.instance.signOut();
+            }),
+      ),
+      //returnScreen()
+
+      // Center is a layout widget. It takes a single child and positions it
+      // in the middle of the parent.
+      // Column is also a layout widget. It takes a list of children and
+      // arranges them vertically. By default, it sizes itself to fit its
+      // children horizontally, and tries to be as tall as its parent.
+      //
+      // Column has various properties to control how it sizes itself and
+      // how it positions its children. Here we use mainAxisAlignment to
+      // center the children vertically; the main axis here is the vertical
+      // axis because Columns are vertical (the cross axis would be
+      // horizontal).
+      //
+      // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
+      // action in the IDE, or press "p" in the console), to see the
+      // wireframe for each widget.
+    );
   }
 }
