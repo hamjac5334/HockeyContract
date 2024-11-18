@@ -10,6 +10,7 @@ typedef EvaluationListChangedCallback = Function(Evaluation evaluation);
 
 class EvaluationListView extends StatefulWidget {
   final List items;
+  List displayitems = [];
   final EvaluationHighlightedCallback onEvaluationListChanged;
   final List<Goaltender> goaltenders;
 
@@ -18,6 +19,7 @@ class EvaluationListView extends StatefulWidget {
       required this.items,
       required this.onEvaluationListChanged,
       required this.goaltenders});
+
 
   @override
   State<StatefulWidget> createState() {
@@ -28,6 +30,9 @@ class EvaluationListView extends StatefulWidget {
 class EvaluationListViewState extends State<EvaluationListView>
     with TickerProviderStateMixin {
   late final TabController _tabController;
+  // for searching stuff
+  String searchQuery = '';
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -39,6 +44,16 @@ class EvaluationListViewState extends State<EvaluationListView>
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  List<Evaluation> _searchEvals(String search) {
+    List<Evaluation> searched_evals = [];
+    for (Evaluation e in widget.items) {
+      if (e.name.toLowerCase().contains(search.toLowerCase())) {
+        searched_evals.add(e);
+      }
+    }
+    return searched_evals;
   }
 
   void _handleEvaluationHighlighted(Evaluation evaluation) {
@@ -67,11 +82,64 @@ class EvaluationListViewState extends State<EvaluationListView>
     return evals;
   }
 
+  void showSearchDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          alignment: Alignment.topCenter,
+          title: Text('Search'),
+          content: TextField(
+            controller: _searchController,
+            decoration: InputDecoration(
+              hintText: 'Enter Eval name',
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {
+                  widget.displayitems = widget.items;
+                });
+                _searchController.clear();
+              },
+              child: Text('Clear'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _searchController.clear();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                print(_searchController.text);
+                setState(() {
+                  widget.displayitems = _searchEvals(_searchController.text);
+                });
+                print(_searchEvals(_searchController.text));
+                _searchController.clear();
+              },
+              child: Text('Search'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Evaluations Page"),
+        titleTextStyle: TextStyle(
+          fontSize: 22,
+          color: Color.fromARGB(255, 80, 78, 78),
+        ),
         actions: [
           IconButton(
               onPressed: () {
@@ -81,27 +149,33 @@ class EvaluationListViewState extends State<EvaluationListView>
               icon: const Icon(Icons.filter_alt_sharp)),
           IconButton(
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Pretend this brought up a searchbar')));
+                showSearchDialog(context);
               },
               icon: const Icon(Icons.search))
         ],
         centerTitle: true,
+        //shadowColor: Colors.black,
         bottom: TabBar(
-            labelColor: Colors.black,
-            controller: _tabController,
-            tabs: const [
-              Text("All Evaluations"),
-              Text("Open Evaluations"),
-              Text("Highlighted")
-            ]),
+          labelColor: Colors.black,
+          controller: _tabController,
+          labelStyle: TextStyle(fontSize: 12.0),
+          tabs: const [
+            Tab(text: "All Evaluations"), // Wrap each Text in a Tab widget
+            Tab(text: "Open Evaluations"),
+            Tab(text: "Highlighted"),
+          ],
+          indicatorSize:
+              TabBarIndicatorSize.label, // Aligns indicator with label width
+          labelPadding: EdgeInsets.symmetric(
+              horizontal: 16.0), // Optional: adjusts spacing between tabs
+        ),
       ),
       body: //It may be easier to have each tabbarview return a different screen... or maybe just do it all here. I am not sure
           TabBarView(controller: _tabController, children: [
         ListView.builder(
-            itemCount: widget.items.length,
+            itemCount: widget.displayitems.length,
             itemBuilder: (BuildContext context, int index) {
-              final evaluation = widget.items[index];
+              final evaluation = widget.displayitems[index];
 
               return EvaluationItem(
                 goaltenders: widget.goaltenders,

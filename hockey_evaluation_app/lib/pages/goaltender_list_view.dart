@@ -55,6 +55,10 @@ class GoaltenderListViewState extends State<GoaltenderListView>
     return Scaffold(
       appBar: AppBar(
         title: const Text("GoalTenders Page"),
+        titleTextStyle: TextStyle(
+          fontSize: 22,
+          color: Color.fromARGB(255, 80, 78, 78),
+        ),
         actions: [
           IconButton(
               onPressed: () {
@@ -71,13 +75,19 @@ class GoaltenderListViewState extends State<GoaltenderListView>
         ],
         centerTitle: true,
         bottom: TabBar(
-            labelColor: Colors.black,
-            controller: _tabController,
-            tabs: const [
-              Text("All Goaltenders"),
-              Text("Comparisons"),
-              Text("Watchlist")
-            ]),
+          labelColor: Colors.black,
+          controller: _tabController,
+          labelStyle: TextStyle(fontSize: 12.0),
+          tabs: const [
+            Tab(text: "All Goaltenders"), // Wrap each Text in a Tab widget
+            Tab(text: "Comparisons"),
+            Tab(text: "Watchlist"),
+          ],
+          indicatorSize: TabBarIndicatorSize
+              .label, // Aligns the indicator with each label's width
+          labelPadding: EdgeInsets.symmetric(
+              horizontal: 16.0), // Optional: adjust spacing between tabs
+        ),
       ),
       body: TabBarView(controller: _tabController, children: [
         ListView.builder(

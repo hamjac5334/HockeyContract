@@ -3,11 +3,16 @@ import 'package:hockey_evaluation_app/objects/evaluation.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/widgets/evaluation_item.dart';
 import 'package:hockey_evaluation_app/widgets/widgets.dart';
+import 'package:hockey_evaluation_app/pages/scoring_page.dart';
+import 'package:hockey_evaluation_app/main.dart';
+
+import 'package:firebase_auth/firebase_auth.dart'; 
 
 typedef EvaluationListChangedCallback = Function(Evaluation evaluation);
 
 class NewEval extends StatefulWidget {
   EvaluationHighlightedCallback onEvaluationListChanged;
+
   NewEval({super.key, required this.onEvaluationListChanged});
 
   @override
@@ -17,6 +22,8 @@ class NewEval extends StatefulWidget {
 class _MyWidgetState extends State<NewEval> {
   final TextEditingController _goalController = TextEditingController();
   final TextEditingController _evalController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  int current_screen_index = 0;
   String valuetext = "+";
   String evaltext = "+";
   String selectedDate = "Select Date";
@@ -38,7 +45,116 @@ class _MyWidgetState extends State<NewEval> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('New Evaluation'),
+          //made background of appbar white
+          backgroundColor: Colors.white,
+          title: Row(
+            children: [
+              // Add spacing between image and title
+              Flexible(
+                // This prevents the overflow
+                child: Text(
+                  "Hockey Evaluation App",
+                  style: Theme.of(context).textTheme.labelLarge,
+                  //overflow: TextOverflow
+                  //   .ellipsis, // Adds ellipsis if text is too long
+                ),
+              ),
+              SizedBox(width: 14),
+              Image.asset(
+                'lib/image/logo.png', // Path to image file
+                height: 40, // Adjust height as needed
+              ),
+            ],
+          ),
+        ),
+        drawer: Drawer(
+          child: ListView(
+            // padding: EdgeInsets.zero,
+            children: [
+              ListTile(
+                title: Text(
+                  "Home",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () {
+                  print("tapped");
+                  current_screen_index = 0;
+                  //takes you home
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => MyApp()), 
+                    (Route<dynamic> route) => false, 
+                  );
+                },
+                leading: Icon(Icons.home),
+              ),
+              ListTile(
+                title: Text(
+                  "Goaltenders",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () {
+                  setState(() {
+                    current_screen_index = 1;
+                  });
+                },
+                leading: const Icon(Icons.people),
+              ),
+              ListTile(
+                title: Text(
+                  "Evaluations",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () {
+                  setState(() {
+                    current_screen_index = 0;
+                  });
+                },
+                leading: const Icon(Icons.note),
+              ),
+              ListTile(
+                title: Text(
+                  "Notifications",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () {
+                  print("Pretend this opened a notifications page");
+                },
+                leading: const Icon(Icons.notifications),
+              ),
+              ListTile(
+                title: Text(
+                  "Organization",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () {
+                  print("Pretend this opened an organization page");
+                },
+                leading: const Icon(Icons.roofing),
+              ),
+              
+              ListTile(
+                title: Text(
+                  "Settings",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () {
+                  print("Pretend this opened a settings page");
+                },
+                leading: const Icon(Icons.settings),
+              ),
+              ListTile(
+                title: Text(
+                  "Logout",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () async {
+                  await _auth.signOut();
+                  print("This should log out");
+                },
+                leading: const Icon(Icons.logout),
+              )
+            ],
+          ),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -216,7 +332,15 @@ class _MyWidgetState extends State<NewEval> {
                       organization: "HEndrix"),
                   evaluationDate: DateTime.now(),
                   evaluationType: evaltext));
-              Navigator.pop(context);
+              //change this to navigate to scoring page
+              //Navigator.pop(context);
+              Navigator.push(
+          context,
+          MaterialPageRoute(
+            //keep this temp and then replace with open form
+            builder: (context) => EvaluationUI(), 
+          ),
+        );
             },
             //go to open eval and add to list with new info
             child: Text("Open Evaluation"),

@@ -4,10 +4,33 @@ import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/pages/evaluation_list_view.dart';
 import 'package:hockey_evaluation_app/pages/goaltender_list_view.dart';
 import 'package:hockey_evaluation_app/objects/theme.dart';
+import 'package:hockey_evaluation_app/widgets/auth.dart';
+import 'package:hockey_evaluation_app/widgets/wrapper.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart'; 
+import 'package:go_router/go_router.dart';              
+import 'package:provider/provider.dart';  
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' 
+    hide EmailAuthProvider, PhoneAuthProvider;    
+import 'package:hockey_evaluation_app/objects/authentication.dart';
+import 'package:hockey_evaluation_app/widgets/app_state.dart';   
+                       // new
+
+
+                                         
+
 
 Color redtheme = const Color.fromRGBO(254, 48, 60, 1);
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
+
+  runApp(ChangeNotifierProvider(
+    create: (context) => ApplicationState(),
+    builder: ((context, child) => MyApp()),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -15,7 +38,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return 
+      MaterialApp.router(
       title: 'Hockey Evaluation App',
       //theme: ThemeData(
       // This is the theme of your application.
@@ -38,10 +62,88 @@ class MyApp extends StatelessWidget {
       // ),
       theme: appTheme,
 
-      home: MyHomePage(title: 'Hockey Evaluation App'),
+      routerConfig: _router
     );
   }
 }
+
+final _router = GoRouter(
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) =>  MyHomePage( title: 'Hockey Evaluation App'),
+      routes: [
+        GoRoute(
+          path: 'sign-in',
+          builder: (context, state) {
+            return SignInScreen(
+              actions: [
+                ForgotPasswordAction(((context, email) {
+                  final uri = Uri(
+                    path: '/sign-in/forgot-password',
+                    queryParameters: <String, String?>{
+                      'email': email,
+                    },
+                  );
+                  context.push(uri.toString());
+                })),
+                AuthStateChangeAction(((context, state) {
+                  final user = switch (state) {
+                    SignedIn state => state.user,
+                    UserCreated state => state.credential.user,
+                    _ => null
+                  };
+                  if (user == null) {
+                    return;
+                  }
+                  if (state is UserCreated) {
+                    user.updateDisplayName(user.email!.split('@')[0]);
+                  }
+                  if (!user.emailVerified) {
+                    user.sendEmailVerification();
+                    const snackBar = SnackBar(
+                        content: Text(
+                            'Please check your email to verify your email address'));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                  context.pushReplacement('/');
+                })),
+              ],
+            );
+          },
+          routes: [
+            GoRoute(
+              path: 'forgot-password',
+              builder: (context, state) {
+                final arguments = state.uri.queryParameters;
+                return ForgotPasswordScreen(
+                  email: arguments['email'],
+                  headerMaxExtent: 200,
+                );
+              },
+            ),
+          ],
+        ),
+        GoRoute(
+          path: '/evaluations',
+          builder: (context, state) {
+            return EvaluationListView(items: _MyHomePageState().evaluations, onEvaluationListChanged: _MyHomePageState()._handleNewEvaluation);
+          },
+        ),
+        GoRoute(
+          path: '/goalies',
+          builder: (context, state) {
+            return GoaltenderListView(items: _MyHomePageState().goalies, onGoaltenderListChanged: _MyHomePageState()._handleNewGoaltender);
+          },
+          ),
+      ],
+    ),
+  ],
+
+);
+
+
+
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({super.key, required this.title});
@@ -62,6 +164,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final AuthService _auth = AuthService();
   int current_screen_index = 0;
 
   List<Goaltender> goaltenders = [
@@ -137,11 +240,22 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Row(
             children: [
+              // Add spacing between image and title
+              Flexible(
+                // This prevents the overflow
+                child: Text(
+                  widget.title,
+                  style: Theme.of(context).textTheme.labelLarge,
+                  //overflow: TextOverflow
+                  //   .ellipsis, // Adds ellipsis if text is too long
+                ),
+              ),
+              SizedBox(width: 14),
               Image.asset(
                 'lib/image/logo.png', // Path to image file
                 height: 40, // Adjust height as needed
               ),
-              SizedBox(width: 6), // Spacing between image and title
+              SizedBox(width: 1), // Spacing between image and title
               Text(
                 widget.title,
                 style: Theme.of(context).textTheme.displayLarge,
@@ -151,12 +265,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         drawer: Drawer(
           child: ListView(
-            padding: EdgeInsets.zero,
+            // padding: EdgeInsets.zero,
             children: [
               ListTile(
                 title: Text(
                   "Home",
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {
                   print("tapped");
@@ -167,31 +281,35 @@ class _MyHomePageState extends State<MyHomePage> {
               ListTile(
                 title: Text(
                   "Goaltenders",
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {
+                  context.go('/goalies');
                   setState(() {
                     current_screen_index = 1;
                   });
+                  //context.go('/goalies');
                 },
                 leading: const Icon(Icons.people),
               ),
               ListTile(
                 title: Text(
                   "Evaluations",
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {
+                  context.go('/evaluations');
                   setState(() {
                     current_screen_index = 0;
                   });
+                  //context.go('/evaluations');
                 },
                 leading: const Icon(Icons.note),
               ),
               ListTile(
                 title: Text(
                   "Notifications",
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {
                   print("Pretend this opened a notifications page");
@@ -200,28 +318,19 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ListTile(
                 title: Text(
-                  "Orginization",
-                  style: Theme.of(context).textTheme.displaySmall,
+                  "Organization",
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {
                   print("Pretend this opened an organization page");
                 },
                 leading: const Icon(Icons.roofing),
               ),
-              ListTile(
-                title: Text(
-                  "Account",
-                  style: Theme.of(context).textTheme.displaySmall,
-                ),
-                onTap: () {
-                  print("Pretend this opened an accout page");
-                },
-                leading: const Icon(Icons.person),
-              ),
+              //make sure to include account information Settings
               ListTile(
                 title: Text(
                   "Settings",
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {
                   print("Pretend this opened a settings page");
@@ -231,17 +340,31 @@ class _MyHomePageState extends State<MyHomePage> {
               ListTile(
                 title: Text(
                   "Logout",
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
-                onTap: () {
-                  print("Pretend this opened the logout page");
+                onTap: () async {
+                  await _auth.signOut();
+                  print("This should log out");
                 },
                 leading: const Icon(Icons.logout),
               )
             ],
           ),
         ),
-        body: returnScreen()
+        body: 
+        //consumer leads to authentication, cannot figure out how to route to app when logged in, can route to pages through go route
+        Consumer<ApplicationState>(
+            builder: (context, appState, _) => AuthFunc(
+                loggedIn: appState.loggedIn,
+                signOut: () {
+                  FirebaseAuth.instance.signOut();
+                }),
+                
+          ),
+         //returnScreen()
+        
+        
+        
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         // Column is also a layout widget. It takes a list of children and

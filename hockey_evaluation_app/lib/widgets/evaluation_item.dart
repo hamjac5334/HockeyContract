@@ -24,17 +24,26 @@ class EvaluationItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-            color: const Color.fromARGB(104, 224, 59, 48),
-            width: 1), // Add red border
-        borderRadius:
-            BorderRadius.circular(4), // Optional: match Card's corner radius
+          color: const Color.fromARGB(104, 224, 59, 48),
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(4),
       ),
       child: Card(
-        elevation:
-            0, // Optional: remove Card's default shadow to highlight the border
+        elevation: 0,
         child: ListTile(
+
+          leading: ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: 100, // Adjust width as needed
+              maxWidth: 100, // Ensures the left section does not overflow
+            ),
+            child: Text(
+              evaluation.goaltender.name,
+              overflow: TextOverflow.ellipsis, // Truncate text if too long
+            ),
+          ),
           title: Text(evaluation.goaltender.name),
-          leading: Text(evaluation.goaltender.name),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
