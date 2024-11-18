@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
+import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/widgets/evaluation_item.dart';
 import 'package:hockey_evaluation_app/widgets/widgets.dart';
 import 'package:hockey_evaluation_app/pages/scoring_page.dart';
@@ -325,7 +326,10 @@ class _MyWidgetState extends State<NewEval> {
           FloatingActionButton(
             onPressed: () {
               widget.onEvaluationListChanged(Evaluation(
-                  name: valuetext,
+                  goaltender: Goaltender(
+                      name: "Temporary fix",
+                      levelAge: "21",
+                      organization: "HEndrix"),
                   evaluationDate: DateTime.now(),
                   evaluationType: evaltext));
               //change this to navigate to scoring page
