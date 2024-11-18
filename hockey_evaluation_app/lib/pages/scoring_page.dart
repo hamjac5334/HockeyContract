@@ -15,176 +15,32 @@ void main() {
   ));
 }
 
-class EvaluationUI extends StatefulWidget {
-  @override
-  _EvaluationUIState createState() => _EvaluationUIState();
-}
-class _EvaluationUIState extends State<EvaluationUI> {
+class EvaluationUI extends StatelessWidget {
+  const EvaluationUI({super.key});
 
-
-  int current_screen_index = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        // theme: appTheme,
-
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
-        //title: Text('Hockey Evaluation App'),
-        title: Row(
-          children: [
-            // Add spacing between image and title
-            Flexible(
-              // This prevents the overflow
-              child: Text(
-                'Hockey Evaluation App',
-                style: Theme.of(context).textTheme.labelLarge,
-                //overflow: TextOverflow
-                //   .ellipsis, // Adds ellipsis if text is too long
-              ),
-            ),
-            SizedBox(width: 14),
-            Image.asset(
-              'lib/image/logo.png', // Path to image file
-              height: 40, // Adjust height as needed
-            ),
-          ],
-        ),
-
-        actions: [
-          IconButton(
+    return ListView(
+      padding: EdgeInsets.all(21),
+      children: [
+        Center(
+          child: ElevatedButton(
             onPressed: () {},
-            icon: Icon(Icons.check),
-          ),
-        ],
-      ),
-      drawer: Drawer(
-          child: ListView(
-            // padding: EdgeInsets.zero,
-            children: [
-              ListTile(
-                title: Text(
-                  "Home",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  print("tapped");
-                  current_screen_index = 0;
-                  //takes you home
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => MyApp()), 
-                    (Route<dynamic> route) => false, 
-                  );
-                },
-                leading: Icon(Icons.home),
-              ),
-              ListTile(
-                title: Text(
-                  "Goaltenders",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  setState(() {
-                    current_screen_index = 1;
-                  });
-                },
-                leading: const Icon(Icons.people),
-              ),
-              ListTile(
-                title: Text(
-                  "Evaluations",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  setState(() {
-                    current_screen_index = 0;
-                  });
-                },
-                leading: const Icon(Icons.note),
-              ),
-              ListTile(
-                title: Text(
-                  "Notifications",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  print("Pretend this opened a notifications page");
-                },
-                leading: const Icon(Icons.notifications),
-              ),
-              ListTile(
-                title: Text(
-                  "Organization",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  print("Pretend this opened an organization page");
-                },
-                leading: const Icon(Icons.roofing),
-              ),
-  
-              ListTile(
-                title: Text(
-                  "Settings",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  print("Pretend this opened a settings page");
-                },
-                leading: const Icon(Icons.settings),
-              ),
-              ListTile(
-                title: Text(
-                  "Logout",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () async {
-                  await _auth.signOut();
-                  print("This should log out");
-                },
-                leading: const Icon(Icons.logout),
-              )
-            ],
-          ),
-        ),
-
-      body: ListView(
-        padding: EdgeInsets.all(21),
-        children: [
-          Center(
-            child: ElevatedButton(
-              onPressed: () {},
-              child: Text("Calculate Scores"),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 145, 4, 4),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
+            child: Text("Calculate Scores"),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromARGB(255, 207, 174, 221),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
           ),
+        ),
 
-          SizedBox(height: 22),
+        SizedBox(height: 22),
 
-          
-          EvaluationCategory(
+        //Only put values in for Run bc I don't know the other features
+                 EvaluationCategory(
               title: "See", subItems: ["Acquisition", "Tracking", "Focus"]),
 
           EvaluationCategory(
@@ -210,8 +66,7 @@ class _EvaluationUIState extends State<EvaluationUI> {
             "Emotional Habits",
             "Practice Habits"
           ]),
-        ],
-      ),
+
     );
   }
 }

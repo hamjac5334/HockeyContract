@@ -166,31 +166,18 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final AuthService _auth = AuthService();
   int current_screen_index = 0;
-  List<Evaluation> evaluations = [
-    Evaluation(
-        name: "Colten Berry",
-        evaluationDate: DateTime.now(),
-        evaluationType: "Epic"),
-    Evaluation(
-        name: "Jack Hamilton",
-        evaluationDate: DateTime.now(),
-        evaluationType: "Pretty Cool"),
-    Evaluation(
-        name: "Sam LastName",
-        evaluationDate: DateTime.now(),
-        evaluationType: "I guess he's alright")
-  ];
 
-  List<Goaltender> goalies = [
+  List<Goaltender> goaltenders = [
     Goaltender(
         name: "Colten Berry", levelAge: "21", organization: "Hendrix College"),
     Goaltender(name: "Jack", levelAge: "21", organization: "Hendrix College"),
     Goaltender(name: "Sarah", levelAge: "21", organization: "Hendrix College")
   ];
+  List<Evaluation> evaluations = [];
 
   void _handleNewGoaltender(Goaltender goaltender) {
     setState(() {
-      goalies.add(goaltender);
+      goaltenders.add(goaltender);
     });
   }
 
@@ -203,38 +190,37 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    Evaluation e = Evaluation(
-        name: "Closed Evaluation 1",
+    evaluations.add(Evaluation(
+        goaltender: goaltenders.first,
         evaluationDate: DateTime.now(),
-        evaluationType: "Howdy");
-
-    e.set_completed();
-
-    evaluations.add(e);
-
-    e = Evaluation(
-        name: "Closed Evaluation 2",
+        evaluationType: "Game"));
+    evaluations.add(Evaluation(
+        goaltender: goaltenders[1],
         evaluationDate: DateTime.now(),
-        evaluationType: "evaluationType");
-    e.set_completed();
-    evaluations.add(e);
+        evaluationType: "Game"));
+    evaluations.add(Evaluation(
+        goaltender: goaltenders.last,
+        evaluationDate: DateTime.now(),
+        evaluationType: "Practice"));
   }
 
   Widget returnScreen() {
     if (current_screen_index == 0) {
       //return the page.
       return EvaluationListView(
+        goaltenders: goaltenders,
         items: evaluations,
         onEvaluationListChanged: _handleNewEvaluation,
       );
     } else if (current_screen_index == 1) {
       return GoaltenderListView(
-        items: goalies,
+        items: goaltenders,
         onGoaltenderListChanged: _handleNewGoaltender,
       );
     } else {
       print("Something is wrong. Main Line 126");
       return EvaluationListView(
+        goaltenders: goaltenders,
         items: evaluations,
         onEvaluationListChanged: _handleNewEvaluation,
       );
