@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 typedef GoaltenderListChangedCallback = Function(Goaltender goaltender);
 
@@ -14,10 +15,19 @@ class NewGoaltenderPage extends StatefulWidget {
   }
 }
 
+
+
 class NewGoaltenderPageState extends State<NewGoaltenderPage> {
   String goaltenderName = "";
   String levelAge = "";
   String organization = "";
+
+  void dataSave(){
+  var db = FirebaseFirestore.instance;
+
+  //db.collection("Goaltenders").doc(goaltenderName).collection("Evaluations").doc("Evaluation").set({"Name": goaltenderName, "Level/Age": levelAge, "Organization" : organization});
+  db.collection("Goaltenders").doc(goaltenderName).set({"Name": goaltenderName, "Level/Age": levelAge, "Organization" : organization});
+}
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +69,11 @@ class NewGoaltenderPageState extends State<NewGoaltenderPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          widget.onGoaltenderListChanged(Goaltender(
+          dataSave();
+          /*widget.onGoaltenderListChanged(Goaltender(
               name: goaltenderName,
               levelAge: levelAge,
-              organization: organization));
+              organization: organization));*/
           Navigator.pop(context);
         },
         child: const Icon(Icons.add),

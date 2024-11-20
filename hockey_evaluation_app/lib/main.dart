@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
@@ -5,7 +6,6 @@ import 'package:hockey_evaluation_app/pages/evaluation_list_view.dart';
 import 'package:hockey_evaluation_app/pages/goaltender_list_view.dart';
 import 'package:hockey_evaluation_app/objects/theme.dart';
 import 'package:hockey_evaluation_app/widgets/auth.dart';
-import 'package:hockey_evaluation_app/widgets/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:go_router/go_router.dart';
@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _MyHomePageState()._cloudGoaltenderPull();
     return MaterialApp.router(
         title: 'Hockey Evaluation App',
         //theme: ThemeData(
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
         // ),
         theme: appTheme,
         routerConfig: _router);
+        
   }
 }
 
@@ -163,13 +165,29 @@ class _MyHomePageState extends State<MyHomePage> {
   final AuthService _auth = AuthService();
   int current_screen_index = 0;
 
+  var db = FirebaseFirestore.instance;
+
   List<Goaltender> goaltenders = [
-    Goaltender(
-        name: "Colten Berry", levelAge: "21", organization: "Hendrix College"),
+    Goaltender(name: "Colten Berry", levelAge: "21", organization: "Hendrix College"),
     Goaltender(name: "Jack", levelAge: "21", organization: "Hendrix College"),
     Goaltender(name: "Sarah", levelAge: "21", organization: "Hendrix College")
   ];
   List<Evaluation> evaluations = [];
+
+  void _cloudGoaltenderPull(){
+    db.collection("Goaltenders").get().then((querySnapshot) {
+    print("Successfully completed");
+    for (var docSnapshot in querySnapshot.docs) {
+      print('${docSnapshot.id} => ${docSnapshot.data()}');
+      print(docSnapshot.data()['Name']);
+      goaltenders.add(Goaltender(name: docSnapshot.data()['Name'], levelAge: docSnapshot.data()['Level/Age'], organization: docSnapshot.data()['Organization']));
+    }
+    print(goaltenders);
+  },
+  onError: (e) => print("Error completing: $e"),
+);
+
+}
 
   void _handleNewGoaltender(Goaltender goaltender) {
     setState(() {
@@ -284,7 +302,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 setState(() {
                   current_screen_index = 1;
                 });
-                //context.go('/goalies');
               },
               leading: const Icon(Icons.people),
             ),
