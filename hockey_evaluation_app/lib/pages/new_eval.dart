@@ -5,6 +5,8 @@ import 'package:hockey_evaluation_app/widgets/evaluation_item.dart';
 import 'package:hockey_evaluation_app/widgets/widgets.dart';
 import 'package:hockey_evaluation_app/pages/scoring_page.dart';
 import 'package:hockey_evaluation_app/main.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 import 'package:firebase_auth/firebase_auth.dart'; 
 
@@ -18,6 +20,7 @@ class NewEval extends StatefulWidget {
   @override
   State<NewEval> createState() => _MyWidgetState();
 }
+
 
 class _MyWidgetState extends State<NewEval> {
   final TextEditingController _goalController = TextEditingController();

@@ -4,6 +4,7 @@ import 'package:hockey_evaluation_app/objects/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hockey_evaluation_app/main.dart';
 
+
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 //put in a main function to run page individually
