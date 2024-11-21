@@ -42,6 +42,22 @@ class _MyWidgetState extends State<NewEval> {
     return menuItems;
   }
 
+  String goalieName = "";
+  String evaluatorName = "";
+  String evaluationType = "Game";
+  String notes = "";
+
+
+  void dataSave(){
+  var db = FirebaseFirestore.instance;
+
+  //db.collection("Goaltenders").doc(goaltenderName).collection("Evaluations").doc("Evaluation").set({"Name": goaltenderName, "Level/Age": levelAge, "Organization" : organization});
+  db.collection("Goaltenders").doc(goalieName).collection("Evaluations").doc(DateTime.now().toString()).set({"Name": goalieName, "Evaluator": evaluatorName, "Evaluation Typle" : evaluationType, "Evaluation Date" : DateTime.now(), "Additional Notes": notes});
+  db.collection("Evaluations").doc(goalieName +" - "+ DateTime.now().toString()).set({"Name": goalieName, "Evaluator": evaluatorName, "Evaluation Typle" : evaluationType, "Evaluation Date" : DateTime.now(), "Additional Notes": notes});
+
+}
+
+
   String selectedvalue = "Game";
 
   @override
@@ -186,6 +202,7 @@ class _MyWidgetState extends State<NewEval> {
                                 children: [
                                   TextField(
                                     onChanged: (value) {
+                                      goalieName = value;
                                       setState(() {
                                         valuetext = value;
                                       });
@@ -239,6 +256,7 @@ class _MyWidgetState extends State<NewEval> {
                                 children: [
                                   TextField(
                                     onChanged: (value) {
+                                      evaluatorName = value;
                                       setState(() {
                                         evaltext = value;
                                       });
@@ -275,6 +293,7 @@ class _MyWidgetState extends State<NewEval> {
                 value: selectedvalue,
                 menuWidth: double.infinity,
                 onChanged: (String? newValue) {
+                  evaluationType = newValue.toString();
                   setState(() {
                     selectedvalue = newValue!;
                   });
@@ -310,6 +329,7 @@ class _MyWidgetState extends State<NewEval> {
               height: (80),
               child: TextField(
                 onChanged: (value) {
+                  notes = value;
                   setState(() {
                     addinfotext = value;
                   });
@@ -328,6 +348,7 @@ class _MyWidgetState extends State<NewEval> {
             Row(mainAxisAlignment: MainAxisAlignment.end, children: [
           FloatingActionButton(
             onPressed: () {
+              dataSave();
               widget.onEvaluationListChanged(Evaluation(
                   goaltender: Goaltender(
                       name: "Temporary fix",

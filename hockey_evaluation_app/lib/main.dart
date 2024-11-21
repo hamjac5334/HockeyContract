@@ -170,24 +170,34 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Goaltender> goaltenders = [
     Goaltender(name: "Colten Berry", levelAge: "21", organization: "Hendrix College"),
     Goaltender(name: "Jack", levelAge: "21", organization: "Hendrix College"),
-    Goaltender(name: "Sarah", levelAge: "21", organization: "Hendrix College")
+    Goaltender(name: "Sarah", levelAge: "21", organization: "Hendrix College"),
+    Goaltender(name: "Nate Hirsh", levelAge: "20", organization: "Hendrix College"),
   ];
   List<Evaluation> evaluations = [];
 
-  void _cloudGoaltenderPull(){
-    db.collection("Goaltenders").get().then((querySnapshot) {
-    print("Successfully completed");
+  void _cloudGoaltenderPull() async{
+    await db.collection("Goaltenders").get().then((querySnapshot) {
+    print("Goaltenders completed");
     for (var docSnapshot in querySnapshot.docs) {
       print('${docSnapshot.id} => ${docSnapshot.data()}');
-      print(docSnapshot.data()['Name']);
       goaltenders.add(Goaltender(name: docSnapshot.data()['Name'], levelAge: docSnapshot.data()['Level/Age'], organization: docSnapshot.data()['Organization']));
     }
-    print(goaltenders);
   },
   onError: (e) => print("Error completing: $e"),
 );
-
+_cloudEvalPull();
 }
+  void _cloudEvalPull(){
+    db.collection("Evaluations").get().then((querySnapshot) {
+    print("Evaluations completed");
+    for (var docSnapshot in querySnapshot.docs) {
+      print('${docSnapshot.id} => ${docSnapshot.data()}');
+      evaluations.add(Evaluation(goaltender: goaltenders.firstWhere((goaltenders) => goaltenders.name == docSnapshot.data()["Name"]), evaluationDate: DateTime.timestamp(), evaluationType: docSnapshot.data()["Evaluation Type"]));
+      }
+  },
+  onError: (e) => print("Error completing: $e"),
+);
+  }
 
   void _handleNewGoaltender(Goaltender goaltender) {
     setState(() {
