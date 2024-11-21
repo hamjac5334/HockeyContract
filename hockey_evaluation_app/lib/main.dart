@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _MyHomePageState()._cloudGoaltenderPull();
+    _MyHomePageState()._cloudEvalPull();
     return MaterialApp.router(
         title: 'Hockey Evaluation App',
         //theme: ThemeData(
@@ -170,13 +171,14 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Goaltender> goaltenders = [
     Goaltender(name: "Colten Berry", levelAge: "21", organization: "Hendrix College"),
     Goaltender(name: "Jack", levelAge: "21", organization: "Hendrix College"),
-    Goaltender(name: "Sarah", levelAge: "21", organization: "Hendrix College")
+    Goaltender(name: "Sarah", levelAge: "21", organization: "Hendrix College"),
+    Goaltender(name: "Nate Hirsh", levelAge: "20", organization: "Hendrix College"),
   ];
   List<Evaluation> evaluations = [];
 
   void _cloudGoaltenderPull(){
     db.collection("Goaltenders").get().then((querySnapshot) {
-    print("Successfully completed");
+    print("Goaltenders completed");
     for (var docSnapshot in querySnapshot.docs) {
       print('${docSnapshot.id} => ${docSnapshot.data()}');
       print(docSnapshot.data()['Name']);
@@ -186,8 +188,19 @@ class _MyHomePageState extends State<MyHomePage> {
   },
   onError: (e) => print("Error completing: $e"),
 );
-
 }
+  void _cloudEvalPull(){
+    db.collection("Evaluations").get().then((querySnapshot) {
+    print("Evaluations completed");
+    for (var docSnapshot in querySnapshot.docs) {
+      print('${docSnapshot.id} => ${docSnapshot.data()}');
+      evaluations.add(Evaluation(goaltender: goaltenders.elementAt(goaltenders.indexWhere((goaltenders) => goaltenders.name == docSnapshot.data()["Name"])), evaluationDate: docSnapshot.data()["Evaluation Date"], evaluationType: docSnapshot.data()["Evaluation Type"]));
+      print(evaluations);
+      }
+  },
+  onError: (e) => print("Error completing: $e"),
+);
+  }
 
   void _handleNewGoaltender(Goaltender goaltender) {
     setState(() {
