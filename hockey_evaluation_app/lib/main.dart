@@ -189,19 +189,20 @@ class _MyHomePageState extends State<MyHomePage> {
 );
 _cloudEvalPull();
 }
-  void _cloudEvalPull(){
-    db.collection("Evaluations").get().then((querySnapshot) {
+  void _cloudEvalPull()async{
+    await db.collection("Evaluations").get().then((querySnapshot) {
     print("Evaluations completed");
     for (var docSnapshot in querySnapshot.docs) {
       print('${docSnapshot.id} => ${docSnapshot.data()}');
-      if (!evaluations.contains(docSnapshot.data()["Name"])){
-      goaltenders.add(Goaltender(name: docSnapshot.data()['Name'], levelAge: docSnapshot.data()['Level/Age'], organization: docSnapshot.data()['Organization']));
+    if (!evaluations.contains(goaltenders.firstWhere((goaltenders) => goaltenders.name == docSnapshot.data()["Name"]))){
+      evaluations.add(Evaluation(goaltender: goaltenders.firstWhere((goaltenders) => goaltenders.name == docSnapshot.data()["Name"]), evaluationDate: DateTime.now(), evaluationType: docSnapshot.data()["Evaluation Type"]));
       }
-      evaluations.add(Evaluation(goaltender: goaltenders.firstWhere((goaltenders) => goaltenders.name == docSnapshot.data()["Name"]), evaluationDate: DateTime.timestamp(), evaluationType: docSnapshot.data()["Evaluation Type"]));
       }
   },
   onError: (e) => print("Error completing: $e"),
 );
+print(evaluations.length.toString() + " evals");
+print(goaltenders.length.toString() + " Goalies");
   }
 
   void _handleNewGoaltender(Goaltender goaltender) {
@@ -314,6 +315,7 @@ _cloudEvalPull();
               ),
               onTap: () {
                 context.go('/goalies');
+                _cloudGoaltenderPull();
                 setState(() {
                   current_screen_index = 1;
                 });
@@ -326,6 +328,7 @@ _cloudEvalPull();
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               onTap: () {
+                //_cloudEvalPull();
                 context.go('/evaluations');
                 setState(() {
                   current_screen_index = 0;
