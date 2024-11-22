@@ -5,6 +5,7 @@ import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/pages/evaluation_list_view.dart';
 import 'package:hockey_evaluation_app/pages/goaltender_list_view.dart';
 import 'package:hockey_evaluation_app/objects/theme.dart';
+import 'package:hockey_evaluation_app/pages/settings.dart';
 import 'package:hockey_evaluation_app/widgets/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
@@ -15,7 +16,8 @@ import 'package:firebase_auth/firebase_auth.dart'
     hide EmailAuthProvider, PhoneAuthProvider;
 import 'package:hockey_evaluation_app/objects/authentication.dart';
 import 'package:hockey_evaluation_app/widgets/app_state.dart';
-// new
+
+
 
 Color redtheme = const Color.fromRGBO(254, 48, 60, 1);
 void main() async {
@@ -136,6 +138,12 @@ final _router = GoRouter(
                 items: _MyHomePageState().goaltenders,
                 onGoaltenderListChanged:
                     _MyHomePageState()._handleNewGoaltender);
+          },
+        ),
+        GoRoute(
+          path: '/settings',
+          builder: (context, state) {
+            return const TheseSettings();
           },
         ),
       ],
@@ -364,7 +372,7 @@ print(goaltenders.length.toString() + " Goalies");
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               onTap: () {
-                print("Pretend this opened a settings page");
+                context.go('/settings');
               },
               leading: const Icon(Icons.settings),
             ),
