@@ -32,6 +32,11 @@ class EvaluationListViewState extends State<EvaluationListView>
   // for searching stuff
   String searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
+  final List<String> _filters = ["A-Z", "Z-A", "Age/Level", "Grade"];
+
+  // the selected value
+  String? _selectedFilter;
+
 
   @override
   void initState() {
@@ -45,6 +50,21 @@ class EvaluationListViewState extends State<EvaluationListView>
     super.dispose();
   }
 
+  void _filterEvals(String filter){
+    if(filter == "A-Z"){
+      widget.displayitems.sort((a, b) => a.toString().compareTo(b.toString()));
+
+    }else if(filter == 'Z-A'){
+      widget.displayitems.sort((b, a) => a.toString().compareTo(b.toString()));
+
+    }else if (filter == 'Age/Level'){
+      widget.goaltenders.sort((a, b) => a.levelAge.compareTo(b.levelAge),);
+
+    }
+
+  }
+
+
   List<Evaluation> _searchEvals(String search) {
     List<Evaluation> searched_evals = [];
     for (Evaluation e in widget.items) {
@@ -54,7 +74,7 @@ class EvaluationListViewState extends State<EvaluationListView>
     }
     return searched_evals;
   }
-
+  
   void _handleEvaluationHighlighted(Evaluation evaluation) {
     setState(() {
       evaluation.set_highlighted();
@@ -129,6 +149,82 @@ class EvaluationListViewState extends State<EvaluationListView>
       },
     );
   }
+  void showFilterDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          alignment: Alignment.topCenter,
+          title: Text('Filter'),
+          content: DropdownButton<String>(
+            value: _selectedFilter,
+            onChanged: (value) {
+              setState(() {
+                _selectedFilter = value;
+              });
+            },
+            hint: const Center(
+                child: Text(
+              'Select Filter',
+              
+            )),
+            // Hide the default underline
+            underline: Container(),
+            // set the color of the dropdown menu
+            icon: const Icon(
+              Icons.arrow_downward,
+            ),
+            isExpanded: true,
+
+            // The list of options
+            items: _filters
+                .map((e) => DropdownMenuItem(
+                      value: e,
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          e,
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                      ),
+                    ))
+                .toList(),
+            
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {
+                  widget.displayitems = widget.items;
+                });
+                
+              },
+              child: Text('Clear'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+               
+                setState(() {
+                  widget.displayitems = widget.items;
+                });
+               
+              },
+              child: Text('Filter'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -142,8 +238,7 @@ class EvaluationListViewState extends State<EvaluationListView>
         actions: [
           IconButton(
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Pretend this brought up a way to filter')));
+                showFilterDialog(context);
               },
               icon: const Icon(Icons.filter_alt_sharp)),
           IconButton(

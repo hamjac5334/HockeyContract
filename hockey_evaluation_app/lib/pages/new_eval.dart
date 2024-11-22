@@ -219,9 +219,9 @@ class _MyWidgetState extends State<NewEval> {
                                     Navigator.of(ctx).pop();
                                   },
                                   child: Container(
-                                    color: Colors.green,
+                                    color: Colors.red,
                                     padding: const EdgeInsets.all(14),
-                                    child: const Text("OK"),
+                                    child: const Text("OK", style: TextStyle(color: Colors.white)),
                                   ),
                                 )
                               ]));
@@ -273,9 +273,9 @@ class _MyWidgetState extends State<NewEval> {
                                     Navigator.of(ctx).pop();
                                   },
                                   child: Container(
-                                    color: Colors.red,
+                                     color: Colors.red,
                                     padding: const EdgeInsets.all(14),
-                                    child: const Text("OK"),
+                                    child: const Text("OK", style: TextStyle(color: Colors.white)),
                                   ),
                                 )
                               ]));
