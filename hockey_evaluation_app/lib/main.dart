@@ -180,7 +180,9 @@ class _MyHomePageState extends State<MyHomePage> {
     print("Goaltenders completed");
     for (var docSnapshot in querySnapshot.docs) {
       print('${docSnapshot.id} => ${docSnapshot.data()}');
+      if (!goaltenders.contains(docSnapshot.data()["Name"])){
       goaltenders.add(Goaltender(name: docSnapshot.data()['Name'], levelAge: docSnapshot.data()['Level/Age'], organization: docSnapshot.data()['Organization']));
+      }
     }
   },
   onError: (e) => print("Error completing: $e"),
@@ -192,6 +194,9 @@ _cloudEvalPull();
     print("Evaluations completed");
     for (var docSnapshot in querySnapshot.docs) {
       print('${docSnapshot.id} => ${docSnapshot.data()}');
+      if (!evaluations.contains(docSnapshot.data()["Name"])){
+      goaltenders.add(Goaltender(name: docSnapshot.data()['Name'], levelAge: docSnapshot.data()['Level/Age'], organization: docSnapshot.data()['Organization']));
+      }
       evaluations.add(Evaluation(goaltender: goaltenders.firstWhere((goaltenders) => goaltenders.name == docSnapshot.data()["Name"]), evaluationDate: DateTime.timestamp(), evaluationType: docSnapshot.data()["Evaluation Type"]));
       }
   },
