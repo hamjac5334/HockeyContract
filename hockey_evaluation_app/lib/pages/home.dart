@@ -6,7 +6,6 @@ import 'package:hockey_evaluation_app/pages/evaluation_list_view.dart';
 import 'package:hockey_evaluation_app/pages/goaltender_list_view.dart';
 import 'package:hockey_evaluation_app/objects/theme.dart';
 import 'package:hockey_evaluation_app/widgets/auth.dart';
-import 'package:hockey_evaluation_app/widgets/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:go_router/go_router.dart';

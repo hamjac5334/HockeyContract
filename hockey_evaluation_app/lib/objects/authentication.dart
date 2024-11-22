@@ -15,28 +15,54 @@ class AuthFunc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 24, bottom: 8),
-          child: StyledButton(
-              onPressed: () {
-                !loggedIn ? context.push('/sign-in') : signOut();
-              },
-              child: !loggedIn ? const Text('Sign In') : const Text('Logout')),
-        ),
-        Visibility(
-          visible: loggedIn,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 24, bottom: 8),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Visibility(
+            visible: loggedIn,
             child: StyledButton(
-                onPressed: () {
-                  context.push('/evaluations');
-                },
-                child: const Text('home')),
+              onPressed: () {
+                context.go('/evaluations');
+              },
+              child: const Text('Evaluations'),
+            ),
           ),
-        )
-      ],
+          StyledButton(
+            onPressed: () {
+              context.go('/goalies');
+            },
+            child: const Text('Goaltenders'),
+          ),
+          StyledButton(
+            onPressed: () {
+              //context.go('');
+              print("Pretend this opened a notifications page");
+            },
+            child: const Text('Notifications'),
+          ),
+          StyledButton(
+            onPressed: () {
+              //context.go('');
+              print("Pretend this opened a Organization page");
+            },
+            child: const Text('Organization'),
+          ),
+          StyledButton(
+            onPressed: () {
+              //context.go('');
+              print("Pretend this opened a settings page");
+            },
+            child: const Text('Settings'),
+          ),
+          StyledButton(
+            onPressed: () {
+              !loggedIn ? context.go('/sign-in') : signOut();
+            },
+            child: !loggedIn ? const Text('Sign In') : const Text('Logout'),
+          ),
+        ],
+      ),
     );
   }
 }
