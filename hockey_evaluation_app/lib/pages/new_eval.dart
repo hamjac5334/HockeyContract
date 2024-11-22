@@ -53,7 +53,7 @@ class _MyWidgetState extends State<NewEval> {
 
   //db.collection("Goaltenders").doc(goaltenderName).collection("Evaluations").doc("Evaluation").set({"Name": goaltenderName, "Level/Age": levelAge, "Organization" : organization});
   db.collection("Goaltenders").doc(goalieName).collection("Evaluations").doc(DateTime.now().toString()).set({"Name": goalieName, "Evaluator": evaluatorName, "Evaluation Typle" : evaluationType, "Evaluation Date" : DateTime.now(), "Additional Notes": notes});
-  db.collection("Evaluations").doc(goalieName +" - "+ DateTime.now().toString()).set({"Name": goalieName, "Evaluator": evaluatorName, "Evaluation Typle" : evaluationType, "Evaluation Date" : DateTime.now(), "Additional Notes": notes});
+  db.collection("Evaluations").doc(goalieName +" - "+ DateTime.now().toString()).set({"Name": goalieName, "Evaluator": evaluatorName, "Evaluation Type" : evaluationType, "Evaluation Date" : DateTime.now(), "Additional Notes": notes});
 
 }
 
