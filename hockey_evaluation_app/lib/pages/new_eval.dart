@@ -64,116 +64,12 @@ class _MyWidgetState extends State<NewEval> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          //made background of appbar white
-          backgroundColor: Colors.white,
-          title: Row(
-            children: [
-              // Add spacing between image and title
-              Flexible(
-                // This prevents the overflow
-                child: Text(
-                  "Hockey Evaluation App",
-                  style: Theme.of(context).textTheme.labelLarge,
-                  //overflow: TextOverflow
-                  //   .ellipsis, // Adds ellipsis if text is too long
-                ),
-              ),
-              SizedBox(width: 14),
-              Image.asset(
-                'lib/image/logo.png', // Path to image file
-                height: 40, // Adjust height as needed
-              ),
-            ],
-          ),
+          title: const Text("New Evaluations"),
+          titleTextStyle: TextStyle(
+          fontSize: 22,
+          color: Color.fromARGB(255, 80, 78, 78),
         ),
-        drawer: Drawer(
-          child: ListView(
-            // padding: EdgeInsets.zero,
-            children: [
-              ListTile(
-                title: Text(
-                  "Home",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  print("tapped");
-                  current_screen_index = 0;
-                  //takes you home
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => MyApp()), 
-                    (Route<dynamic> route) => false, 
-                  );
-                },
-                leading: Icon(Icons.home),
-              ),
-              ListTile(
-                title: Text(
-                  "Goaltenders",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  setState(() {
-                    current_screen_index = 1;
-                  });
-                },
-                leading: const Icon(Icons.people),
-              ),
-              ListTile(
-                title: Text(
-                  "Evaluations",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  setState(() {
-                    current_screen_index = 0;
-                  });
-                },
-                leading: const Icon(Icons.note),
-              ),
-              ListTile(
-                title: Text(
-                  "Notifications",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  print("Pretend this opened a notifications page");
-                },
-                leading: const Icon(Icons.notifications),
-              ),
-              ListTile(
-                title: Text(
-                  "Organization",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  print("Pretend this opened an organization page");
-                },
-                leading: const Icon(Icons.roofing),
-              ),
-              
-              ListTile(
-                title: Text(
-                  "Settings",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () {
-                  print("Pretend this opened a settings page");
-                },
-                leading: const Icon(Icons.settings),
-              ),
-              ListTile(
-                title: Text(
-                  "Logout",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onTap: () async {
-                  await _auth.signOut();
-                  print("This should log out");
-                },
-                leading: const Icon(Icons.logout),
-              )
-            ],
-          ),
+        centerTitle: true,
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,

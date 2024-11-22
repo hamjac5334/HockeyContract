@@ -34,6 +34,11 @@ class NewGoaltenderPageState extends State<NewGoaltenderPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("New Goaltender"),
+        titleTextStyle: TextStyle(
+          fontSize: 22,
+          color: Color.fromARGB(255, 80, 78, 78),
+        ),
+        centerTitle: true,
       ),
       body: Center(
         child: SizedBox(

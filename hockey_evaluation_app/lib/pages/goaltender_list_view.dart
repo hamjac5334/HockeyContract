@@ -117,7 +117,7 @@ class GoaltenderListViewState extends State<GoaltenderListView>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("GoalTenders Page"),
+        title: const Text("Goaltenders Page"),
         titleTextStyle: TextStyle(
           fontSize: 22,
           color: Color.fromARGB(255, 80, 78, 78),
