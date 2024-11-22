@@ -315,7 +315,6 @@ print(goaltenders.length.toString() + " Goalies");
               ),
               onTap: () {
                 context.go('/goalies');
-                _cloudGoaltenderPull();
                 setState(() {
                   current_screen_index = 1;
                 });
@@ -328,7 +327,6 @@ print(goaltenders.length.toString() + " Goalies");
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               onTap: () {
-                _cloudEvalPull();
                 context.go('/evaluations');
                 setState(() {
                   current_screen_index = 0;
