@@ -60,6 +60,8 @@ class EvaluationListViewState extends State<EvaluationListView>
     }else if (filter == 'Age/Level'){
       widget.goaltenders.sort((a, b) => a.levelAge.compareTo(b.levelAge),);
 
+    }else if (filter == 'Grade'){
+      //widget.goaltenders.sort((a, b) => a.,)
     }
 
   }
@@ -197,6 +199,7 @@ class EvaluationListViewState extends State<EvaluationListView>
                 Navigator.of(context).pop();
                 setState(() {
                   widget.displayitems = widget.items;
+                  _selectedFilter = null;
                 });
                 
               },
