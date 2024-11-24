@@ -313,6 +313,7 @@ print(goaltenders.length.toString() + " Goalies");
               onTap: () {
                 print("tapped");
                 current_screen_index = 0;
+                Navigator.pop(context);
               },
               leading: Icon(Icons.home),
             ),
@@ -384,6 +385,7 @@ print(goaltenders.length.toString() + " Goalies");
               onTap: () async {
                 await _auth.signOut();
                 print("This should log out");
+                Navigator.pop(context);
               },
               leading: const Icon(Icons.logout),
             )

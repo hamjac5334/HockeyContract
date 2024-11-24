@@ -264,6 +264,8 @@ class _MyWidgetState extends State<NewEval> {
             },
             //go to open eval and add to list with new info
             child: Text("Open Evaluation"),
+            //uncomment code below for icon
+            //child: const Icon(Icons.add),
           ),
         ]));
   }
