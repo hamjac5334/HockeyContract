@@ -17,8 +17,6 @@ import 'package:firebase_auth/firebase_auth.dart'
 import 'package:hockey_evaluation_app/objects/authentication.dart';
 import 'package:hockey_evaluation_app/widgets/app_state.dart';
 
-
-
 Color redtheme = const Color.fromRGBO(254, 48, 60, 1);
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,7 +58,6 @@ class MyApp extends StatelessWidget {
         // ),
         theme: appTheme,
         routerConfig: _router);
-        
   }
 }
 
@@ -176,41 +173,72 @@ class _MyHomePageState extends State<MyHomePage> {
   var db = FirebaseFirestore.instance;
 
   List<Goaltender> goaltenders = [
-    Goaltender(name: "Colten Berry", levelAge: "21", organization: "Hendrix College"),
+    Goaltender(
+        name: "Colten Berry", levelAge: "21", organization: "Hendrix College"),
     Goaltender(name: "Jack", levelAge: "21", organization: "Hendrix College"),
     Goaltender(name: "Sarah", levelAge: "21", organization: "Hendrix College"),
-    Goaltender(name: "Nate Hirsh", levelAge: "20", organization: "Hendrix College"),
+    Goaltender(
+        name: "Nate Hirsh", levelAge: "20", organization: "Hendrix College"),
   ];
   List<Evaluation> evaluations = [];
 
-  void _cloudGoaltenderPull() async{
-    await db.collection("Goaltenders").get().then((querySnapshot) {
-    print("Goaltenders completed");
-    for (var docSnapshot in querySnapshot.docs) {
-      print('${docSnapshot.id} => ${docSnapshot.data()}');
-      if (!goaltenders.contains(docSnapshot.data()["Name"])){
-      goaltenders.add(Goaltender(name: docSnapshot.data()['Name'], levelAge: docSnapshot.data()['Level/Age'], organization: docSnapshot.data()['Organization']));
-      }
+  void _cloudGoaltenderPull() async {
+    await db.collection("Goaltenders").get().then(
+      (querySnapshot) {
+        print("Goaltenders completed");
+        for (var docSnapshot in querySnapshot.docs) {
+          print('${docSnapshot.id} => ${docSnapshot.data()}');
+          if (!goaltenders.contains(docSnapshot.data()["Name"])) {
+            goaltenders.add(Goaltender(
+                name: docSnapshot.data()['Name'],
+                levelAge: docSnapshot.data()['Level/Age'],
+                organization: docSnapshot.data()['Organization']));
+          }
+        }
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
+    for (Goaltender goaltender in goaltenders) {
+      print("Goaltender: ${goaltender.name}");
     }
-  },
-  onError: (e) => print("Error completing: $e"),
-);
-_cloudEvalPull();
-}
-  void _cloudEvalPull()async{
-    await db.collection("Evaluations").get().then((querySnapshot) {
-    print("Evaluations completed");
-    for (var docSnapshot in querySnapshot.docs) {
-      print('${docSnapshot.id} => ${docSnapshot.data()}');
-    if (!evaluations.contains(goaltenders.firstWhere((goaltenders) => goaltenders.name == docSnapshot.data()["Name"]))){
-      evaluations.add(Evaluation(goaltender: goaltenders.firstWhere((goaltenders) => goaltenders.name == docSnapshot.data()["Name"]), evaluationDate: DateTime.now(), evaluationType: docSnapshot.data()["Evaluation Type"]));
-      }
-      }
-  },
-  onError: (e) => print("Error completing: $e"),
-);
-print(evaluations.length.toString() + " evals");
-print(goaltenders.length.toString() + " Goalies");
+    _cloudEvalPull();
+  }
+
+  //TODO: the way the data is stored in firebase is based on the evaluation having a name, instead of it having a goaltender
+
+  void _cloudEvalPull() async {
+    await db.collection("Evaluations").get().then(
+      (querySnapshot) {
+        print("Evaluations completed");
+        for (var docSnapshot in querySnapshot.docs) {
+          print('${docSnapshot.id} => ${docSnapshot.data()}');
+          // if (!evaluations.contains(docSnapshot.data()["Name"])) {
+          //   evaluations.add(Evaluation(
+          //       goaltender: goaltenders.firstWhere((goaltenders) =>
+          //           goaltenders.name == docSnapshot.data()["Name"]),
+          //       evaluationDate: DateTime.now(),
+          //       evaluationType: docSnapshot.data()["Evaluation Type"]));
+          // }
+          String name = docSnapshot.data()["Name"];
+
+          //this is a temporary solution that just creates a new goaltender with the appropriate name.
+          evaluations.add(Evaluation(
+              goaltender: Goaltender(
+                  name: name,
+                  levelAge: "levelAge",
+                  organization: "organization"),
+              evaluationDate: DateTime.now(),
+              evaluationType: docSnapshot.data()["Evaluation Type"]));
+        }
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
+    print(evaluations.length.toString() + " evals");
+    print(goaltenders.length.toString() + " Goalies");
+
+    for (Evaluation evaluation in evaluations) {
+      print("Goaltender: ${evaluation.goaltender.name}");
+    }
   }
 
   void _handleNewGoaltender(Goaltender goaltender) {
@@ -338,6 +366,8 @@ print(goaltenders.length.toString() + " Goalies");
               onTap: () {
                 _cloudEvalPull();
                 context.go('/evaluations');
+                print("Evaluations: $evaluations");
+
                 setState(() {
                   current_screen_index = 0;
                 });
