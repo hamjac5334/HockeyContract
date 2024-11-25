@@ -32,7 +32,6 @@ class EvaluationItem extends StatelessWidget {
       child: Card(
         elevation: 0,
         child: ListTile(
-
           leading: ConstrainedBox(
             constraints: BoxConstraints(
               minWidth: 100, // Adjust width as needed
@@ -62,12 +61,10 @@ class EvaluationItem extends StatelessWidget {
             onPressed: () {
               onEvaluationHighlighted(evaluation);
             },
-            icon: Icon(
-              Icons.star,
-              color: evaluation.highlighted
-                  ? const Color.fromARGB(255, 141, 40, 33)
-                  : Colors.black,
-            ),
+            icon: evaluation.highlighted
+                ? Icon(Icons.star)
+                : Icon(Icons.star_border),
+            color: const Color.fromARGB(255, 141, 40, 33),
           ),
         ),
       ),

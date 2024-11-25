@@ -8,12 +8,12 @@ typedef GoaltenderListChangedCallback = Function(Goaltender goaltender);
 
 class GoaltenderListView extends StatefulWidget {
   final List items;
-  List displayitems= [];
+  List displayitems = [];
   final GoaltenderListChangedCallback onGoaltenderListChanged;
   GoaltenderListView(
-      {super.key, required this.items, required this.onGoaltenderListChanged}){
-        displayitems = items;
-      }
+      {super.key, required this.items, required this.onGoaltenderListChanged}) {
+    displayitems = items;
+  }
 
   @override
   State<StatefulWidget> createState() {
@@ -24,7 +24,7 @@ class GoaltenderListView extends StatefulWidget {
 class GoaltenderListViewState extends State<GoaltenderListView>
     with TickerProviderStateMixin {
   late final TabController _tabController;
-   final TextEditingController _filterController = TextEditingController();
+  final TextEditingController _filterController = TextEditingController();
 
   @override
   void initState() {
@@ -37,16 +37,16 @@ class GoaltenderListViewState extends State<GoaltenderListView>
     _tabController.dispose();
     super.dispose();
   }
-   List<Goaltender> _searchEvals(String search){
+
+  List<Goaltender> _searchEvals(String search) {
     List<Goaltender> searched_evals = [];
     for (Goaltender g in widget.items) {
-      if (g.name.toLowerCase().contains(search.toLowerCase())){
+      if (g.name.toLowerCase().contains(search.toLowerCase())) {
         searched_evals.add(g);
       }
     }
     return searched_evals;
   }
-
 
   void _handleGoaltenderWatchlistAdded(Goaltender goaltender) {
     setState(() {
@@ -63,61 +63,60 @@ class GoaltenderListViewState extends State<GoaltenderListView>
     }
     return watchlist_goaltenders;
   }
+
   void showSearchDialog(BuildContext context) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            alignment:  Alignment.topCenter,
-            title: Text('Filter'),
-            content: TextField(
-              controller: _filterController,
-              decoration: InputDecoration(
-                hintText: 'Enter Goaltender',
-              ),
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          alignment: Alignment.topCenter,
+          title: Text('Filter'),
+          content: TextField(
+            controller: _filterController,
+            decoration: InputDecoration(
+              hintText: 'Enter Goaltender',
             ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  setState(() {
-                     widget.displayitems = widget.items;
-                  });
-                  _filterController.clear();
-                },
-                child: Text('Clear'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  _filterController.clear();
-                },
-                child: Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  print(_filterController.text);
-                  setState(() {
-                     widget.displayitems =_searchEvals(_filterController.text);
-                  });
-                  print(_searchEvals(_filterController.text));
-                   
-                   
-                },
-                child: Text('Search'),
-              ),
-            ],
-          );
-        },
-      );
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {
+                  widget.displayitems = widget.items;
+                });
+                _filterController.clear();
+              },
+              child: Text('Clear'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _filterController.clear();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                print(_filterController.text);
+                setState(() {
+                  widget.displayitems = _searchEvals(_filterController.text);
+                });
+                print(_searchEvals(_filterController.text));
+              },
+              child: Text('Search'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("GoalTenders Page"),
+        title: const Text("Goaltenders Page"),
         titleTextStyle: TextStyle(
           fontSize: 22,
           color: Color.fromARGB(255, 80, 78, 78),

@@ -37,11 +37,12 @@ class EvaluationListViewState extends State<EvaluationListView>
   // the selected value
   String? _selectedFilter;
 
-
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    widget.displayitems = widget.items;
+    print("Display Items: ${widget.displayitems}");
   }
 
   @override
@@ -50,22 +51,19 @@ class EvaluationListViewState extends State<EvaluationListView>
     super.dispose();
   }
 
-  void _filterEvals(String filter){
-    if(filter == "A-Z"){
+  void _filterEvals(String filter) {
+    if (filter == "A-Z") {
       widget.displayitems.sort((a, b) => a.toString().compareTo(b.toString()));
-
-    }else if(filter == 'Z-A'){
+    } else if (filter == 'Z-A') {
       widget.displayitems.sort((b, a) => a.toString().compareTo(b.toString()));
-
-    }else if (filter == 'Age/Level'){
-      widget.goaltenders.sort((a, b) => a.levelAge.compareTo(b.levelAge),);
-
-    }else if (filter == 'Grade'){
+    } else if (filter == 'Age/Level') {
+      widget.goaltenders.sort(
+        (a, b) => a.levelAge.compareTo(b.levelAge),
+      );
+    } else if (filter == 'Grade') {
       //widget.goaltenders.sort((a, b) => a.,)
     }
-
   }
-
 
   List<Evaluation> _searchEvals(String search) {
     List<Evaluation> searched_evals = [];
@@ -76,7 +74,7 @@ class EvaluationListViewState extends State<EvaluationListView>
     }
     return searched_evals;
   }
-  
+
   void _handleEvaluationHighlighted(Evaluation evaluation) {
     setState(() {
       evaluation.set_highlighted();
@@ -151,6 +149,7 @@ class EvaluationListViewState extends State<EvaluationListView>
       },
     );
   }
+
   void showFilterDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -168,7 +167,6 @@ class EvaluationListViewState extends State<EvaluationListView>
             hint: const Center(
                 child: Text(
               'Select Filter',
-              
             )),
             // Hide the default underline
             underline: Container(),
@@ -191,7 +189,6 @@ class EvaluationListViewState extends State<EvaluationListView>
                       ),
                     ))
                 .toList(),
-            
           ),
           actions: [
             TextButton(
@@ -201,25 +198,22 @@ class EvaluationListViewState extends State<EvaluationListView>
                   widget.displayitems = widget.items;
                   _selectedFilter = null;
                 });
-                
               },
               child: Text('Clear'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                
               },
               child: Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-               
+
                 setState(() {
                   widget.displayitems = widget.items;
                 });
-               
               },
               child: Text('Filter'),
             ),
@@ -321,7 +315,7 @@ class EvaluationListViewState extends State<EvaluationListView>
               ),
             );
           },
-          child: const Text('Add Eval')
+          child: const Icon(Icons.add),
           //pull up the add new evaluation page.
           /*ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text("Pretend this goes to the create evaluation page")));*/

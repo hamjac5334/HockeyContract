@@ -15,25 +15,32 @@ class NewGoaltenderPage extends StatefulWidget {
   }
 }
 
-
-
 class NewGoaltenderPageState extends State<NewGoaltenderPage> {
   String goaltenderName = "";
   String levelAge = "";
   String organization = "";
 
-  void dataSave(){
-  var db = FirebaseFirestore.instance;
+  void dataSave() {
+    var db = FirebaseFirestore.instance;
 
-  //db.collection("Goaltenders").doc(goaltenderName).collection("Evaluations").doc("Evaluation").set({"Name": goaltenderName, "Level/Age": levelAge, "Organization" : organization});
-  db.collection("Goaltenders").doc(goaltenderName).set({"Name": goaltenderName, "Level/Age": levelAge, "Organization" : organization});
-}
+    //db.collection("Goaltenders").doc(goaltenderName).collection("Evaluations").doc("Evaluation").set({"Name": goaltenderName, "Level/Age": levelAge, "Organization" : organization});
+    db.collection("Goaltenders").doc(goaltenderName).set({
+      "Name": goaltenderName,
+      "Level/Age": levelAge,
+      "Organization": organization
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("New Goaltender"),
+        titleTextStyle: TextStyle(
+          fontSize: 22,
+          color: Color.fromARGB(255, 80, 78, 78),
+        ),
+        centerTitle: true,
       ),
       body: Center(
         child: SizedBox(
@@ -70,10 +77,10 @@ class NewGoaltenderPageState extends State<NewGoaltenderPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           dataSave();
-          /*widget.onGoaltenderListChanged(Goaltender(
+          widget.onGoaltenderListChanged(Goaltender(
               name: goaltenderName,
               levelAge: levelAge,
-              organization: organization));*/
+              organization: organization));
           Navigator.pop(context);
         },
         child: const Icon(Icons.add),
