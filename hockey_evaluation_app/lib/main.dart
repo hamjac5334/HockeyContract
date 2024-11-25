@@ -378,24 +378,21 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 leading: const Icon(Icons.settings),
               ),
-              onTap: () {
-                context.go('/settings');
-              },
-              leading: const Icon(Icons.settings),
-            ),
-            ListTile(
-              title: Text(
-                "Logout",
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-              onTap: () async {
-                await _auth.signOut();
-                print("This should log out");
-                Navigator.pop(context);
-              },
-              leading: const Icon(Icons.logout),
-            )
-          ],
+
+              ListTile(
+                title: Text(
+                  "Logout",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () async {
+                  await _auth.signOut();
+                  print("This should log out");
+                  Navigator.pop(context);
+                },
+                leading: const Icon(Icons.logout),
+              )
+            ],
+          ),
         ),
         body:
             //consumer leads to authentication, cannot figure out how to route to app when logged in, can route to pages through go route
