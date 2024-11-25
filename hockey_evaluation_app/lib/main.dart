@@ -167,14 +167,14 @@ class _MyHomePageState extends State<MyHomePage> {
     await db.collection("Goaltenders").get().then(
       (querySnapshot) {
         print("Goaltenders completed");
+        goaltenders
+            .clear(); //TODO: Find a solution that does not resort to this!
         for (var docSnapshot in querySnapshot.docs) {
           print('${docSnapshot.id} => ${docSnapshot.data()}');
-          if (!goaltenders.contains(docSnapshot.data()["Name"])) {
-            goaltenders.add(Goaltender(
-                name: docSnapshot.data()['Name'],
-                levelAge: docSnapshot.data()['Level/Age'],
-                organization: docSnapshot.data()['Organization']));
-          }
+          goaltenders.add(Goaltender(
+              name: docSnapshot.data()['Name'],
+              levelAge: docSnapshot.data()['Level/Age'],
+              organization: docSnapshot.data()['Organization']));
         }
       },
       onError: (e) => print("Error completing: $e"),
@@ -191,6 +191,8 @@ class _MyHomePageState extends State<MyHomePage> {
     await db.collection("Evaluations").get().then(
       (querySnapshot) {
         print("Evaluations completed");
+        evaluations
+            .clear(); //TODO: Find a solution that doesn't resort to this!
         for (var docSnapshot in querySnapshot.docs) {
           print('${docSnapshot.id} => ${docSnapshot.data()}');
           // if (!evaluations.contains(docSnapshot.data()["Name"])) {
@@ -200,16 +202,16 @@ class _MyHomePageState extends State<MyHomePage> {
           //       evaluationDate: DateTime.now(),
           //       evaluationType: docSnapshot.data()["Evaluation Type"]));
           // }
-          String name = docSnapshot.data()["Name"];
 
+          String name = docSnapshot.data()["Name"];
+          Goaltender temp_goaltender = Goaltender(
+              name: name, levelAge: "21", organization: "Hendrix College");
+          Evaluation temp_evaluation = Evaluation(
+              goaltender: temp_goaltender,
+              evaluationDate: DateTime(2021),
+              evaluationType: docSnapshot.data()["Evaluation Type"]);
           //this is a temporary solution that just creates a new goaltender with the appropriate name.
-          evaluations.add(Evaluation(
-              goaltender: Goaltender(
-                  name: name,
-                  levelAge: "levelAge",
-                  organization: "organization"),
-              evaluationDate: DateTime.now(),
-              evaluationType: docSnapshot.data()["Evaluation Type"]));
+          evaluations.add(temp_evaluation);
         }
       },
       onError: (e) => print("Error completing: $e"),
