@@ -262,21 +262,18 @@ class _MyWidgetState extends State<NewEval> {
           FloatingActionButton(
             onPressed: () {
               dataSave();
-              // widget.onEvaluationListChanged(Evaluation(
-              //     goaltender: Goaltender(
-              //         name: "Temporary fix",
-              //         levelAge: "21",
-              //         organization: "HEndrix"),
-              //     evaluationDate: DateTime.now(),
-              //     evaluationType: evaltext));
+              widget.onEvaluationListChanged(Evaluation(
+                goaltender: Goaltender(
+                    name: goalieName, levelAge: "21", organization: "Hendrix"),
+                evaluationDate: DateTime.now(),
+                evaluationType: evaluationType,
+              ));
               //Hopefully this fixes the error
 
-              //change this to navigate to scoring page
-              //Navigator.pop(context);
               Navigator.pop(context);
             },
             //go to open eval and add to list with new info
-            child: Text("Open Evaluation"),
+            child: Icon(Icons.add),
           ),
         ]));
   }
