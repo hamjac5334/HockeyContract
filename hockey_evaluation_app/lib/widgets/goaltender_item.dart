@@ -47,10 +47,10 @@ class GoaltenderItem extends StatelessWidget {
             onPressed: () {
               onGoaltenderWatchlist(goaltender);
             },
-            icon: Icon(
-              Icons.star,
-              color: goaltender.watchlist ? Colors.red : Colors.black,
-            ),
+            icon: goaltender.watchlist
+                ? Icon(Icons.star)
+                : Icon(Icons.star_border),
+            color: const Color.fromARGB(255, 141, 40, 33),
           ),
         ),
       ),
