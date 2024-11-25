@@ -13,8 +13,12 @@ typedef EvaluationListChangedCallback = Function(Evaluation evaluation);
 
 class NewEval extends StatefulWidget {
   EvaluationHighlightedCallback onEvaluationListChanged;
+  final List<Goaltender> goaltenders;
 
-  NewEval({super.key, required this.onEvaluationListChanged});
+  NewEval(
+      {super.key,
+      required this.goaltenders,
+      required this.onEvaluationListChanged});
 
   @override
   State<NewEval> createState() => _MyWidgetState();
@@ -44,6 +48,7 @@ class _MyWidgetState extends State<NewEval> {
   String evaluatorName = "";
   String evaluationType = "Game";
   String notes = "";
+  late Goaltender? selectedGoaltender;
 
   void dataSave() {
     var db = FirebaseFirestore.instance;
@@ -92,58 +97,78 @@ class _MyWidgetState extends State<NewEval> {
           children: [
             const Paragraph("Select a goaltender"),
             const SizedBox(height: 5),
-            Container(
-              margin: EdgeInsets.all(1),
-              height: 40.0,
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  // text color
-                  padding: EdgeInsets.all(5),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(0.0),
-                  ),
-                ),
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (ctx) => AlertDialog(
-                              title: const Text('Add Goaltender'),
-                              content: Column(
-                                children: [
-                                  TextField(
-                                    onChanged: (value) {
-                                      goalieName = value;
-                                      setState(() {
-                                        valuetext = value;
-                                      });
-                                    },
-                                    controller: _goalController,
-                                    decoration:
-                                        const InputDecoration(hintText: "Name"),
-                                  ),
-                                ],
-                              ),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(ctx).pop();
-                                  },
-                                  child: Container(
-                                    color: Colors.red,
-                                    padding: const EdgeInsets.all(14),
-                                    child: const Text("OK",
-                                        style: TextStyle(color: Colors.white)),
-                                  ),
-                                )
-                              ]));
+
+            //This is the old way of picking a goaltender, it did not use a drop down list but it looked nice so i just commented it out
+
+            // Container(
+            //   margin: EdgeInsets.all(1),
+            //   height: 40.0,
+            //   width: double.infinity,
+            //   child: ElevatedButton(
+            //     style: ElevatedButton.styleFrom(
+            //       // text color
+            //       padding: EdgeInsets.all(5),
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(0.0),
+            //       ),
+            //     ),
+            //     onPressed: () {
+            //       showDialog(
+            //           context: context,
+            //           builder: (ctx) => AlertDialog(
+            //                   title: const Text('Add Goaltender'),
+            //                   content: Column(
+            //                     children: [
+            //                       TextField(
+            //                         onChanged: (value) {
+            //                           goalieName = value;
+            //                           setState(() {
+            //                             valuetext = value;
+            //                           });
+            //                         },
+            //                         controller: _goalController,
+            //                         decoration:
+            //                             const InputDecoration(hintText: "Name"),
+            //                       ),
+            //                     ],
+            //                   ),
+            //                   actions: <Widget>[
+            //                     TextButton(
+            //                       onPressed: () {
+            //                         Navigator.of(ctx).pop();
+            //                       },
+            //                       child: Container(
+            //                         color: Colors.red,
+            //                         padding: const EdgeInsets.all(14),
+            //                         child: const Text("OK",
+            //                             style: TextStyle(color: Colors.white)),
+            //                       ),
+            //                     )
+            //                   ]));
+            //     },
+            //     child: Text(
+            //       valuetext,
+            //       style: TextStyle(fontSize: 15),
+            //     ),
+            //   ),
+            // ),
+
+            DropdownMenu<Goaltender>(
+                width:
+                    500, // TODO: Make this the screen size-ish. idk how to do that
+                enableSearch: true,
+                enableFilter: false,
+                requestFocusOnTap: true,
+                onSelected: (Goaltender? goaltender) {
+                  setState(() {
+                    selectedGoaltender = goaltender;
+                  });
                 },
-                child: Text(
-                  valuetext,
-                  style: TextStyle(fontSize: 15),
-                ),
-              ),
-            ),
+                dropdownMenuEntries:
+                    widget.goaltenders.map((Goaltender goaltender) {
+                  return DropdownMenuEntry(
+                      value: goaltender, label: goaltender.name);
+                }).toList()),
             const SizedBox(height: 10),
             const Paragraph("Select an Evaluator"),
             const SizedBox(height: 5),
@@ -261,6 +286,8 @@ class _MyWidgetState extends State<NewEval> {
             Row(mainAxisAlignment: MainAxisAlignment.end, children: [
           FloatingActionButton(
             onPressed: () {
+              goalieName = selectedGoaltender!.name;
+
               dataSave();
               widget.onEvaluationListChanged(Evaluation(
                 goaltender: Goaltender(

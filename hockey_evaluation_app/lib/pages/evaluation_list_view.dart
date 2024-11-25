@@ -306,20 +306,21 @@ class EvaluationListViewState extends State<EvaluationListView>
             })
       ]),
       floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => NewEval(
-                  onEvaluationListChanged: widget.onEvaluationListChanged,
-                ),
+        onPressed: () async {
+          await Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => NewEval(
+                goaltenders: widget.goaltenders,
+                onEvaluationListChanged: widget.onEvaluationListChanged,
               ),
-            );
-          },
-          child: const Icon(Icons.add),
-          //pull up the add new evaluation page.
-          /*ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            ),
+          );
+        },
+        child: const Icon(Icons.add),
+        //pull up the add new evaluation page.
+        /*ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text("Pretend this goes to the create evaluation page")));*/
-          ),
+      ),
     );
   }
 }
