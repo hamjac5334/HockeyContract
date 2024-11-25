@@ -153,14 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   var db = FirebaseFirestore.instance;
 
-  List<Goaltender> goaltenders = [
-    Goaltender(
-        name: "Colten Berry", levelAge: "21", organization: "Hendrix College"),
-    Goaltender(name: "Jack", levelAge: "21", organization: "Hendrix College"),
-    Goaltender(name: "Sarah", levelAge: "21", organization: "Hendrix College"),
-    Goaltender(
-        name: "Nate Hirsh", levelAge: "20", organization: "Hendrix College"),
-  ];
+  List<Goaltender> goaltenders = [];
   List<Evaluation> evaluations = [];
 
   void _cloudGoaltenderPull() async {
@@ -239,18 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    evaluations.add(Evaluation(
-        goaltender: goaltenders.first,
-        evaluationDate: DateTime.now(),
-        evaluationType: "Game"));
-    evaluations.add(Evaluation(
-        goaltender: goaltenders[1],
-        evaluationDate: DateTime.now(),
-        evaluationType: "Game"));
-    evaluations.add(Evaluation(
-        goaltender: goaltenders.last,
-        evaluationDate: DateTime.now(),
-        evaluationType: "Practice"));
+    _cloudGoaltenderPull(); //this pulls both goaltender and eval
   }
 
   Widget returnScreen() {
