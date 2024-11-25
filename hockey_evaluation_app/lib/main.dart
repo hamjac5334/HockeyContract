@@ -119,25 +119,6 @@ final _router = GoRouter(
           ],
         ),
         GoRoute(
-          path: '/evaluations',
-          builder: (context, state) {
-            return EvaluationListView(
-                goaltenders: _MyHomePageState().goaltenders,
-                items: _MyHomePageState().evaluations,
-                onEvaluationListChanged:
-                    _MyHomePageState()._handleNewEvaluation);
-          },
-        ),
-        GoRoute(
-          path: '/goalies',
-          builder: (context, state) {
-            return GoaltenderListView(
-                items: _MyHomePageState().goaltenders,
-                onGoaltenderListChanged:
-                    _MyHomePageState()._handleNewGoaltender);
-          },
-        ),
-        GoRoute(
           path: '/settings',
           builder: (context, state) {
             return const TheseSettings();
@@ -273,23 +254,32 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget returnScreen() {
     if (current_screen_index == 0) {
       //return the page.
-      return EvaluationListView(
-        goaltenders: goaltenders,
-        items: evaluations,
-        onEvaluationListChanged: _handleNewEvaluation,
+      return Consumer<ApplicationState>(
+        builder: (context, appState, _) {
+          return AuthFunc(
+              loggedIn: appState.loggedIn,
+              signOut: () {
+                FirebaseAuth.instance.signOut();
+              });
+        },
       );
     } else if (current_screen_index == 1) {
       return GoaltenderListView(
         items: goaltenders,
         onGoaltenderListChanged: _handleNewGoaltender,
       );
-    } else {
-      print("Something is wrong. Main Line 126");
+    } else if (current_screen_index == 2) {
       return EvaluationListView(
         goaltenders: goaltenders,
         items: evaluations,
         onEvaluationListChanged: _handleNewEvaluation,
       );
+    } else {
+      print("Something is wrong");
+      return EvaluationListView(
+          items: evaluations,
+          onEvaluationListChanged: _handleNewEvaluation,
+          goaltenders: goaltenders);
     }
   }
 
@@ -302,150 +292,141 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Row(
-          children: [
-            // Add spacing between image and title
-            Flexible(
-              // This prevents the overflow
-              child: Text(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Row(
+            children: [
+              // Add spacing between image and title
+              Flexible(
+                // This prevents the overflow
+                child: Text(
+                  widget.title,
+                  style: Theme.of(context).textTheme.labelLarge,
+                  //overflow: TextOverflow
+                  //   .ellipsis, // Adds ellipsis if text is too long
+                ),
+              ),
+              SizedBox(width: 14),
+              Image.asset(
+                'lib/image/logo.png', // Path to image file
+                height: 40, // Adjust height as needed
+              ),
+              SizedBox(width: 1), // Spacing between image and title
+              Text(
                 widget.title,
-                style: Theme.of(context).textTheme.labelLarge,
-                //overflow: TextOverflow
-                //   .ellipsis, // Adds ellipsis if text is too long
+                style: Theme.of(context).textTheme.displayLarge,
               ),
-            ),
-            SizedBox(width: 14),
-            Image.asset(
-              'lib/image/logo.png', // Path to image file
-              height: 40, // Adjust height as needed
-            ),
-            SizedBox(width: 1), // Spacing between image and title
-            Text(
-              widget.title,
-              style: Theme.of(context).textTheme.displayLarge,
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          // padding: EdgeInsets.zero,
-          children: [
-            ListTile(
-              title: Text(
-                "Home",
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-              onTap: () {
-                print("tapped");
-                current_screen_index = 0;
-              },
-              leading: Icon(Icons.home),
-            ),
-            ListTile(
-              title: Text(
-                "Goaltenders",
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-              onTap: () {
-                context.go('/goalies');
-                _cloudGoaltenderPull();
-                setState(() {
-                  current_screen_index = 1;
-                });
-              },
-              leading: const Icon(Icons.people),
-            ),
-            ListTile(
-              title: Text(
-                "Evaluations",
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-              onTap: () {
-                _cloudEvalPull();
-                context.go('/evaluations');
-                print("Evaluations: $evaluations");
-
-                setState(() {
+        drawer: Drawer(
+          child: ListView(
+            // padding: EdgeInsets.zero,
+            children: [
+              ListTile(
+                title: Text(
+                  "Home",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () {
+                  print("tapped");
                   current_screen_index = 0;
-                });
-                //context.go('/evaluations');
-              },
-              leading: const Icon(Icons.note),
-            ),
-            ListTile(
-              title: Text(
-                "Notifications",
-                style: Theme.of(context).textTheme.bodySmall,
+                },
+                leading: Icon(Icons.home),
               ),
-              onTap: () {
-                print("Pretend this opened a notifications page");
-              },
-              leading: const Icon(Icons.notifications),
-            ),
-            ListTile(
-              title: Text(
-                "Organization",
-                style: Theme.of(context).textTheme.bodySmall,
+              ListTile(
+                title: Text(
+                  "Goaltenders",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () {
+                  _cloudGoaltenderPull();
+                  setState(() {
+                    current_screen_index = 1;
+                  });
+                },
+                leading: const Icon(Icons.people),
               ),
-              onTap: () {
-                print("Pretend this opened an organization page");
-              },
-              leading: const Icon(Icons.roofing),
-            ),
-            //make sure to include account information Settings
-            ListTile(
-              title: Text(
-                "Settings",
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-              onTap: () {
-                context.go('/settings');
-              },
-              leading: const Icon(Icons.settings),
-            ),
-            ListTile(
-              title: Text(
-                "Logout",
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-              onTap: () async {
-                await _auth.signOut();
-                print("This should log out");
-              },
-              leading: const Icon(Icons.logout),
-            )
-          ],
-        ),
-      ),
-      body:
-          //consumer leads to authentication, cannot figure out how to route to app when logged in, can route to pages through go route
-          Consumer<ApplicationState>(
-        builder: (context, appState, _) => AuthFunc(
-            loggedIn: appState.loggedIn,
-            signOut: () {
-              FirebaseAuth.instance.signOut();
-            }),
-      ),
-      //returnScreen()
+              ListTile(
+                title: Text(
+                  "Evaluations",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () {
+                  _cloudEvalPull();
+                  print("Evaluations: $evaluations");
 
-      // Center is a layout widget. It takes a single child and positions it
-      // in the middle of the parent.
-      // Column is also a layout widget. It takes a list of children and
-      // arranges them vertically. By default, it sizes itself to fit its
-      // children horizontally, and tries to be as tall as its parent.
-      //
-      // Column has various properties to control how it sizes itself and
-      // how it positions its children. Here we use mainAxisAlignment to
-      // center the children vertically; the main axis here is the vertical
-      // axis because Columns are vertical (the cross axis would be
-      // horizontal).
-      //
-      // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-      // action in the IDE, or press "p" in the console), to see the
-      // wireframe for each widget.
-    );
+                  setState(() {
+                    current_screen_index = 2;
+                  });
+                  //context.go('/evaluations');
+                },
+                leading: const Icon(Icons.note),
+              ),
+              ListTile(
+                title: Text(
+                  "Notifications",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () {
+                  print("Pretend this opened a notifications page");
+                },
+                leading: const Icon(Icons.notifications),
+              ),
+              ListTile(
+                title: Text(
+                  "Organization",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () {
+                  print("Pretend this opened an organization page");
+                },
+                leading: const Icon(Icons.roofing),
+              ),
+              //make sure to include account information Settings
+              ListTile(
+                title: Text(
+                  "Settings",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () {
+                  context.go('/settings');
+                },
+                leading: const Icon(Icons.settings),
+              ),
+              ListTile(
+                title: Text(
+                  "Logout",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                onTap: () async {
+                  await _auth.signOut();
+                  print("This should log out");
+                },
+                leading: const Icon(Icons.logout),
+              )
+            ],
+          ),
+        ),
+        body:
+            //consumer leads to authentication, cannot figure out how to route to app when logged in, can route to pages through go route
+            returnScreen()
+
+        // Center is a layout widget. It takes a single child and positions it
+        // in the middle of the parent.
+        // Column is also a layout widget. It takes a list of children and
+        // arranges them vertically. By default, it sizes itself to fit its
+        // children horizontally, and tries to be as tall as its parent.
+        //
+        // Column has various properties to control how it sizes itself and
+        // how it positions its children. Here we use mainAxisAlignment to
+        // center the children vertically; the main axis here is the vertical
+        // axis because Columns are vertical (the cross axis would be
+        // horizontal).
+        //
+        // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
+        // action in the IDE, or press "p" in the console), to see the
+        // wireframe for each widget.
+        );
   }
 }

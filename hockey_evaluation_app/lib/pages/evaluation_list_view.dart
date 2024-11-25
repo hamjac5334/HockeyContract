@@ -41,6 +41,7 @@ class EvaluationListViewState extends State<EvaluationListView>
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    widget.displayitems = widget.items;
     print("Display Items: ${widget.displayitems}");
   }
 
