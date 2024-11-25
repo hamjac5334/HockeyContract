@@ -315,7 +315,7 @@ class EvaluationListViewState extends State<EvaluationListView>
               ),
             );
           },
-          child: const Text('Add Eval')
+          child: const Icon(Icons.add),
           //pull up the add new evaluation page.
           /*ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text("Pretend this goes to the create evaluation page")));*/
