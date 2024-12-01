@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
@@ -36,6 +37,7 @@ class EvaluationListViewState extends State<EvaluationListView>
 
   // the selected value
   String? _selectedFilter;
+   var db = FirebaseFirestore.instance;
 
   @override
   void initState() {
