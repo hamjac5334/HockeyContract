@@ -1,3 +1,4 @@
+import 'package:hockey_evaluation_app/objects/full_score.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
 
 class Evaluation {
@@ -8,6 +9,7 @@ class Evaluation {
   bool highlighted = false;
   String comments = "";
   String evaluator = "";
+  FullScore fullScore = FullScore();
 
   Evaluation({
     required this.goaltender,

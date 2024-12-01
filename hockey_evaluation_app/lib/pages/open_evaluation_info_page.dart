@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
+import 'package:hockey_evaluation_app/objects/full_score.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/pages/scoring_page.dart';
 import 'package:hockey_evaluation_app/widgets/goaltender_item.dart';
@@ -10,7 +11,6 @@ class OpenEvaluationInfoPage extends StatelessWidget {
   final List<Goaltender> goaltenders;
   OpenEvaluationInfoPage(
       {super.key, required this.evaluation, required this.goaltenders});
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -31,7 +31,9 @@ class OpenEvaluationInfoPage extends StatelessWidget {
             goaltenders: goaltenders,
           ),
           //change this to be a actual widget
-          EvaluationUI(),
+          EvaluationUI(
+            fullScore: evaluation.fullScore,
+          ),
           OpenEvaluationCommentsPage(evaluation: evaluation),
           OpenEvaluationSubmitPage(evaluation: evaluation)
         ]),
