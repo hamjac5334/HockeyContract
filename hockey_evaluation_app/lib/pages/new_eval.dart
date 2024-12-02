@@ -178,7 +178,7 @@ class _MyWidgetState extends State<NewEval> {
                  await Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => NewGoaltenderPage(
-                  onGoaltenderListChanged: onGoaltenderListChanged
+                  onGoaltenderListChanged: onGoaltenderListChanged //right now onGoaltenderList changed is null, need implememtation for it
               ),
             ),
           );
