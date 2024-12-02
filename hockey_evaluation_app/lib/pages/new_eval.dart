@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
+import 'package:hockey_evaluation_app/objects/full_score.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/widgets/evaluation_item.dart';
 import 'package:hockey_evaluation_app/widgets/widgets.dart';
@@ -290,11 +291,13 @@ class _MyWidgetState extends State<NewEval> {
 
               dataSave();
               widget.onEvaluationListChanged(Evaluation(
-                goaltender: Goaltender(
-                    name: goalieName, levelAge: "21", organization: "Hendrix"),
-                evaluationDate: DateTime.now(),
-                evaluationType: evaluationType,
-              ));
+                  goaltender: Goaltender(
+                      name: goalieName,
+                      levelAge: "21",
+                      organization: "Hendrix"),
+                  evaluationDate: DateTime.now(),
+                  evaluationType: evaluationType,
+                  fullScore: FullScore()));
               //Hopefully this fixes the error
 
               Navigator.pop(context);
