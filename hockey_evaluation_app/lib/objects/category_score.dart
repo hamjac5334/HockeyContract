@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/item_score.dart';
+import 'package:hockey_evaluation_app/widgets/styledButton.dart';
 
 //TODO: I can just combine this and evaluation category on scoring_page.
 
@@ -42,7 +43,7 @@ class CategoryScoreState extends State<CategoryScore> {
     return Column(
       children: [
         ListTile(
-          title: Text(widget.name),
+          title: Header(widget.name),
           trailing: Icon(
             isExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
           ),
@@ -63,7 +64,7 @@ class CategoryScoreState extends State<CategoryScore> {
                   children: [
                     Row(
                       children: [
-                        Text(subItem.name),
+                        Paragraph(subItem.name),
                         SizedBox(width: 8),
                         Text(
                           '${subItem.count}',

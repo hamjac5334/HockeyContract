@@ -5,6 +5,7 @@ import 'package:hockey_evaluation_app/objects/item_score.dart';
 import 'package:hockey_evaluation_app/objects/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hockey_evaluation_app/main.dart';
+import 'package:hockey_evaluation_app/widgets/styledButton.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
