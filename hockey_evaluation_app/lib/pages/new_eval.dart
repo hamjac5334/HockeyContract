@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
 import 'package:hockey_evaluation_app/objects/full_score.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
+import 'package:hockey_evaluation_app/pages/new_goaltender_page.dart';
 import 'package:hockey_evaluation_app/widgets/evaluation_item.dart';
 import 'package:hockey_evaluation_app/widgets/widgets.dart';
 import 'package:hockey_evaluation_app/pages/scoring_page.dart';
@@ -80,6 +81,8 @@ class _MyWidgetState extends State<NewEval> {
   }
 
   String selectedvalue = "Game";
+  
+  get onGoaltenderListChanged => null;
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +157,7 @@ class _MyWidgetState extends State<NewEval> {
             //   ),
             // ),
 
-            DropdownMenu<Goaltender>(
+            Row(children: [DropdownMenu<Goaltender>(
                 width:
                     500, // TODO: Make this the screen size-ish. idk how to do that
                 enableSearch: true,
@@ -170,6 +173,18 @@ class _MyWidgetState extends State<NewEval> {
                   return DropdownMenuEntry(
                       value: goaltender, label: goaltender.name);
                 }).toList()),
+                FloatingActionButton(
+                  onPressed: () async {
+                 await Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => NewGoaltenderPage(
+                  onGoaltenderListChanged: onGoaltenderListChanged
+              ),
+            ),
+          );
+          
+        },)
+                ],),
             const SizedBox(height: 10),
             const Paragraph("Select an Evaluator"),
             const SizedBox(height: 5),
