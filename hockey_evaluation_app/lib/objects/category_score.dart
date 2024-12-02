@@ -13,6 +13,16 @@ class CategoryScore extends StatefulWidget {
   State<StatefulWidget> createState() {
     return CategoryScoreState();
   }
+
+  double getAverage() {
+    int denominator = 0;
+    int numerator = 0;
+    for (ItemScore itemScore in itemScores) {
+      numerator += itemScore.count;
+      denominator += 2;
+    }
+    return numerator / denominator;
+  }
 }
 
 class CategoryScoreState extends State<CategoryScore> {

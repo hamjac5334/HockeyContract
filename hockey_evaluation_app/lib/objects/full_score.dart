@@ -46,4 +46,14 @@ class FullScore {
       ItemScore(name: "Practice Habits"),
     ]),
   ];
+  CategoryScore getCategoryScore(String desiredName) {
+    for (CategoryScore categoryScore in categoryScoreList) {
+      if (categoryScore.name == desiredName) {
+        return categoryScore;
+      }
+    }
+    print("ERROR: Category not found");
+    return CategoryScore(
+        name: "Error Category", itemScores: [ItemScore(name: "Error Item")]);
+  }
 }

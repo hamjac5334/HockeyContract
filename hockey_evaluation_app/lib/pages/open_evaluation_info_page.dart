@@ -238,40 +238,64 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
             border: TableBorder(verticalInside: BorderSide(width: 1)),
             columns: const [
               DataColumn(label: Text("Skill")),
-              DataColumn(label: Text("Average")),
+              DataColumn(label: Text("Value")),
             ],
-            rows: const [
+            rows: [
               DataRow(cells: [
                 DataCell(Text("See")),
-                DataCell(Text("Value")),
+                DataCell(Text(widget.evaluation.fullScore
+                    .getCategoryScore("See")
+                    .getAverage()
+                    .toString())),
               ]),
               DataRow(cells: [
                 DataCell(Text("Understand")),
-                DataCell(Text("Value")),
+                DataCell(Text(widget.evaluation.fullScore
+                    .getCategoryScore("Understand")
+                    .getAverage()
+                    .toString())),
               ]),
               DataRow(cells: [
                 DataCell(Text("Drive")),
-                DataCell(Text("Value")),
+                DataCell(Text(widget.evaluation.fullScore
+                    .getCategoryScore("Drive")
+                    .getAverage()
+                    .toString())),
               ]),
               DataRow(cells: [
                 DataCell(Text("Adapt")),
-                DataCell(Text("Value")),
+                DataCell(Text(widget.evaluation.fullScore
+                    .getCategoryScore("Adapt")
+                    .getAverage()
+                    .toString())),
               ]),
               DataRow(cells: [
                 DataCell(Text("Move")),
-                DataCell(Text("Value")),
+                DataCell(Text(widget.evaluation.fullScore
+                    .getCategoryScore("Move")
+                    .getAverage()
+                    .toString())),
               ]),
               DataRow(cells: [
                 DataCell(Text("Save")),
-                DataCell(Text("Value")),
+                DataCell(Text(widget.evaluation.fullScore
+                    .getCategoryScore("Save")
+                    .getAverage()
+                    .toString())),
               ]),
               DataRow(cells: [
                 DataCell(Text("Learn")),
-                DataCell(Text("Value")),
+                DataCell(Text(widget.evaluation.fullScore
+                    .getCategoryScore("Learn")
+                    .getAverage()
+                    .toString())),
               ]),
               DataRow(cells: [
                 DataCell(Text("Grow")),
-                DataCell(Text("Value")),
+                DataCell(Text(widget.evaluation.fullScore
+                    .getCategoryScore("Grow")
+                    .getAverage()
+                    .toString())),
               ]),
             ]),
         Text("Comments: "),
