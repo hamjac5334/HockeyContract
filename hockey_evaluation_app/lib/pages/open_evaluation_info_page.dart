@@ -298,6 +298,12 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
                     .toString())),
               ]),
             ]),
+        ElevatedButton(
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("This button will update firebase")));
+            },
+            child: Text("Submit")),
         Text("Comments: "),
         Paragraph(widget.evaluation.comments)
       ],
