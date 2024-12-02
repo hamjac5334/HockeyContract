@@ -162,7 +162,7 @@ class GoaltenderListViewState extends State<GoaltenderListView>
                 onGoaltenderWatchlist: _handleGoaltenderWatchlistAdded,
               );
             }),
-        const Text("I have no clue how to do this"),
+        const Text("Waiting for firebase data to be properly stored"),
         ListView.builder(
             itemCount: getGoaltenderWatchList().length,
             itemBuilder: (BuildContext context, int index) {

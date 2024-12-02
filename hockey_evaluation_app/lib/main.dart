@@ -328,6 +328,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   setState(() {
                     current_screen_index = 1;
                   });
+                  Navigator.pop(context);
                 },
                 leading: const Icon(Icons.people),
               ),
@@ -343,6 +344,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   setState(() {
                     current_screen_index = 2;
                   });
+                  Navigator.pop(context);
+
                   //context.go('/evaluations');
                 },
                 leading: const Icon(Icons.note),

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
+import 'package:hockey_evaluation_app/objects/full_score.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/pages/scoring_page.dart';
 import 'package:hockey_evaluation_app/widgets/goaltender_item.dart';
-import 'package:hockey_evaluation_app/widgets/widgets.dart';
+import 'package:hockey_evaluation_app/widgets/styledButton.dart';
+import 'package:intl/intl.dart';
 
 class OpenEvaluationInfoPage extends StatelessWidget {
   Evaluation evaluation;
   final List<Goaltender> goaltenders;
   OpenEvaluationInfoPage(
       {super.key, required this.evaluation, required this.goaltenders});
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -31,7 +32,9 @@ class OpenEvaluationInfoPage extends StatelessWidget {
             goaltenders: goaltenders,
           ),
           //change this to be a actual widget
-          EvaluationUI(),
+          EvaluationUI(
+            fullScore: evaluation.fullScore,
+          ),
           OpenEvaluationCommentsPage(evaluation: evaluation),
           OpenEvaluationSubmitPage(evaluation: evaluation)
         ]),
@@ -71,6 +74,7 @@ class OpenEvaluationEvaluationInfoPageState
 
   @override
   void initState() {
+    super.initState();
     selectedvalue = widget.evaluation.evaluationType;
     selectedDate = widget.evaluation.evaluationDate;
     selectedGoaltender = widget.evaluation.goaltender;
@@ -86,43 +90,35 @@ class OpenEvaluationEvaluationInfoPageState
         const SizedBox(
           height: 5,
         ),
-        DropdownMenu<Goaltender>(
-            width:
-                500, // TODO: Make this the screen size-ish. idk how to do that
-            enableSearch: true,
-            initialSelection: widget.evaluation.goaltender,
-            enableFilter: false,
-            requestFocusOnTap: true,
-            onSelected: (Goaltender? goaltender) {
-              setState(() {
-                selectedGoaltender = goaltender;
-              });
-            },
-            dropdownMenuEntries:
-                widget.goaltenders.map((Goaltender goaltender) {
-              return DropdownMenuEntry(
-                  value: goaltender, label: goaltender.name);
-            }).toList()),
-        // Container(
-        //   margin: EdgeInsets.all(1),
-        //   height: 40.0,
-        //   width: double.infinity,
-        //   child: ElevatedButton(
-        //       style: ElevatedButton.styleFrom(
-        //         // text color
-        //         padding: EdgeInsets.all(5),
-        //         shape: RoundedRectangleBorder(
-        //           borderRadius: BorderRadius.circular(0.0),
-        //         ),
-        //       ),
-        //       onPressed: () {
-        //         print("Pretend this did something");
-        //       },
-        //       child: Text(
-        //         widget.evaluation.name,
-        //         style: TextStyle(fontSize: 15),
-        //       )),
-        // ),
+        // DropdownMenu<Goaltender>(
+        //     width:
+        //         500, // TODO: Make this the screen size-ish. idk how to do that
+        //     enableSearch: true,
+        //     initialSelection: widget.evaluation.goaltender,
+        //     enableFilter: false,
+        //     requestFocusOnTap: true,
+        //     onSelected: (Goaltender? goaltender) {
+        //       setState(() {
+        //         selectedGoaltender = goaltender;
+        //       });
+        //     },
+        // dropdownMenuEntries:
+        //     widget.goaltenders.map((Goaltender goaltender) {
+        //   return DropdownMenuEntry(
+        //       value: goaltender, label: goaltender.name);
+        // }).toList()),
+        Container(
+          margin: EdgeInsets.all(1),
+          height: 40.0,
+          width: double.infinity,
+          padding: EdgeInsets.all(5),
+          alignment: Alignment.center,
+          child: Text(
+            widget.evaluation.goaltender.name,
+            //TODO: correct this color, idk how
+            style: TextStyle(fontSize: 15, color: Colors.red),
+          ),
+        ),
         Paragraph("Reassign evaluator"),
         const SizedBox(
           height: 5,
@@ -173,12 +169,12 @@ class OpenEvaluationEvaluationInfoPageState
               );
               if (date != null) {
                 setState(() {
-                  selectedDate =
-                      DateTime.parse('${date.month}/${date.day}/${date.year}');
+                  selectedDate = date;
+                  // DateTime.parse('${date.month}/${date.day}/${date.year}');
                 });
               }
             },
-            child: Text(selectedDate.toString()),
+            child: Text(DateFormat('MM-dd-yyy').format(selectedDate)),
           ),
         ),
         Paragraph("Additional Notes"),
@@ -229,52 +225,100 @@ class OpenEvaluationSubmitPage extends StatefulWidget {
 class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        DataTable(
-            border: TableBorder(verticalInside: BorderSide(width: 1)),
-            columns: const [
-              DataColumn(label: Text("Skill")),
-              DataColumn(label: Text("Average")),
-            ],
-            rows: const [
-              DataRow(cells: [
-                DataCell(Text("See")),
-                DataCell(Text("Value")),
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          DataTable(
+              border: TableBorder(
+                  verticalInside: BorderSide(width: 1),
+                  left: BorderSide(width: 1),
+                  bottom: BorderSide(width: 1),
+                  right: BorderSide(width: 1)),
+              columns: const [
+                DataColumn(label: Paragraph("Skill")),
+                DataColumn(label: Paragraph("Value")),
+              ],
+              rows: [
+                DataRow(cells: [
+                  DataCell(Paragraph("See")),
+                  DataCell(Paragraph(widget.evaluation.fullScore
+                      .getCategoryScore("See")
+                      .getAverage()
+                      .toString())),
+                ]),
+                DataRow(cells: [
+                  DataCell(Paragraph("Understand")),
+                  DataCell(Paragraph(widget.evaluation.fullScore
+                      .getCategoryScore("Understand")
+                      .getAverage()
+                      .toString())),
+                ]),
+                DataRow(cells: [
+                  DataCell(Paragraph("Drive")),
+                  DataCell(Paragraph(widget.evaluation.fullScore
+                      .getCategoryScore("Drive")
+                      .getAverage()
+                      .toString())),
+                ]),
+                DataRow(cells: [
+                  DataCell(Paragraph("Adapt")),
+                  DataCell(Paragraph(widget.evaluation.fullScore
+                      .getCategoryScore("Adapt")
+                      .getAverage()
+                      .toString())),
+                ]),
+                DataRow(cells: [
+                  DataCell(Paragraph("Move")),
+                  DataCell(Paragraph(widget.evaluation.fullScore
+                      .getCategoryScore("Move")
+                      .getAverage()
+                      .toString())),
+                ]),
+                DataRow(cells: [
+                  DataCell(Paragraph("Save")),
+                  DataCell(Paragraph(widget.evaluation.fullScore
+                      .getCategoryScore("Save")
+                      .getAverage()
+                      .toString())),
+                ]),
+                DataRow(cells: [
+                  DataCell(Paragraph("Learn")),
+                  DataCell(Paragraph(widget.evaluation.fullScore
+                      .getCategoryScore("Learn")
+                      .getAverage()
+                      .toString())),
+                ]),
+                DataRow(cells: [
+                  DataCell(Paragraph("Grow")),
+                  DataCell(Paragraph(widget.evaluation.fullScore
+                      .getCategoryScore("Grow")
+                      .getAverage()
+                      .toString())),
+                ]),
               ]),
-              DataRow(cells: [
-                DataCell(Text("Understand")),
-                DataCell(Text("Value")),
-              ]),
-              DataRow(cells: [
-                DataCell(Text("Drive")),
-                DataCell(Text("Value")),
-              ]),
-              DataRow(cells: [
-                DataCell(Text("Adapt")),
-                DataCell(Text("Value")),
-              ]),
-              DataRow(cells: [
-                DataCell(Text("Move")),
-                DataCell(Text("Value")),
-              ]),
-              DataRow(cells: [
-                DataCell(Text("Save")),
-                DataCell(Text("Value")),
-              ]),
-              DataRow(cells: [
-                DataCell(Text("Learn")),
-                DataCell(Text("Value")),
-              ]),
-              DataRow(cells: [
-                DataCell(Text("Grow")),
-                DataCell(Text("Value")),
-              ]),
-            ]),
-        Text("Comments: "),
-        Paragraph(widget.evaluation.comments)
-      ],
+          // ElevatedButton(
+          //     onPressed: () {
+          //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          //           content: Text("This button will update firebase")));
+          //     },
+          //     child: Text("Submit")),
+          Header("Comments: "),
+          Paragraph(widget.evaluation.comments)
+        ],
+      ),
+      floatingActionButton: Container(
+        height: 50,
+        width: 100,
+        child: FloatingActionButton(
+          onPressed: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("This button will update firebase")));
+          },
+          child: Text("Submit"),
+          shape: RoundedRectangleBorder(),
+        ),
+      ),
     );
   }
 }
