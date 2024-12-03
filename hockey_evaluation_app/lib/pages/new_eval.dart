@@ -10,6 +10,7 @@ import 'package:hockey_evaluation_app/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 
 typedef EvaluationListChangedCallback = Function(Evaluation evaluation);
 
@@ -60,7 +61,7 @@ class _MyWidgetState extends State<NewEval> {
         .collection("Goaltenders")
         .doc(goalieName)
         .collection("Evaluations")
-        .doc(DateTime.now().toString())
+        .doc(DateFormat('MM-dd-yyy').format(DateTime.now()))
         .set({
       "Name": goalieName,
       "Evaluator": evaluatorName,

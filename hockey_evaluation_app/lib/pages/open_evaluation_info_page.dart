@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
 import 'package:hockey_evaluation_app/objects/full_score.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
+import 'package:hockey_evaluation_app/pages/new_eval.dart';
 import 'package:hockey_evaluation_app/pages/scoring_page.dart';
 import 'package:hockey_evaluation_app/widgets/goaltender_item.dart';
 import 'package:hockey_evaluation_app/widgets/styledButton.dart';
@@ -66,6 +67,7 @@ class OpenEvaluationEvaluationInfoPageState
     ];
     return menuItems;
   }
+
 
   late Goaltender? selectedGoaltender;
   String selectedvalue = "";
@@ -205,6 +207,7 @@ class OpenEvaluationCommentsPage extends StatelessWidget {
             onPressed: () {
               evaluation.comments = _controller.text;
               print(evaluation.comments);
+
             },
             child: const Text("Save comment")),
       ],
@@ -314,6 +317,7 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
           onPressed: () {
             ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text("This button will update firebase")));
+                widget.evaluation.fullScore.dataSaveScoring(OpenEvaluationEvaluationInfoPageState().selectedGoaltender, DateFormat('MM-dd-yyy').format(OpenEvaluationEvaluationInfoPageState().selectedDate));
           },
           child: Text("Submit"),
           shape: RoundedRectangleBorder(),

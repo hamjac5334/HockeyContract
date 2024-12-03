@@ -19,7 +19,7 @@ class CategoryScore extends StatefulWidget {
     int denominator = 0;
     int numerator = 0;
     for (ItemScore itemScore in itemScores) {
-      numerator += itemScore.count;
+      numerator += itemScore.count * 2;
       denominator += 2;
     }
     return numerator / denominator;
