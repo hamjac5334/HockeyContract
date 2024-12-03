@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
+import 'package:hockey_evaluation_app/objects/full_score.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/pages/evaluation_list_view.dart';
 import 'package:hockey_evaluation_app/pages/goaltender_list_view.dart';
@@ -202,7 +203,9 @@ class _MyHomePageState extends State<MyHomePage> {
           Evaluation temp_evaluation = Evaluation(
               goaltender: temp_goaltender,
               evaluationDate: DateTime(2021),
-              evaluationType: docSnapshot.data()["Evaluation Type"]);
+              evaluationType: docSnapshot.data()["Evaluation Type"],
+              //TODO: Change this to be the scores stored on firebase
+              fullScore: FullScore());
           //this is a temporary solution that just creates a new goaltender with the appropriate name.
           evaluations.add(temp_evaluation);
         }

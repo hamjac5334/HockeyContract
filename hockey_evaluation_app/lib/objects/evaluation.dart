@@ -9,12 +9,13 @@ class Evaluation {
   bool highlighted = false;
   String comments = "";
   String evaluator = "";
-  FullScore fullScore = FullScore();
+  FullScore fullScore;
 
   Evaluation({
     required this.goaltender,
     required this.evaluationDate,
     required this.evaluationType,
+    required this.fullScore,
   });
 
   void set_completed() {
