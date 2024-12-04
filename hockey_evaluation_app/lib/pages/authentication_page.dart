@@ -7,7 +7,7 @@ class EvaluationListView extends StatefulWidget {
   final List items;
   final List<Goaltender> goaltenders;
   const EvaluationListView(
-      {super.key, required this.items, required this.goaltenders});
+      {super.key, required this.items, required this.goaltenders, required Null Function(dynamic _) onEvaluationListChanged});
 
   @override
   State<StatefulWidget> createState() {
