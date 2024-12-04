@@ -337,23 +337,30 @@ class _MyHomePageState extends State<MyHomePage> {
               // Add spacing between image and title
               Flexible(
                 // This prevents the overflow
-                child: Text(
+                child: Image.asset(
+                'lib/image/logo.png', // Path to image file
+                height: 40,
+                fit: BoxFit.cover, // Adjust height as needed
+              ),
+                
+                /*Text(
                   widget.title,
                   style: Theme.of(context).textTheme.labelLarge,
                   //overflow: TextOverflow
                   //   .ellipsis, // Adds ellipsis if text is too long
-                ),
+                ),*/
               ),
-              SizedBox(width: 14),
+              /*SizedBox(width: 14),
               Image.asset(
                 'lib/image/logo.png', // Path to image file
-                height: 40, // Adjust height as needed
+                height: 40,
+                fit: BoxFit.cover, // Adjust height as needed
               ),
               SizedBox(width: 1), // Spacing between image and title
               Text(
                 widget.title,
                 style: Theme.of(context).textTheme.displayLarge,
-              ),
+              ),*/
             ],
           ),
         ),
