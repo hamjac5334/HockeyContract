@@ -314,7 +314,12 @@ class _MyHomePageState extends State<MyHomePage> {
               loggedIn: appState.loggedIn,
               signOut: () {
                 FirebaseAuth.instance.signOut();
-              });
+              },
+              goaltenders: goaltenders,
+              evaluations: evaluations,
+              onGoaltenderListChanged: _handleNewGoaltender,
+              onEvaluationListChanged: _handleNewEvaluation,
+              );
         },
       );
     } else if (current_screen_index == 1) {

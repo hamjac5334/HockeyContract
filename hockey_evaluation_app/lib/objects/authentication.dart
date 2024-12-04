@@ -52,8 +52,8 @@ class _AuthFuncState extends State<AuthFunc> {
       //goaltenders: widget.goaltenders,
       //items: widget.evaluations,
       //onEvaluationListChanged: widget.onEvaluationListChanged,
-    //);
-    //return TheseSettings();
+      //);
+      return TheseSettings();
       case 3:
       //once we have organizations, put here
       return TheseSettings(); 
