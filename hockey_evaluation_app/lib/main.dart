@@ -145,6 +145,7 @@ class MyHomePage extends StatefulWidget {
   // always marked "final".
 
   final String title;
+  
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -222,36 +223,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //TODO: the way the data is stored in firebase is based on the evaluation having a name, instead of it having a goaltender
 
-  void _cloudEvalPull() async {
-    await db.collection("Evaluations").get().then(
-      (querySnapshot) {
-        print("Evaluations completed");
-        evaluations
-            .clear(); //TODO: Find a solution that doesn't resort to this!
-        for (var docSnapshot in querySnapshot.docs) {
-          print('${docSnapshot.id} => ${docSnapshot.data()}');
-          String name = docSnapshot.data()["Name"];
-          Goaltender temp_goaltender = Goaltender(
-              name: name, levelAge: "21", organization: "Hendrix College");
-          Evaluation temp_evaluation = Evaluation(
-              goaltender: temp_goaltender,
-              evaluationDate: DateTime(2021),
-              evaluationType: docSnapshot.data()["Evaluation Type"],
-              //TODO: Change this to be the scores stored on firebase
-              fullScore: FullScore());
-          //this is a temporary solution that just creates a new goaltender with the appropriate name.
-          evaluations.add(temp_evaluation);
-        }
-      },
-      onError: (e) => print("Error completing: $e"),
-    );
-    print(evaluations.length.toString() + " evals");
-    print(goaltenders.length.toString() + " Goalies");
-
-    for (Evaluation evaluation in evaluations) {
-      print("Goaltender: ${evaluation.goaltender.name}");
-    }
-  }
 
   void _cloudOrgPull() async{
     goaltenders.clear(); 
