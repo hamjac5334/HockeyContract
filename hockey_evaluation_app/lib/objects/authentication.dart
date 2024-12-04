@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
+import 'package:hockey_evaluation_app/objects/organizationCode.dart';
 import 'package:hockey_evaluation_app/pages/authentication_page.dart';
 import 'package:hockey_evaluation_app/pages/goaltender_list_view.dart';
 import 'package:hockey_evaluation_app/pages/evaluation_list_view.dart' as eval_list;
@@ -15,6 +16,7 @@ import 'package:provider/provider.dart';
 import 'package:hockey_evaluation_app/main.dart';
 import 'package:hockey_evaluation_app/pages/join_organization_page.dart';
 import 'package:hockey_evaluation_app/pages/organization_view.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthFunc extends StatefulWidget {
   const AuthFunc({
@@ -40,9 +42,44 @@ class AuthFunc extends StatefulWidget {
 
 class _AuthFuncState extends State<AuthFunc> {
   int current_screen_index = 0;
+  String organization = "No Organization";
+  String code = "No Code";
+
+
+    void _cloudOrgPull() async{
+      var db = FirebaseFirestore.instance;
+      final FirebaseAuth auth = FirebaseAuth.instance;
+      await db.collection("Users").get().then(
+        (querySnapshot) {
+          for (var docSnapshot in querySnapshot.docs) {
+            ('${docSnapshot.id} => ${docSnapshot.data()}');
+            if (auth.currentUser?.email == docSnapshot.id){
+              organization = docSnapshot.data()["Organization"];
+            }
+          
+        }
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
+    await db.collection("Organization").get().then(
+      (querySnapshot) {
+        for (var docSnapshot in querySnapshot.docs) {
+          ('${docSnapshot.id} => ${docSnapshot.data()}');
+          if (organization == docSnapshot.id){
+            code = docSnapshot.data()["Code"];
+          }
+          
+        }
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
+  }
+  
+
 
 //https://www.geeksforgeeks.org/switch-case-in-dart/
   Widget returnScreen() {
+    _cloudOrgPull();
     switch (current_screen_index) {
       case 0:
         return _buildAuthButtons();
@@ -63,7 +100,12 @@ class _AuthFuncState extends State<AuthFunc> {
       return TheseSettings(); 
       case 4:
       //once we have notifications, put here
+      if (organization == "No Organization"){
           return JoinOrganizationPage();
+      }
+      else{
+        return OrganizationPage(organization: organization, code: code);
+      }
       case 5:
         return TheseSettings();
       default:

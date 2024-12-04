@@ -19,6 +19,7 @@ import 'package:firebase_auth/firebase_auth.dart'
     hide EmailAuthProvider, PhoneAuthProvider;
 import 'package:hockey_evaluation_app/objects/authentication.dart';
 import 'package:hockey_evaluation_app/widgets/app_state.dart';
+import 'package:hockey_evaluation_app/objects/organizationCode.dart';
 
 Color redtheme = const Color.fromRGBO(254, 48, 60, 1);
 void main() async {
@@ -188,16 +189,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 }
               );
             } 
-          else{
-            if (docSnapshot.data()['Organization'] == organization){
+          else {
+            if (docSnapshot.data()['Organization'] == organization)  {
             goaltenders.add(Goaltender(
               name: docSnapshot.data()['Name'],
               levelAge: docSnapshot.data()['Level/Age'],
               organization: docSnapshot.data()['Organization']));
-              db.collection("Goaltenders").doc(docSnapshot.data()['Name']).collection("Evaluations").get().then(
+               db.collection("Goaltenders").doc(docSnapshot.data()['Name']).collection("Evaluations").get().then(
                 (querySnapshotEvals)  {
                     for (var eval in querySnapshotEvals.docs){
                       print("Adding Eval");
+                      print(eval.id);
+                      print(docSnapshot.data()['Name'] + ' ' + docSnapshot.data()['Level/Age']+ ' '  + docSnapshot.data()['Organization']+ ' '  + eval.data()['Evaluation Type']);
                       Evaluation temp_evaluation = Evaluation(
                         goaltender: Goaltender(name: docSnapshot.data()['Name'], levelAge: docSnapshot.data()['Level/Age'], organization: docSnapshot.data()['Organization']),
                         evaluationDate: DateTime.now(),
@@ -218,8 +221,8 @@ class _MyHomePageState extends State<MyHomePage> {
     for (Goaltender goaltender in goaltenders) {
       print("Goaltender: ${goaltender.name}");
     }
-    //_cloudEvalPull();
   }
+
 
   //TODO: the way the data is stored in firebase is based on the evaluation having a name, instead of it having a goaltender
 
