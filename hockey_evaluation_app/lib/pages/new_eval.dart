@@ -64,7 +64,7 @@ class _MyWidgetState extends State<NewEval> {
         .set({
       "Name": goalieName,
       "Evaluator": evaluatorName,
-      "Evaluation Typle": evaluationType,
+      "Evaluation Type": evaluationType,
       "Evaluation Date": DateTime.now(),
       "Additional Notes": notes
     });

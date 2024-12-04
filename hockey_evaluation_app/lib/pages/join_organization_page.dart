@@ -22,20 +22,22 @@ class JoinOrganizationPageState extends State<JoinOrganizationPage> {
   String organizationCode = "No code entered";
   String organization = "No Organization";
 
-  void organizationAccess(){
-    var db = FirebaseFirestore.instance;
-      db.collection("Codes").get().then(
+  void organizationAccess()async {
+     var db = FirebaseFirestore.instance;
+     await db.collection("Codes").get().then(
       (querySnapshot) {
         print("codes completed");
         for (var docSnapshot in querySnapshot.docs) {
-          if(docSnapshot == organizationCode){
-            organization = docSnapshot.data()["organization"];
+          print(docSnapshot.id);
+          if(docSnapshot.id == organizationCode){
+            print("Updating Org");
+            organization = docSnapshot.data()["Organization"];
           }
         }
       },
       onError: (e) => print("Error completing: $e"),
     );
-
+    dataSave();
   }
 
   
@@ -43,9 +45,7 @@ class JoinOrganizationPageState extends State<JoinOrganizationPage> {
   void dataSave() {
     var db = FirebaseFirestore.instance;
     final FirebaseAuth auth = FirebaseAuth.instance;
-
-    //db.collection("Goaltenders").doc(goaltenderName).collection("Evaluations").doc("Evaluation").set({"Name": goaltenderName, "Level/Age": levelAge, "Organization" : organization});
-    db.collection("Users").doc(auth.currentUser?.email).set({
+        db.collection("Users").doc(auth.currentUser?.email).set({
       "Organization": organization,
     });
   }
@@ -75,8 +75,12 @@ class JoinOrganizationPageState extends State<JoinOrganizationPage> {
                   });
                 },
                 textAlign: TextAlign.center,
-                decoration: const InputDecoration(labelText: "Organization Code"),
+                decoration: const InputDecoration(labelText: "Organization Code", floatingLabelAlignment: FloatingLabelAlignment.center, border: OutlineInputBorder()),
               ),
+              StyledButton(child: Text("Join"), 
+                onPressed: () {
+                  organizationAccess();
+                } ),
               StyledButton
               (onPressed: () async {
           await Navigator.of(context).push(MaterialPageRoute(
@@ -87,15 +91,6 @@ class JoinOrganizationPageState extends State<JoinOrganizationPage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            
-          });
-          dataSave();
-        },
-        child: const Icon(Icons.add),
-      ),
-    );
+      );
   }
 }

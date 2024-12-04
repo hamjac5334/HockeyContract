@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hockey_evaluation_app/pages/new_goaltender_page.dart';
 import 'package:hockey_evaluation_app/pages/new_organization.dart';
 import 'package:hockey_evaluation_app/pages/settings.dart';
+import 'package:hockey_evaluation_app/widgets/styledButton.dart';
 
 
 class OrganizationPage extends StatefulWidget {
@@ -19,6 +20,15 @@ class OrganizationPage extends StatefulWidget {
     return OrganizationPageState(organization: organization, code: code);
   }
 }
+
+void leave(){
+    var db = FirebaseFirestore.instance;
+    final FirebaseAuth auth = FirebaseAuth.instance;
+
+    db.collection("Users").doc(auth.currentUser?.email).set({
+      "Organization": "No Organization",
+    });
+  }
 
 class OrganizationPageState extends State<OrganizationPage> {
   final String organization;
@@ -43,22 +53,14 @@ class OrganizationPageState extends State<OrganizationPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children:[
               Text("Code: " + code),
-              IconButton
-              (onPressed: () async {
-          await Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => NewOrganizationPage()));
+              StyledButton
+              (onPressed: (){
+                leave();
               }, 
-              icon: Text("Register New Organization"))
+              child: Text("Leave Organization"))
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() { 
-          });
-        },
-        child: const Icon(Icons.add),
       ),
     );
   }
