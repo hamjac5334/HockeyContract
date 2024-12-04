@@ -72,7 +72,9 @@ class JoinOrganizationPageState extends State<JoinOrganizationPage> {
                     organizationCode = value;
                   });
                 },
-                decoration: const InputDecoration(labelText: "Organization Code"),
+                textAlign: TextAlign.center,
+                decoration: const InputDecoration(labelText: "Organization Code", floatingLabelAlignment: FloatingLabelAlignment.center, border: OutlineInputBorder()),
+                
               ),
               IconButton
               (onPressed: () async {
