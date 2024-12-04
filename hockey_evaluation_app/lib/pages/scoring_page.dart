@@ -134,8 +134,6 @@ class _EvaluationCategoryState extends State<EvaluationCategory> {
                         IconButton(
                           color: Colors.black,
                           icon: Icon(Icons.remove),
-                          style: IconButton.styleFrom(
-                              backgroundColor: Colors.redAccent),
                           onPressed: () {
                             setState(() {
                               subItemCounters[subItem]?.decrease();

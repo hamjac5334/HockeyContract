@@ -19,14 +19,15 @@ class AuthFunc extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Flexible(
-                // This prevents the overflow
-                child: Image.asset(
-                'lib/image/logo.png', // Path to image file
-                height: 40,
-                width: double.infinity,
-                fit: BoxFit.cover, // Adjust height as needed
-              ),),
-              SizedBox(height: 20),
+            // This prevents the overflow
+            child: Image.asset(
+              'lib/image/logo.png', // Path to image file
+              height: 157,
+              width: double.infinity,
+              fit: BoxFit.cover, // Adjust height as needed
+            ),
+          ),
+          SizedBox(height: 20),
           if (loggedIn) ...[
             StyledButton(
               onPressed: () {
