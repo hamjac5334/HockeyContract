@@ -17,7 +17,7 @@ import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart'
     hide EmailAuthProvider, PhoneAuthProvider;
-import 'package:hockey_evaluation_app/objects/authentication.dart';
+import 'package:hockey_evaluation_app/pages/authentication.dart';
 import 'package:hockey_evaluation_app/widgets/app_state.dart';
 
 Color redtheme = const Color.fromRGBO(254, 48, 60, 1);
@@ -167,20 +167,21 @@ class _MyHomePageState extends State<MyHomePage> {
     await db.collection("Goaltenders").get().then(
       (querySnapshot) {
         print("Goaltenders completed");
-        goaltenders.clear(); //TODO: Find a solution that does not resort to this!
+        goaltenders
+            .clear(); //TODO: Find a solution that does not resort to this!
         for (var docSnapshot in querySnapshot.docs) {
-          if (docSnapshot.data()['Organization'] == organization){
+          if (docSnapshot.data()['Organization'] == organization) {
             print('${docSnapshot.id} => ${docSnapshot.data()}');
             goaltenders.add(Goaltender(
-              name: docSnapshot.data()['Name'],
-              levelAge: docSnapshot.data()['Level/Age'],
-              organization: docSnapshot.data()['Organization']));
+                name: docSnapshot.data()['Name'],
+                levelAge: docSnapshot.data()['Level/Age'],
+                organization: docSnapshot.data()['Organization']));
           }
-          if (auth.currentUser?.email == "goaltenderevaluation@gmail.com"){
+          if (auth.currentUser?.email == "goaltenderevaluation@gmail.com") {
             goaltenders.add(Goaltender(
-              name: docSnapshot.data()['Name'],
-              levelAge: docSnapshot.data()['Level/Age'],
-              organization: docSnapshot.data()['Organization']));
+                name: docSnapshot.data()['Name'],
+                levelAge: docSnapshot.data()['Level/Age'],
+                organization: docSnapshot.data()['Organization']));
           }
         }
       },
@@ -202,14 +203,14 @@ class _MyHomePageState extends State<MyHomePage> {
             .clear(); //TODO: Find a solution that doesn't resort to this!
         for (var docSnapshot in querySnapshot.docs) {
           print('${docSnapshot.id} => ${docSnapshot.data()}');
-           if (!evaluations.contains(docSnapshot.data()["Name"])) {
-                evaluations.add(Evaluation(
+          if (!evaluations.contains(docSnapshot.data()["Name"])) {
+            evaluations.add(Evaluation(
                 goaltender: goaltenders.firstWhere((goaltenders) =>
-                goaltenders.name == docSnapshot.data()["Name"]),
+                    goaltenders.name == docSnapshot.data()["Name"]),
                 evaluationDate: DateTime.now(),
                 evaluationType: docSnapshot.data()["Evaluation Type"],
                 fullScore: FullScore()));
-           }
+          }
           /*String name = docSnapshot.data()["Name"];
           Goaltender temp_goaltender = Goaltender(
               name: name, levelAge: "21", organization: "Hendrix College");
@@ -233,17 +234,16 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void _cloudOrgPull() async{
+  void _cloudOrgPull() async {
     final FirebaseAuth auth = FirebaseAuth.instance;
     await db.collection("Users").get().then(
       (querySnapshot) {
         for (var docSnapshot in querySnapshot.docs) {
           ('${docSnapshot.id} => ${docSnapshot.data()}');
-          if (auth.currentUser?.email == docSnapshot.id){
+          if (auth.currentUser?.email == docSnapshot.id) {
             organization = docSnapshot.data()["Organization"];
             print(organization);
           }
-          
         }
       },
       onError: (e) => print("Error completing: $e"),
@@ -252,11 +252,10 @@ class _MyHomePageState extends State<MyHomePage> {
       (querySnapshot) {
         for (var docSnapshot in querySnapshot.docs) {
           ('${docSnapshot.id} => ${docSnapshot.data()}');
-          if (organization == docSnapshot.id){
+          if (organization == docSnapshot.id) {
             code = docSnapshot.data()["Code"];
             print(code);
           }
-          
         }
       },
       onError: (e) => print("Error completing: $e"),
@@ -279,7 +278,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-     _cloudOrgPull(); //this pulls both goaltender and eval
+    _cloudOrgPull(); //this pulls both goaltender and eval
   }
 
   Widget returnScreen() {
@@ -306,12 +305,11 @@ class _MyHomePageState extends State<MyHomePage> {
         onEvaluationListChanged: _handleNewEvaluation,
       );
     } else if (current_screen_index == 3) {
-        if (organization == "No Organization"){
-          return JoinOrganizationPage();}
-        else{
-          return OrganizationPage(organization: organization, code: code);
-        }
-
+      if (organization == "No Organization") {
+        return JoinOrganizationPage();
+      } else {
+        return OrganizationPage(organization: organization, code: code);
+      }
     } else {
       print("Something is wrong");
       return EvaluationListView(
@@ -338,11 +336,11 @@ class _MyHomePageState extends State<MyHomePage> {
               Flexible(
                 // This prevents the overflow
                 child: Image.asset(
-                'lib/image/logo.png', // Path to image file
-                height: 40,
-                fit: BoxFit.cover, // Adjust height as needed
-              ),
-                
+                  'lib/image/logo.png', // Path to image file
+                  height: 40,
+                  fit: BoxFit.cover, // Adjust height as needed
+                ),
+
                 /*Text(
                   widget.title,
                   style: Theme.of(context).textTheme.labelLarge,
