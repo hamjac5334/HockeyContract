@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 final ThemeData appTheme = ThemeData(
   fontFamily: 'Inter',
-  brightness: Brightness.light,
+  brightness: Brightness.dark,
   colorScheme: const ColorScheme(
-    brightness: Brightness.light,
-    primary: Colors.red,
-    onPrimary: Colors.white,
+    brightness: Brightness.dark,
+    primary: Color.fromARGB(255, 32, 8, 7),
+    onPrimary: Color.fromARGB(255, 122, 10, 10),
     secondary: Colors.black,
     onSecondary: Colors.white,
     tertiary: Color.fromARGB(255, 128, 128, 128),
