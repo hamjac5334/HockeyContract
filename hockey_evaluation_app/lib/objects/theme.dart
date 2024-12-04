@@ -6,7 +6,7 @@ final ThemeData appTheme = ThemeData(
   colorScheme: const ColorScheme(
     brightness: Brightness.dark,
     primary: Color.fromARGB(255, 32, 8, 7),
-    onPrimary: Color.fromARGB(255, 212, 16, 16),
+    onPrimary: Color.fromARGB(255, 122, 10, 10),
     secondary: Colors.black,
     onSecondary: Colors.white,
     tertiary: Color.fromARGB(255, 128, 128, 128),
