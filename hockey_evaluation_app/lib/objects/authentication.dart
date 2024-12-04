@@ -6,11 +6,15 @@ import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/pages/authentication_page.dart';
 import 'package:hockey_evaluation_app/pages/goaltender_list_view.dart';
 import 'package:hockey_evaluation_app/pages/evaluation_list_view.dart' as eval_list;
+import 'package:hockey_evaluation_app/pages/new_organization.dart';
 import 'package:hockey_evaluation_app/pages/organization_view.dart';
 import 'package:hockey_evaluation_app/pages/settings.dart';
 import 'package:hockey_evaluation_app/widgets/app_state.dart';
 import 'package:hockey_evaluation_app/widgets/styledButton.dart';
 import 'package:provider/provider.dart';
+import 'package:hockey_evaluation_app/main.dart';
+import 'package:hockey_evaluation_app/pages/join_organization_page.dart';
+import 'package:hockey_evaluation_app/pages/organization_view.dart';
 
 class AuthFunc extends StatefulWidget {
   const AuthFunc({
@@ -59,7 +63,7 @@ class _AuthFuncState extends State<AuthFunc> {
       return TheseSettings(); 
       case 4:
       //once we have notifications, put here
-        return OrganizationPage(organization: '', code: '',);
+          return JoinOrganizationPage();
       case 5:
         return TheseSettings();
       default:
