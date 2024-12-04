@@ -5,7 +5,7 @@ import 'package:hockey_evaluation_app/objects/evaluation.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/pages/authentication_page.dart';
 import 'package:hockey_evaluation_app/pages/goaltender_list_view.dart';
-import 'package:hockey_evaluation_app/pages/evaluation_list_view.dart';
+import 'package:hockey_evaluation_app/pages/evaluation_list_view.dart' as eval_list;
 import 'package:hockey_evaluation_app/pages/organization_view.dart';
 import 'package:hockey_evaluation_app/pages/settings.dart';
 import 'package:hockey_evaluation_app/widgets/app_state.dart';
@@ -48,12 +48,12 @@ class _AuthFuncState extends State<AuthFunc> {
         onGoaltenderListChanged: widget.onGoaltenderListChanged,
       );
     case 2:
-      //return EvaluationListView(
-      //goaltenders: widget.goaltenders,
-      //items: widget.evaluations,
-      //onEvaluationListChanged: widget.onEvaluationListChanged,
-      //);
-      return TheseSettings();
+      return eval_list.EvaluationListView(
+      goaltenders: widget.goaltenders,
+      items: widget.evaluations,
+      onEvaluationListChanged: widget.onEvaluationListChanged,
+      );
+      //return TheseSettings();
       case 3:
       //once we have organizations, put here
       return TheseSettings(); 
