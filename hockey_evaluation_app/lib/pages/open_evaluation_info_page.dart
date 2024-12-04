@@ -17,8 +17,9 @@ class OpenEvaluationInfoPage extends StatelessWidget {
       {super.key, required this.evaluation, required this.goaltenders});
   @override
   Widget build(BuildContext context) {
+    print("Goaltender: ${evaluation.goaltender}");
     return DefaultTabController(
-      length: 7,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -26,10 +27,10 @@ class OpenEvaluationInfoPage extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           bottom: const TabBar(tabs: [
-            AutoSizeText("Info", maxLines:1),
-            AutoSizeText("Scoring", maxLines:1),
-            AutoSizeText("Comments", maxLines:1),
-            AutoSizeText("Submit", maxLines:1)
+            AutoSizeText("Info", maxLines: 1),
+            AutoSizeText("Scoring", maxLines: 1),
+            AutoSizeText("Comments", maxLines: 1),
+            AutoSizeText("Submit", maxLines: 1)
           ]),
         ),
         body: TabBarView(children: [
@@ -72,7 +73,6 @@ class OpenEvaluationEvaluationInfoPageState
     ];
     return menuItems;
   }
-
 
   late Goaltender? selectedGoaltender;
   String selectedvalue = "";
@@ -210,7 +210,6 @@ class OpenEvaluationCommentsPage extends StatelessWidget {
             onPressed: () {
               evaluation.comments = _controller.text;
               print(evaluation.comments);
-
             },
             child: const Text("Save comment")),
       ],
@@ -231,104 +230,107 @@ class OpenEvaluationSubmitPage extends StatefulWidget {
 class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
   @override
   Widget build(BuildContext context) {
+    print("Goaltender: ${widget.evaluation.goaltender.name}");
     return Scaffold(
-      body: SingleChildScrollView( 
-      child:
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          DataTable(
-              border: TableBorder(
-                  verticalInside: BorderSide(width: 1),
-                  left: BorderSide(width: 1),
-                  bottom: BorderSide(width: 1),
-                  right: BorderSide(width: 1)),
-              columns: const [
-                DataColumn(label: Paragraph("Skill")),
-                DataColumn(label: Paragraph("Value")),
-              ],
-              rows: [
-                DataRow(cells: [
-                  DataCell(Paragraph("See")),
-                  DataCell(Paragraph(widget.evaluation.fullScore
-                      .getCategoryScore("See")
-                      .getAverage()
-                      .toString())),
-                ]),
-                DataRow(cells: [
-                  DataCell(Paragraph("Understand")),
-                  DataCell(Paragraph(widget.evaluation.fullScore
-                      .getCategoryScore("Understand")
-                      .getAverage()
-                      .toString())),
-                ]),
-                DataRow(cells: [
-                  DataCell(Paragraph("Drive")),
-                  DataCell(Paragraph(widget.evaluation.fullScore
-                      .getCategoryScore("Drive")
-                      .getAverage()
-                      .toString())),
-                ]),
-                DataRow(cells: [
-                  DataCell(Paragraph("Adapt")),
-                  DataCell(Paragraph(widget.evaluation.fullScore
-                      .getCategoryScore("Adapt")
-                      .getAverage()
-                      .toString())),
-                ]),
-                DataRow(cells: [
-                  DataCell(Paragraph("Move")),
-                  DataCell(Paragraph(widget.evaluation.fullScore
-                      .getCategoryScore("Move")
-                      .getAverage()
-                      .toString())),
-                ]),
-                DataRow(cells: [
-                  DataCell(Paragraph("Save")),
-                  DataCell(Paragraph(widget.evaluation.fullScore
-                      .getCategoryScore("Save")
-                      .getAverage()
-                      .toString())),
-                ]),
-                DataRow(cells: [
-                  DataCell(Paragraph("Learn")),
-                  DataCell(Paragraph(widget.evaluation.fullScore
-                      .getCategoryScore("Learn")
-                      .getAverage()
-                      .toString())),
-                ]),
-                DataRow(cells: [
-                  DataCell(Paragraph("Grow")),
-                  DataCell(Paragraph(widget.evaluation.fullScore
-                      .getCategoryScore("Grow")
-                      .getAverage()
-                      .toString())),
-                ]),
-              ]),
-          // ElevatedButton(
-          //     onPressed: () {
-          //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          //           content: Text("This button will update firebase")));
-          //     },
-          //     child: Text("Submit")),
-          Header("Comments: "),
-          Paragraph(widget.evaluation.comments)
-        ],
-      ),),
-      floatingActionButton: Container(
-        height: 50,
-        width: 100,
-        child: FloatingActionButton(
-          onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("This button will update firebase")));
-                widget.evaluation.fullScore.dataSaveScoring(OpenEvaluationEvaluationInfoPageState().selectedGoaltender, DateFormat('MM-dd-yyy').format(OpenEvaluationEvaluationInfoPageState().selectedDate));
-          },
-          child: Text("Submit"),
-          shape: RoundedRectangleBorder(),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              DataTable(
+                  border: TableBorder(
+                      verticalInside: BorderSide(width: 1),
+                      left: BorderSide(width: 1),
+                      bottom: BorderSide(width: 1),
+                      right: BorderSide(width: 1)),
+                  columns: const [
+                    DataColumn(label: Paragraph("Skill")),
+                    DataColumn(label: Paragraph("Value")),
+                  ],
+                  rows: [
+                    DataRow(cells: [
+                      DataCell(Paragraph("See")),
+                      DataCell(Paragraph(widget.evaluation.fullScore
+                          .getCategoryScore("See")
+                          .getAverage()
+                          .toString())),
+                    ]),
+                    DataRow(cells: [
+                      DataCell(Paragraph("Understand")),
+                      DataCell(Paragraph(widget.evaluation.fullScore
+                          .getCategoryScore("Understand")
+                          .getAverage()
+                          .toString())),
+                    ]),
+                    DataRow(cells: [
+                      DataCell(Paragraph("Drive")),
+                      DataCell(Paragraph(widget.evaluation.fullScore
+                          .getCategoryScore("Drive")
+                          .getAverage()
+                          .toString())),
+                    ]),
+                    DataRow(cells: [
+                      DataCell(Paragraph("Adapt")),
+                      DataCell(Paragraph(widget.evaluation.fullScore
+                          .getCategoryScore("Adapt")
+                          .getAverage()
+                          .toString())),
+                    ]),
+                    DataRow(cells: [
+                      DataCell(Paragraph("Move")),
+                      DataCell(Paragraph(widget.evaluation.fullScore
+                          .getCategoryScore("Move")
+                          .getAverage()
+                          .toString())),
+                    ]),
+                    DataRow(cells: [
+                      DataCell(Paragraph("Save")),
+                      DataCell(Paragraph(widget.evaluation.fullScore
+                          .getCategoryScore("Save")
+                          .getAverage()
+                          .toString())),
+                    ]),
+                    DataRow(cells: [
+                      DataCell(Paragraph("Learn")),
+                      DataCell(Paragraph(widget.evaluation.fullScore
+                          .getCategoryScore("Learn")
+                          .getAverage()
+                          .toString())),
+                    ]),
+                    DataRow(cells: [
+                      DataCell(Paragraph("Grow")),
+                      DataCell(Paragraph(widget.evaluation.fullScore
+                          .getCategoryScore("Grow")
+                          .getAverage()
+                          .toString())),
+                    ]),
+                  ]),
+              // ElevatedButton(
+              //     onPressed: () {
+              //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              //           content: Text("This button will update firebase")));
+              //     },
+              //     child: Text("Submit")),
+              Header("Comments: "),
+              Paragraph(widget.evaluation.comments)
+            ],
+          ),
         ),
-      ),
-      resizeToAvoidBottomInset: false
-    );
+        floatingActionButton: Container(
+          height: 50,
+          width: 100,
+          child: FloatingActionButton(
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("This button will update firebase")));
+              widget.evaluation.fullScore.dataSaveScoring(
+                  widget.evaluation.goaltender.name,
+                  DateFormat('MM-dd-yyy').format(
+                      OpenEvaluationEvaluationInfoPageState().selectedDate));
+            },
+            child: Text("Submit"),
+            shape: RoundedRectangleBorder(),
+          ),
+        ),
+        resizeToAvoidBottomInset: false);
   }
 }
