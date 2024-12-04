@@ -10,7 +10,6 @@ import 'package:hockey_evaluation_app/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:intl/intl.dart';
 
 typedef EvaluationListChangedCallback = Function(Evaluation evaluation);
 
@@ -61,7 +60,7 @@ class _MyWidgetState extends State<NewEval> {
         .collection("Goaltenders")
         .doc(goalieName)
         .collection("Evaluations")
-        .doc(DateFormat('MM-dd-yyy').format(DateTime.now()))
+        .doc(DateTime.now().toString())
         .set({
       "Name": goalieName,
       "Evaluator": evaluatorName,
@@ -82,8 +81,6 @@ class _MyWidgetState extends State<NewEval> {
   }
 
   String selectedvalue = "Game";
-  
-  get onGoaltenderListChanged => null;
 
   @override
   Widget build(BuildContext context) {
@@ -158,34 +155,24 @@ class _MyWidgetState extends State<NewEval> {
             //   ),
             // ),
 
-            Row(children: [DropdownMenu<Goaltender>(
-                width:
-                    500, // TODO: Make this the screen size-ish. idk how to do that
-                enableSearch: true,
-                enableFilter: false,
-                requestFocusOnTap: true,
-                onSelected: (Goaltender? goaltender) {
-                  setState(() {
-                    selectedGoaltender = goaltender;
-                  });
-                },
-                dropdownMenuEntries:
-                    widget.goaltenders.map((Goaltender goaltender) {
-                  return DropdownMenuEntry(
-                      value: goaltender, label: goaltender.name);
-                }).toList()),
-                FloatingActionButton(
-                  onPressed: () async {
-                 await Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => NewGoaltenderPage(
-                  onGoaltenderListChanged: onGoaltenderListChanged //right now onGoaltenderList changed is null, need implememtation for it
-              ),
+            Container(
+              width: double.infinity,
+              child: DropdownMenu<Goaltender>(
+                  width: double.infinity,
+                  enableSearch: true,
+                  enableFilter: false,
+                  requestFocusOnTap: true,
+                  onSelected: (Goaltender? goaltender) {
+                    setState(() {
+                      selectedGoaltender = goaltender;
+                    });
+                  },
+                  dropdownMenuEntries:
+                      widget.goaltenders.map((Goaltender goaltender) {
+                    return DropdownMenuEntry(
+                        value: goaltender, label: goaltender.name);
+                  }).toList()),
             ),
-          );
-          
-        },)
-                ],),
             const SizedBox(height: 10),
             const Paragraph("Select an Evaluator"),
             const SizedBox(height: 5),
