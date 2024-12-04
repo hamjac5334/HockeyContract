@@ -37,7 +37,7 @@ class EvaluationListViewState extends State<EvaluationListView>
 
   // the selected value
   String? _selectedFilter;
-   var db = FirebaseFirestore.instance;
+  var db = FirebaseFirestore.instance;
 
   @override
   void initState() {
