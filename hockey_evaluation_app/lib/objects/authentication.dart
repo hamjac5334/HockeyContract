@@ -19,16 +19,18 @@ class AuthFunc extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Flexible(
-            // This prevents the overflow
-            child: Image.asset(
-              'lib/image/logo.png', // Path to image file
-              height: 157,
-              width: double.infinity,
-              fit: BoxFit.cover, // Adjust height as needed
-            ),
-          ),
-          SizedBox(height: 20),
-          if (loggedIn) ...[
+                // This prevents the overflow
+                child: Image.asset(
+                'lib/image/logo.png', // Path to image file
+                height: 175,
+                width: double.infinity,
+                fit: BoxFit.cover, // Adjust height as needed
+              ),),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                Column(children: [
+                  if (loggedIn) ...[
             StyledButton(
               onPressed: () {
                 context.go('/evaluations');
@@ -47,8 +49,11 @@ class AuthFunc extends StatelessWidget {
                 print("Pretend this opened a notifications page");
               },
               child: const Text('Notifications'),
-            ),
-            StyledButton(
+            ),],],
+              ),
+              Column(children: [
+                 if (loggedIn) ...[
+                  StyledButton(
               onPressed: () {
                 //context.go('');
                 print("Pretend this opened an Organization page");
@@ -61,7 +66,7 @@ class AuthFunc extends StatelessWidget {
               },
               child: const Text('Settings'),
             ),
-          ],
+                 ],
           StyledButton(
             onPressed: () {
               if (!loggedIn) {
@@ -72,6 +77,15 @@ class AuthFunc extends StatelessWidget {
             },
             child: !loggedIn ? const Text('Sign In') : const Text('Logout'),
           ),
+                 ],
+
+              
+              
+              )],
+              
+              ),
+          
+            
         ],
       ),
     );
