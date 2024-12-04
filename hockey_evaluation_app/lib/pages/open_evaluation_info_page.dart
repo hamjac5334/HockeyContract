@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
 import 'package:hockey_evaluation_app/objects/full_score.dart';
@@ -21,10 +22,10 @@ class OpenEvaluationInfoPage extends StatelessWidget {
         appBar: AppBar(
           title: Text(evaluation.goaltender.name),
           bottom: const TabBar(tabs: [
-            Text("Evaluation Info"),
-            Text("Scoring"),
-            Text("Comments"),
-            Text("Submit")
+            AutoSizeText("Info", maxLines:1),
+            AutoSizeText("Scoring", maxLines:1),
+            AutoSizeText("Comments", maxLines:1),
+            AutoSizeText("Submit", maxLines:1)
           ]),
         ),
         body: TabBarView(children: [
@@ -179,8 +180,6 @@ class OpenEvaluationEvaluationInfoPageState
             child: Text(DateFormat('MM-dd-yyy').format(selectedDate)),
           ),
         ),
-        Paragraph("Additional Notes"),
-        OpenEvaluationCommentsPage(evaluation: widget.evaluation)
       ],
     );
   }
@@ -229,7 +228,9 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: SingleChildScrollView( 
+      child:
+      Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           DataTable(
@@ -309,7 +310,7 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
           Header("Comments: "),
           Paragraph(widget.evaluation.comments)
         ],
-      ),
+      ),),
       floatingActionButton: Container(
         height: 50,
         width: 100,
@@ -323,6 +324,7 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
           shape: RoundedRectangleBorder(),
         ),
       ),
+      resizeToAvoidBottomInset: false
     );
   }
 }

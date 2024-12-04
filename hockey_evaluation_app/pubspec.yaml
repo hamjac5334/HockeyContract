@@ -33,6 +33,9 @@ dependencies:
   #added go_router
   go_router: ^14.2.7
 
+  #added auto-size widget
+  auto_size_text: ^3.0.0
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
