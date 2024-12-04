@@ -16,16 +16,6 @@ class AuthFunc extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Text(
-          'Welcome to the Hockey App', // The welcome message
-          style: TextStyle(
-            fontSize: 24, // Adjust the font size
-            fontWeight: FontWeight.bold, // Make it bold
-            color: Colors.black, // Adjust the color if needed
-          ),
-          textAlign: TextAlign.center, // Center the text
-        ),
-        SizedBox(height: 20), // Space between the text and the image
         Flexible(
           // This prevents the overflow
           child: Image.asset(
@@ -34,6 +24,17 @@ class AuthFunc extends StatelessWidget {
             width: double.infinity,
             fit: BoxFit.cover, // Adjust height as needed
           ),
+        ),
+        SizedBox(height: 20),
+        const Text(
+          "Welcome to D'Crease! This application allows hockey coaches and scouts to rate youth "
+          "hockey goaltenders on their ability on the ice to evaluate, compare, and see players' progress.",
+          style: TextStyle(
+            fontSize: 12, // Adjust the font size
+            color: Colors.black,
+            // TextAlign: TextAlign.center, // Center the text
+          ),
+          textAlign: TextAlign.center,
         ),
       ]),
     );
