@@ -6,6 +6,8 @@ import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/pages/evaluation_list_view.dart';
 import 'package:hockey_evaluation_app/pages/goaltender_list_view.dart';
 import 'package:hockey_evaluation_app/objects/theme.dart';
+import 'package:hockey_evaluation_app/pages/join_organization_page.dart';
+import 'package:hockey_evaluation_app/pages/organization_view.dart';
 import 'package:hockey_evaluation_app/pages/settings.dart';
 import 'package:hockey_evaluation_app/widgets/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -157,18 +159,30 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Goaltender> goaltenders = [];
   List<Evaluation> evaluations = [];
 
+  String organization = "No Organization";
+  String code = "No Code Generated";
+
   void _cloudGoaltenderPull() async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
     await db.collection("Goaltenders").get().then(
       (querySnapshot) {
         print("Goaltenders completed");
         goaltenders
             .clear(); //TODO: Find a solution that does not resort to this!
         for (var docSnapshot in querySnapshot.docs) {
-          print('${docSnapshot.id} => ${docSnapshot.data()}');
-          goaltenders.add(Goaltender(
+          if (docSnapshot.data()['Organization'] == organization){
+            print('${docSnapshot.id} => ${docSnapshot.data()}');
+            goaltenders.add(Goaltender(
               name: docSnapshot.data()['Name'],
               levelAge: docSnapshot.data()['Level/Age'],
               organization: docSnapshot.data()['Organization']));
+          }
+          if (auth.currentUser?.email == "goaltenderevaluation@gmail.com"){
+            goaltenders.add(Goaltender(
+              name: docSnapshot.data()['Name'],
+              levelAge: docSnapshot.data()['Level/Age'],
+              organization: docSnapshot.data()['Organization']));
+          }
         }
       },
       onError: (e) => print("Error completing: $e"),
@@ -196,7 +210,6 @@ class _MyHomePageState extends State<MyHomePage> {
           //       evaluationDate: DateTime.now(),
           //       evaluationType: docSnapshot.data()["Evaluation Type"]));
           // }
-
           String name = docSnapshot.data()["Name"];
           Goaltender temp_goaltender = Goaltender(
               name: name, levelAge: "21", organization: "Hendrix College");
@@ -220,6 +233,37 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  void _cloudOrgPull() async{
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    await db.collection("Users").get().then(
+      (querySnapshot) {
+        for (var docSnapshot in querySnapshot.docs) {
+          ('${docSnapshot.id} => ${docSnapshot.data()}');
+          if (auth.currentUser?.email == docSnapshot.id){
+            organization = docSnapshot.data()["Organization"];
+            print(organization);
+          }
+          
+        }
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
+    await db.collection("Organization").get().then(
+      (querySnapshot) {
+        for (var docSnapshot in querySnapshot.docs) {
+          ('${docSnapshot.id} => ${docSnapshot.data()}');
+          if (organization == docSnapshot.id){
+            code = docSnapshot.data()["Code"];
+            print(code);
+          }
+          
+        }
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
+    _cloudGoaltenderPull();
+  }
+
   void _handleNewGoaltender(Goaltender goaltender) {
     setState(() {
       goaltenders.add(goaltender);
@@ -235,7 +279,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _cloudGoaltenderPull(); //this pulls both goaltender and eval
+     _cloudOrgPull(); //this pulls both goaltender and eval
   }
 
   Widget returnScreen() {
@@ -261,6 +305,13 @@ class _MyHomePageState extends State<MyHomePage> {
         items: evaluations,
         onEvaluationListChanged: _handleNewEvaluation,
       );
+    } else if (current_screen_index == 3) {
+        if (organization == "No Organization"){
+          return JoinOrganizationPage();}
+        else{
+          return OrganizationPage(organization: organization, code: code);
+        }
+
     } else {
       print("Something is wrong");
       return EvaluationListView(
@@ -369,7 +420,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {
-                  print("Pretend this opened an organization page");
+                  setState(() {
+                    current_screen_index = 3;
+                  });
                 },
                 leading: const Icon(Icons.roofing),
               ),
