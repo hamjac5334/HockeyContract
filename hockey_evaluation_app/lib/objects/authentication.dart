@@ -19,73 +19,76 @@ class AuthFunc extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Flexible(
-                // This prevents the overflow
-                child: Image.asset(
-                'lib/image/logo.png', // Path to image file
-                height: 175,
-                width: double.infinity,
-                fit: BoxFit.cover, // Adjust height as needed
-              ),),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                Column(children: [
-                  if (loggedIn) ...[
-            StyledButton(
-              onPressed: () {
-                context.go('/evaluations');
-              },
-              child: const Text('Evaluations'),
+            // This prevents the overflow
+            child: Image.asset(
+              'lib/image/logo.png', // Path to image file
+              height: 175,
+              width: double.infinity,
+              fit: BoxFit.cover, // Adjust height as needed
             ),
-            StyledButton(
-              onPressed: () {
-                context.go('/goalies');
-              },
-              child: const Text('Goaltenders'),
-            ),
-            StyledButton(
-              onPressed: () {
-                //context.go('');
-                print("Pretend this opened a notifications page");
-              },
-              child: const Text('Notifications'),
-            ),],],
-              ),
-              Column(children: [
-                 if (loggedIn) ...[
-                  StyledButton(
-              onPressed: () {
-                //context.go('');
-                print("Pretend this opened an Organization page");
-              },
-              child: const Text('Organization'),
-            ),
-            StyledButton(
-              onPressed: () {
-                context.go('/settings');
-              },
-              child: const Text('Settings'),
-            ),
-                 ],
-          StyledButton(
-            onPressed: () {
-              if (!loggedIn) {
-                context.go('/sign-in');
-              } else {
-                signOut();
-              }
-            },
-            child: !loggedIn ? const Text('Sign In') : const Text('Logout'),
           ),
-                 ],
-
-              
-              
-              )],
-              
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                children: [
+                  if (loggedIn) ...[
+                    StyledButton(
+                      onPressed: () {
+                        context.go('/evaluations');
+                      },
+                      child: const Text('Evaluations'),
+                    ),
+                    StyledButton(
+                      onPressed: () {
+                        context.go('/goalies');
+                      },
+                      child: const Text('Goaltenders'),
+                    ),
+                    StyledButton(
+                      onPressed: () {
+                        //context.go('');
+                        print("Pretend this opened a notifications page");
+                      },
+                      child: const Text('Notifications'),
+                    ),
+                  ],
+                ],
               ),
-          
-            
+              Column(
+                children: [
+                  if (loggedIn) ...[
+                    StyledButton(
+                      onPressed: () {
+                        //context.go('');
+                        print("Pretend this opened an Organization page");
+                      },
+                      child: const Text('Organization'),
+                    ),
+                    StyledButton(
+                      onPressed: () {
+                        context.go('/settings');
+                      },
+                      child: const Text('Settings'),
+                    ),
+                  ],
+                  StyledButton(
+                    onPressed: () {
+                      if (!loggedIn) {
+                        context.go('/sign-in');
+                      } else {
+                        signOut();
+                      }
+                    },
+                    child: !loggedIn
+                        ? const Text('Sign In')
+                        : const Text('Logout'),
+                  ),
+                ],
+              )
+            ],
+          ),
         ],
       ),
     );

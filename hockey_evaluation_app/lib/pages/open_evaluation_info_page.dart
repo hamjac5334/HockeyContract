@@ -11,16 +11,20 @@ import 'package:intl/intl.dart';
 
 class OpenEvaluationInfoPage extends StatelessWidget {
   Evaluation evaluation;
+
   final List<Goaltender> goaltenders;
   OpenEvaluationInfoPage(
       {super.key, required this.evaluation, required this.goaltenders});
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 7,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(evaluation.goaltender.name),
+          title: Text(
+            evaluation.goaltender.name,
+            overflow: TextOverflow.ellipsis,
+          ),
           bottom: const TabBar(tabs: [
             AutoSizeText("Info", maxLines:1),
             AutoSizeText("Scoring", maxLines:1),
