@@ -340,7 +340,15 @@ class _MyHomePageState extends State<MyHomePage> {
         else{
           return OrganizationPage(organization: organization, code: code);
         }
-
+    
+    } else if (current_screen_index == 4) {
+        //_cloudOrgPull();
+        return TheseSettings();
+    
+    } else if (current_screen_index == 5) {
+        //_cloudOrgPull();
+        return TheseSettings();
+    
     } else {
       print("Something is wrong");
       return EvaluationListView(
@@ -404,7 +412,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 onTap: () {
                   print("tapped");
-                  current_screen_index = 0;
+                  setState(() {
+                    current_screen_index = 0;
+                  });
+                  Navigator.pop(context);
                 },
                 leading: Icon(Icons.home),
               ),
@@ -444,7 +455,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {
-                  print("Pretend this opened a notifications page");
+                  setState(() {
+                    current_screen_index = 4;
+                  });
+                  Navigator.pop(context);
                 },
                 leading: const Icon(Icons.notifications),
               ),
@@ -468,7 +482,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {
-                  context.go('/settings');
+                  setState(() {
+                    current_screen_index = 5;
+                  });
+                  Navigator.pop(context);
                 },
                 leading: const Icon(Icons.settings),
               ),
