@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
 import 'package:hockey_evaluation_app/objects/full_score.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
+import 'package:hockey_evaluation_app/objects/item_score.dart';
 import 'package:hockey_evaluation_app/pages/new_eval.dart';
 import 'package:hockey_evaluation_app/pages/scoring_page.dart';
 import 'package:hockey_evaluation_app/widgets/goaltender_item.dart';
 import 'package:hockey_evaluation_app/widgets/styledButton.dart';
 import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OpenEvaluationInfoPage extends StatelessWidget {
   Evaluation evaluation;
@@ -228,6 +230,15 @@ class OpenEvaluationSubmitPage extends StatefulWidget {
 }
 
 class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
+  void dataSaveScoring() {
+    var db = FirebaseFirestore.instance;
+    for (var item in widget.evaluation.fullScore.categoryScoreList){
+      db.collection("Goaltenders").doc(widget.evaluation.goaltender.name).collection("Evaluations").doc(widget.evaluation.evaluationDate.toString().substring(0,19)).collection("Scoring").doc(item.name).set({
+        item.name : item.getAverage()
+      });
+    }
+    ;}
+
   @override
   Widget build(BuildContext context) {
     print("Goaltender: ${widget.evaluation.goaltender.name}");
@@ -322,10 +333,7 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text("This button will update firebase")));
-              widget.evaluation.fullScore.dataSaveScoring(
-                  widget.evaluation.goaltender.name,
-                  DateFormat('MM-dd-yyy').format(
-                      OpenEvaluationEvaluationInfoPageState().selectedDate));
+                dataSaveScoring();
             },
             child: Text("Submit"),
             shape: RoundedRectangleBorder(),
@@ -333,4 +341,5 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
         ),
         resizeToAvoidBottomInset: false);
   }
+
 }

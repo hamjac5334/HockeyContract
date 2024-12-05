@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
-import 'package:hockey_evaluation_app/objects/organizationCode.dart';
 import 'package:hockey_evaluation_app/pages/authentication_page.dart';
 import 'package:hockey_evaluation_app/pages/goaltender_list_view.dart';
 import 'package:hockey_evaluation_app/pages/evaluation_list_view.dart' as eval_list;

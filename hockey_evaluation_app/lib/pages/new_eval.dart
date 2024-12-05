@@ -55,22 +55,11 @@ class _MyWidgetState extends State<NewEval> {
   void dataSave() {
     var db = FirebaseFirestore.instance;
 
-    //db.collection("Goaltenders").doc(goaltenderName).collection("Evaluations").doc("Evaluation").set({"Name": goaltenderName, "Level/Age": levelAge, "Organization" : organization});
     db
         .collection("Goaltenders")
         .doc(goalieName)
         .collection("Evaluations")
-        .doc(DateTime.now().toString())
-        .set({
-      "Name": goalieName,
-      "Evaluator": evaluatorName,
-      "Evaluation Type": evaluationType,
-      "Evaluation Date": DateTime.now(),
-      "Additional Notes": notes
-    });
-    db
-        .collection("Evaluations")
-        .doc(goalieName + " - " + DateTime.now().toString())
+        .doc(DateTime.now().toString().substring(0,19))
         .set({
       "Name": goalieName,
       "Evaluator": evaluatorName,

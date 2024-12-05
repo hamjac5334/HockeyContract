@@ -6,6 +6,7 @@ import 'package:hockey_evaluation_app/objects/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hockey_evaluation_app/main.dart';
 import 'package:hockey_evaluation_app/widgets/styledButton.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -92,6 +93,17 @@ class _EvaluationCategoryState extends State<EvaluationCategory> {
       subItemCounters[item] = item_score;
     }
   }
+
+  void dataSaveScoring(goalieName, dateAndTime ) {
+    var db = FirebaseFirestore.instance;
+    for (var item in widget.subItems){
+      ItemScore item_score = ItemScore(name: item);
+      db.collection("Goaltenders").doc(goalieName).collection("Evaluations").doc(dateAndTime.toString().substring(0,19)).collection("Scoring").doc("Score").set({
+        item : item_score
+      });
+    }
+    ;}
+  
 
   //dropdown menu: https://www.youtube.com/watch?v=6_Azs3fq9O4
   //https://api.flutter.dev/flutter/material/DropdownMenu-class.html

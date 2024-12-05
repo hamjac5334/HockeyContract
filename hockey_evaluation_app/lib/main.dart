@@ -19,7 +19,6 @@ import 'package:firebase_auth/firebase_auth.dart'
     hide EmailAuthProvider, PhoneAuthProvider;
 import 'package:hockey_evaluation_app/objects/authentication.dart';
 import 'package:hockey_evaluation_app/widgets/app_state.dart';
-import 'package:hockey_evaluation_app/objects/organizationCode.dart';
 
 Color redtheme = const Color.fromRGBO(254, 48, 60, 1);
 void main() async {
@@ -180,7 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       print("Adding Eval");
                       Evaluation temp_evaluation = Evaluation(
                         goaltender: Goaltender(name: docSnapshot.data()['Name'], levelAge: docSnapshot.data()['Level/Age'], organization: docSnapshot.data()['Organization']),
-                        evaluationDate: DateTime.now(),
+                        evaluationDate: (eval.data()["Evaluation Date"] as Timestamp).toDate(),
                         evaluationType: eval.data()['Evaluation Type'],
                         //TODO: Change this to be the scores stored on firebase
                         fullScore: FullScore());
@@ -199,11 +198,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 (querySnapshotEvals)  {
                     for (var eval in querySnapshotEvals.docs){
                       print("Adding Eval");
-                      print(eval.id);
                       print(docSnapshot.data()['Name'] + ' ' + docSnapshot.data()['Level/Age']+ ' '  + docSnapshot.data()['Organization']+ ' '  + eval.data()['Evaluation Type']);
                       Evaluation temp_evaluation = Evaluation(
                         goaltender: Goaltender(name: docSnapshot.data()['Name'], levelAge: docSnapshot.data()['Level/Age'], organization: docSnapshot.data()['Organization']),
-                        evaluationDate: DateTime.now(),
+                        evaluationDate: (eval.data()["Evaluation Date"] as Timestamp).toDate(),
                         evaluationType: eval.data()['Evaluation Type'],
                         //TODO: Change this to be the scores stored on firebase
                         fullScore: FullScore());

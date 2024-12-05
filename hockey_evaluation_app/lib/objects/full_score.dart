@@ -60,10 +60,10 @@ class FullScore {
         name: "Error Category", itemScores: [ItemScore(name: "Error Item")]);
   }
 
-  void dataSaveScoring(goalieName, dateAndTime ) {
+  /*void dataSaveScoring(goalieName, dateAndTime ) {
     var db = FirebaseFirestore.instance;
 
-    db.collection("Goaltenders").doc(goalieName).collection("Evaluations").doc(dateAndTime).collection("Scoring").doc("Score").set(
+    db.collection("Goaltenders").doc(goalieName).collection("Evaluations").doc(dateAndTime.toString().substring(0,19)).collection("Scoring").doc("Score").set(
       {
         "Acquisition": ItemScore(name: "Acquisition").count,
         "Tracking": ItemScore(name: "Tracking").count,
@@ -100,5 +100,5 @@ class FullScore {
         "Grow": CategoryScore(name: "Grow", itemScores: [ItemScore(name: "Athletic Habits"), ItemScore(name: "Emotional Habits"), ItemScore(name: "Practice Habits")]).getAverage(),
       }
     );
-  }
+  }*/
 }
