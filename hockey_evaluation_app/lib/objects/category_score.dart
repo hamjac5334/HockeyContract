@@ -15,6 +15,15 @@ class CategoryScore extends StatefulWidget {
     return CategoryScoreState();
   }
 
+  int getItemScore(String item){
+    for (ItemScore itemScore in itemScores){
+      if (item == itemScore.name){
+        return itemScore.count;
+      }
+    }
+    return 0;
+  }
+
   double getAverage() {
     int denominator = 0;
     int numerator = 0;
@@ -25,6 +34,8 @@ class CategoryScore extends StatefulWidget {
     return numerator / denominator;
   }
 }
+
+
 
 class CategoryScoreState extends State<CategoryScore> {
   double averageScore = 0.0;
@@ -37,6 +48,7 @@ class CategoryScoreState extends State<CategoryScore> {
     }
     averageScore = total / widget.itemScores.length;
   }
+  
 
   @override
   Widget build(BuildContext context) {
