@@ -3,6 +3,7 @@ import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:hockey_evaluation_app/pages/new_goaltender_page.dart';
 import 'package:hockey_evaluation_app/widgets/goaltender_item.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 typedef GoaltenderListChangedCallback = Function(Goaltender goaltender);
 
@@ -247,7 +248,33 @@ class GoaltenderListViewState extends State<GoaltenderListView>
                 onGoaltenderWatchlist: _handleGoaltenderWatchlistAdded,
               );
             }),
-        const Text("Waiting for firebase data to be properly stored"),
+        // const Text("Waiting for firebase data to be properly stored"),
+        RadarChart(RadarChartData(
+            getTitle: (index, angle) {
+              switch (index) {
+                case 0:
+                  return RadarChartTitle(text: "Label 1", angle: angle);
+                case 1:
+                  return RadarChartTitle(text: "Label 2", angle: angle);
+                case 2:
+                  return RadarChartTitle(text: "Label 3", angle: angle);
+                case 3:
+                  return RadarChartTitle(text: "Label 4", angle: angle);
+                default:
+                  return RadarChartTitle(text: "Error", angle: angle);
+              }
+            },
+            dataSets: [
+              RadarDataSet(
+                dataEntries: [
+                  RadarEntry(value: 10),
+                  RadarEntry(value: 20),
+                  RadarEntry(value: 30),
+                  RadarEntry(value: 40),
+                  RadarEntry(value: 50)
+                ],
+              )
+            ])),
         ListView.builder(
             itemCount: getGoaltenderWatchList().length,
             itemBuilder: (BuildContext context, int index) {
@@ -262,10 +289,12 @@ class GoaltenderListViewState extends State<GoaltenderListView>
       ]),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => NewGoaltenderPage(
-                    onGoaltenderListChanged: widget.onGoaltenderListChanged,
-                  )));
+          await Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) {
+            return NewGoaltenderPage(
+              onGoaltenderListChanged: widget.onGoaltenderListChanged,
+            );
+          }));
         },
         child: const Icon(Icons.add),
       ),

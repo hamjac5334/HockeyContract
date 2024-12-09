@@ -147,7 +147,6 @@ class MyHomePage extends StatefulWidget {
   // always marked "final".
 
   final String title;
-  
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -169,58 +168,70 @@ class _MyHomePageState extends State<MyHomePage> {
     final FirebaseAuth auth = FirebaseAuth.instance;
     await db.collection("Goaltenders").get().then(
       (querySnapshot) {
-        for (var docSnapshot in querySnapshot.docs){
-          if (auth.currentUser?.email == "goaltenderevaluation@gmail.com"){
+        for (var docSnapshot in querySnapshot.docs) {
+          if (auth.currentUser?.email == "goaltenderevaluation@gmail.com") {
             goaltenders.add(Goaltender(
-              name: docSnapshot.data()['Name'],
-              levelAge: docSnapshot.data()['Level/Age'],
-              organization: docSnapshot.data()['Organization']));
-              db.collection("Goaltenders").doc(docSnapshot.data()['Name']).collection("Evaluations").get().then(
-                (querySnapshotEvals)  {
-                    for (var eval in querySnapshotEvals.docs){
-                      print("Adding Eval");
-                      Evaluation temp_evaluation = Evaluation(
-                        goaltender: Goaltender(name: docSnapshot.data()['Name'], levelAge: docSnapshot.data()['Level/Age'], organization: docSnapshot.data()['Organization']),
-                        evaluationDate: (eval.data()["Evaluation Date"] as Timestamp).toDate(),
-                        evaluationType: eval.data()['Evaluation Type'],
-                        //TODO: Change this to be the scores stored on firebase
-                        fullScore: FullScore());
-                        evaluations.add(temp_evaluation);
-                        db.collection("Goaltenders").doc(docSnapshot.data()["Name"]).collection("Evaluations").doc(eval.id).collection("Scoring").get().then(
-                          (querySnapshotscore){
-                            for (var score in querySnapshotscore.docs){
-                              
-                            }
-                          }
-                        );   
-                  }
+                name: docSnapshot.data()['Name'],
+                levelAge: docSnapshot.data()['Level/Age'],
+                organization: docSnapshot.data()['Organization']));
+            db
+                .collection("Goaltenders")
+                .doc(docSnapshot.data()['Name'])
+                .collection("Evaluations")
+                .get()
+                .then((querySnapshotEvals) {
+              for (var eval in querySnapshotEvals.docs) {
+                print("Adding Eval");
+                Evaluation temp_evaluation = Evaluation(
+                    goaltender: Goaltender(
+                        name: docSnapshot.data()['Name'],
+                        levelAge: docSnapshot.data()['Level/Age'],
+                        organization: docSnapshot.data()['Organization']),
+                    evaluationDate:
+                        (eval.data()["Evaluation Date"] as Timestamp).toDate(),
+                    evaluationType: eval.data()['Evaluation Type'],
+                    //TODO: Change this to be the scores stored on firebase
+                    fullScore: FullScore());
+                evaluations.add(temp_evaluation);
+              }
+            });
+          } else {
+            if (docSnapshot.data()['Organization'] == organization) {
+              goaltenders.add(Goaltender(
+                  name: docSnapshot.data()['Name'],
+                  levelAge: docSnapshot.data()['Level/Age'],
+                  organization: docSnapshot.data()['Organization']));
+              db
+                  .collection("Goaltenders")
+                  .doc(docSnapshot.data()['Name'])
+                  .collection("Evaluations")
+                  .get()
+                  .then((querySnapshotEvals) {
+                for (var eval in querySnapshotEvals.docs) {
+                  print("Adding Eval");
+                  print(docSnapshot.data()['Name'] +
+                      ' ' +
+                      docSnapshot.data()['Level/Age'] +
+                      ' ' +
+                      docSnapshot.data()['Organization'] +
+                      ' ' +
+                      eval.data()['Evaluation Type']);
+                  Evaluation temp_evaluation = Evaluation(
+                      goaltender: Goaltender(
+                          name: docSnapshot.data()['Name'],
+                          levelAge: docSnapshot.data()['Level/Age'],
+                          organization: docSnapshot.data()['Organization']),
+                      evaluationDate:
+                          (eval.data()["Evaluation Date"] as Timestamp)
+                              .toDate(),
+                      evaluationType: eval.data()['Evaluation Type'],
+                      //TODO: Change this to be the scores stored on firebase
+                      fullScore: FullScore());
+                  evaluations.add(temp_evaluation);
                 }
-              );
-            } 
-          else {
-            if (docSnapshot.data()['Organization'] == organization)  {
-            goaltenders.add(Goaltender(
-              name: docSnapshot.data()['Name'],
-              levelAge: docSnapshot.data()['Level/Age'],
-              organization: docSnapshot.data()['Organization']));
-               db.collection("Goaltenders").doc(docSnapshot.data()['Name']).collection("Evaluations").get().then(
-                (querySnapshotEvals)  {
-                    for (var eval in querySnapshotEvals.docs){
-                      print("Adding Eval");
-                      print(docSnapshot.data()['Name'] + ' ' + docSnapshot.data()['Level/Age']+ ' '  + docSnapshot.data()['Organization']+ ' '  + eval.data()['Evaluation Type']);
-                      Evaluation temp_evaluation = Evaluation(
-                        goaltender: Goaltender(name: docSnapshot.data()['Name'], levelAge: docSnapshot.data()['Level/Age'], organization: docSnapshot.data()['Organization']),
-                        evaluationDate: (eval.data()["Evaluation Date"] as Timestamp).toDate(),
-                        evaluationType: eval.data()['Evaluation Type'],
-                        //TODO: Change this to be the scores stored on firebase
-                        fullScore: FullScore());
-                        evaluations.add(temp_evaluation);
-                  }
-                }
-              );
+              });
+            }
           }
-          
-        }
         }
       },
       onError: (e) => print("Error completing: $e"),
@@ -230,12 +241,10 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-
   //TODO: the way the data is stored in firebase is based on the evaluation having a name, instead of it having a goaltender
 
-
-  void _cloudOrgPull() async{
-    goaltenders.clear(); 
+  void _cloudOrgPull() async {
+    goaltenders.clear();
     evaluations.clear();
     //TODO: Find a solution that does not resort to this!
     final FirebaseAuth auth = FirebaseAuth.instance;
@@ -243,11 +252,10 @@ class _MyHomePageState extends State<MyHomePage> {
       (querySnapshot) {
         for (var docSnapshot in querySnapshot.docs) {
           ('${docSnapshot.id} => ${docSnapshot.data()}');
-          if (auth.currentUser?.email == docSnapshot.id){
+          if (auth.currentUser?.email == docSnapshot.id) {
             organization = docSnapshot.data()["Organization"];
             print(organization);
           }
-          
         }
       },
       onError: (e) => print("Error completing: $e"),
@@ -256,11 +264,10 @@ class _MyHomePageState extends State<MyHomePage> {
       (querySnapshot) {
         for (var docSnapshot in querySnapshot.docs) {
           ('${docSnapshot.id} => ${docSnapshot.data()}');
-          if (organization == docSnapshot.id){
+          if (organization == docSnapshot.id) {
             code = docSnapshot.data()["Code"];
             print(code);
           }
-          
         }
       },
       onError: (e) => print("Error completing: $e"),
@@ -283,7 +290,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-      _cloudOrgPull(); //this pulls both goaltender and eval
+    _cloudOrgPull(); //this pulls both goaltender and eval
   }
 
   Widget returnScreen() {
@@ -292,15 +299,15 @@ class _MyHomePageState extends State<MyHomePage> {
       return Consumer<ApplicationState>(
         builder: (context, appState, _) {
           return AuthFunc(
-              loggedIn: appState.loggedIn,
-              signOut: () {
-                FirebaseAuth.instance.signOut();
-              },
-              goaltenders: goaltenders,
-              evaluations: evaluations,
-              onGoaltenderListChanged: _handleNewGoaltender,
-              onEvaluationListChanged: _handleNewEvaluation,
-              );
+            loggedIn: appState.loggedIn,
+            signOut: () {
+              FirebaseAuth.instance.signOut();
+            },
+            goaltenders: goaltenders,
+            evaluations: evaluations,
+            onGoaltenderListChanged: _handleNewGoaltender,
+            onEvaluationListChanged: _handleNewEvaluation,
+          );
         },
       );
     } else if (current_screen_index == 1) {
@@ -315,21 +322,18 @@ class _MyHomePageState extends State<MyHomePage> {
         onEvaluationListChanged: _handleNewEvaluation,
       );
     } else if (current_screen_index == 3) {
-        //_cloudOrgPull();
-        if (organization == "No Organization"){
-          return JoinOrganizationPage();}
-        else{
-          return OrganizationPage(organization: organization, code: code);
-        }
-    
+      //_cloudOrgPull();
+      if (organization == "No Organization") {
+        return JoinOrganizationPage();
+      } else {
+        return OrganizationPage(organization: organization, code: code);
+      }
     } else if (current_screen_index == 4) {
-        //_cloudOrgPull();
-        return TheseSettings();
-    
+      //_cloudOrgPull();
+      return TheseSettings();
     } else if (current_screen_index == 5) {
-        //_cloudOrgPull();
-        return TheseSettings();
-    
+      //_cloudOrgPull();
+      return TheseSettings();
     } else {
       print("Something is wrong");
       return EvaluationListView(
@@ -356,11 +360,11 @@ class _MyHomePageState extends State<MyHomePage> {
               Flexible(
                 // This prevents the overflow
                 child: Image.asset(
-                'lib/image/logo.png', // Path to image file
-                height: 40,
-                fit: BoxFit.cover, // Adjust height as needed
-              ),
-                
+                  'lib/image/logo.png', // Path to image file
+                  height: 40,
+                  fit: BoxFit.cover, // Adjust height as needed
+                ),
+
                 /*Text(
                   widget.title,
                   style: Theme.of(context).textTheme.labelLarge,
