@@ -33,7 +33,7 @@ class EvaluationListViewState extends State<EvaluationListView>
   // for searching stuff
   String searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
-  final List<String> _filters = ["A-Z", "Z-A", "Age/Level", "Grade"];
+  final List<String> _filters = ["A-Z", "Z-A", "Age/Level"];
 
   // the selected value
   String? _selectedFilter;
@@ -55,16 +55,14 @@ class EvaluationListViewState extends State<EvaluationListView>
 
   void _filterEvals(String filter) {
     if (filter == "A-Z") {
-      widget.displayitems.sort((a, b) => a.toString().compareTo(b.toString()));
+      widget.goaltenders.sort((a, b) => a.toString().compareTo(b.toString()));
     } else if (filter == 'Z-A') {
-      widget.displayitems.sort((b, a) => a.toString().compareTo(b.toString()));
+      widget.goaltenders.sort((b, a) => a.toString().compareTo(b.toString()));
     } else if (filter == 'Age/Level') {
       widget.goaltenders.sort(
         (a, b) => a.levelAge.compareTo(b.levelAge),
       );
-    } else if (filter == 'Grade') {
-      //widget.goaltenders.sort((a, b) => a.,)
-    }
+    } 
   }
 
   List<Evaluation> _searchEvals(String search) {
@@ -169,12 +167,15 @@ class EvaluationListViewState extends State<EvaluationListView>
             hint: const Center(
                 child: Text(
               'Select Filter',
+              style: TextStyle(color: Colors.grey),
+            
             )),
             // Hide the default underline
             underline: Container(),
             // set the color of the dropdown menu
             icon: const Icon(
               Icons.arrow_downward,
+              color: Colors.grey,
             ),
             isExpanded: true,
 
