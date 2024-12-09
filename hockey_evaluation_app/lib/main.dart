@@ -479,7 +479,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onTap: () async {
                   await _auth.signOut();
                   Restart.restartApp(notificationTitle: 'Restarting App',
-		              notificationBody: 'Please tap here to open the app again.',);
+		                notificationBody: 'Please tap here to open the app again.',);
                   print("This should log out");
                   Navigator.pop(context);
                 },
