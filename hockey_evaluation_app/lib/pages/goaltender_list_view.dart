@@ -25,6 +25,9 @@ class GoaltenderListViewState extends State<GoaltenderListView>
     with TickerProviderStateMixin {
   late final TabController _tabController;
   final TextEditingController _filterController = TextEditingController();
+  final List<String> _filters = ["A-Z", "Z-A"];
+
+  String? _selectedFilter;
 
   @override
   void initState() {
@@ -52,6 +55,13 @@ class GoaltenderListViewState extends State<GoaltenderListView>
     setState(() {
       goaltender.toggleWatchlist();
     });
+  }
+   void _filtergoalies(String filter) {
+    if (filter == "A-Z") {
+      widget.displayitems.sort((a, b) => a.toString().compareTo(b.toString()));
+    } else if (filter == 'Z-A') {
+      widget.displayitems.sort((b, a) => a.toString().compareTo(b.toString()));
+    } 
   }
 
   List<Goaltender> getGoaltenderWatchList() {
@@ -112,6 +122,82 @@ class GoaltenderListViewState extends State<GoaltenderListView>
     );
   }
 
+  void showFilterDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          alignment: Alignment.topCenter,
+          title: Text('Filter'),
+          content: DropdownButton<String>(
+            value: _selectedFilter,
+            onChanged: (value) {
+              setState(() {
+                _selectedFilter = value;
+              });
+            },
+            hint: const Center(
+                child: Text(
+              'Select Filter',
+              style: TextStyle(color: Colors.grey),
+            
+            )),
+            // Hide the default underline
+            underline: Container(),
+            // set the color of the dropdown menu
+            icon: const Icon(
+              Icons.arrow_downward,
+              color: Colors.grey,
+            ),
+            isExpanded: true,
+
+            // The list of options
+            items: _filters
+                .map((e) => DropdownMenuItem(
+                      value: e,
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          e,
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                      ),
+                    ))
+                .toList(),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {
+                  widget.displayitems = widget.items;
+                  _selectedFilter = null;
+                });
+              },
+              child: Text('Clear'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+
+                setState(() {
+                  widget.displayitems = widget.items;
+                });
+              },
+              child: Text('Filter'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,8 +210,7 @@ class GoaltenderListViewState extends State<GoaltenderListView>
         actions: [
           IconButton(
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Pretend this brought up a way to filter')));
+                showFilterDialog(context);
               },
               icon: const Icon(Icons.filter_alt_sharp)),
           IconButton(
