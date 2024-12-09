@@ -47,3 +47,34 @@ are key. I plan to hold myself, and the rest of the team, accountable for doing 
 on what I can feasably do and how much time I can realistically put into this project with my other obligations. Finally, I will 
 show respect to my groupmates and our clients. I will respect their time and their thoughts on the project. 
 
+
+# Description of App
+
+Functionality: D'Crease is a platform that allows hockey coaches and scouts to rate youth hockey goaltenders on their 
+ability on the ice to evaluate, compare, and see players' progress. 
+
+Users: D'Crease is designed for youth hockey coaches and goaltenders to be able to rate youth hockey goaltenders to be able to compare
+and track their progress. 
+
+How to Use: The user needs to login using firebase, then will come up on the home screen, then can navigate to the screens as followed:
+
+
+* Goalenders Page: This is where to view the goaltenders and add new goaltenders
+              
+* Evaluation Page: This is where to view the evaluations that have been made or create a new evaluation
+* Organization Page: What organization the user belongs to or list of organizations
+* Notification Page: We don't know what this page is yet
+* App Navigation: App is navigable through the drawer that opens on the uper left side of the screen or through the home page
+
+If there are any questions, then navigate to the settings page where there is an explanation of each page of the app and 
+FAQ's to help the user better understand the application if they are lost. 
+
+
+
+
+
+
+
+
+
+
