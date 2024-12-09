@@ -10,6 +10,7 @@ import 'package:hockey_evaluation_app/widgets/goaltender_item.dart';
 import 'package:hockey_evaluation_app/widgets/styledButton.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hockey_evaluation_app/objects/category_score.dart';
 
 class OpenEvaluationInfoPage extends StatelessWidget {
   Evaluation evaluation;
@@ -232,12 +233,23 @@ class OpenEvaluationSubmitPage extends StatefulWidget {
 class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
   void dataSaveScoring() {
     var db = FirebaseFirestore.instance;
-    for (var item in widget.evaluation.fullScore.categoryScoreList){
-      db.collection("Goaltenders").doc(widget.evaluation.goaltender.name).collection("Evaluations").doc(widget.evaluation.evaluationDate.toString().substring(0,19)).collection("Scoring").doc(item.name).set({
-        item.name : item.getAverage()
-      });
+    for (var catagory in widget.evaluation.fullScore.categoryScoreList){
+      for (var item in widget.evaluation.fullScore.categoryScoreList){
+      db.collection("Goaltenders").doc(widget.evaluation.goaltender.name).collection("Evaluations").doc(widget.evaluation.evaluationDate.toString().substring(0,19)).collection("Scoring").doc(catagory.name).set({
+        "Catagory" : "Catagory",
+        catagory.name : catagory.getAverage(),
+        item.name : catagory.getItemScore(item.name)
+      }
+      );
+      }
     }
-    ;}
+    /*for (var item in widget.evaluation.fullScore.itemScoreList){
+      db.collection("Goaltenders").doc(widget.evaluation.goaltender.name).collection("Evaluations").doc(widget.evaluation.evaluationDate.toString().substring(0,19)).collection("Scoring").doc(item.name).set({
+        "Skill" : "Skill",
+        item.name: widget.evaluation.fullScore.categoryScoreList.
+    });   
+    }*/
+  }
 
   @override
   Widget build(BuildContext context) {

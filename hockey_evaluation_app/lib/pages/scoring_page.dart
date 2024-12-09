@@ -94,15 +94,6 @@ class _EvaluationCategoryState extends State<EvaluationCategory> {
     }
   }
 
-  void dataSaveScoring(goalieName, dateAndTime ) {
-    var db = FirebaseFirestore.instance;
-    for (var item in widget.subItems){
-      ItemScore item_score = ItemScore(name: item);
-      db.collection("Goaltenders").doc(goalieName).collection("Evaluations").doc(dateAndTime.toString().substring(0,19)).collection("Scoring").doc("Score").set({
-        item : item_score
-      });
-    }
-    ;}
   
 
   //dropdown menu: https://www.youtube.com/watch?v=6_Azs3fq9O4
