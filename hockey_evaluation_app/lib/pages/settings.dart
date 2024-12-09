@@ -52,7 +52,7 @@ class _DrawerScreenState extends State<TheseSettings> {
               "Evaluation Page: This is where to view the evaluations that have been made or create a new evaluation\n\n"
               "Organization Page: List of organizations\n\n"
               "Notification Page: We don't know what this page is yet\n\n"
-              "App Navigation: App is navigable through the drawer that opens on the uper left side of the screen or through the home page\n",
+              "App Navigation: App is navigable through the drawer that opens on the upper left side of the screen or through the home page\n",
               style: TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 16),
@@ -65,15 +65,7 @@ class _DrawerScreenState extends State<TheseSettings> {
               "Q: How do I add a new goaltender?\n"
               "A: You can add a new goaltender by clicking the add button in the bottom right corner of the Goaltenders Page\n\n"
               "Q: How do I add a new evaluation?\n"
-              "A: You can add a new evaluation by clicking the add button in the bottom right corner of the Evaluations Page\n\n"
-              "Q: Question #3?\n"
-              "A: Answer#3\n\n"
-              "Q: Question #4\n"
-              "A: Answer #4 \n\n"
-              "Q: Question #5\n"
-              "A: Answer #5\n\n"
-              "Q: Question #6\n"
-              "A: Answer #6\n\n",
+              "A: You can add a new evaluation by clicking the add button in the bottom right corner of the Evaluations Page\n\n",
               
               style: TextStyle(fontSize: 16),
             ),
