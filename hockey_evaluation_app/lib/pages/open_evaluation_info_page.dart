@@ -234,23 +234,12 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
   void dataSaveScoring() {
     var db = FirebaseFirestore.instance;
     for (var catagory in widget.evaluation.fullScore.categoryScoreList){
-      for (var item in widget.evaluation.fullScore.categoryScoreList){
       db.collection("Goaltenders").doc(widget.evaluation.goaltender.name).collection("Evaluations").doc(widget.evaluation.evaluationDate.toString().substring(0,19)).collection("Scoring").doc(catagory.name).set({
-        "Catagory" : "Catagory",
-        catagory.name : catagory.getAverage(),
-        item.name : catagory.getItemScore(item.name)
-      }
-      );
-      }
+        "Catagory" :catagory.name,
+        catagory.name : catagory.getAverage()
+      });
     }
-    /*for (var item in widget.evaluation.fullScore.itemScoreList){
-      db.collection("Goaltenders").doc(widget.evaluation.goaltender.name).collection("Evaluations").doc(widget.evaluation.evaluationDate.toString().substring(0,19)).collection("Scoring").doc(item.name).set({
-        "Skill" : "Skill",
-        item.name: widget.evaluation.fullScore.categoryScoreList.
-    });   
-    }*/
   }
-
   @override
   Widget build(BuildContext context) {
     print("Goaltender: ${widget.evaluation.goaltender.name}");

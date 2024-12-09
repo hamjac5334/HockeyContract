@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hockey_evaluation_app/main.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hockey_evaluation_app/pages/new_goaltender_page.dart';
 import 'package:hockey_evaluation_app/pages/new_organization.dart';
 import 'package:hockey_evaluation_app/pages/settings.dart';
 import 'package:hockey_evaluation_app/widgets/styledButton.dart';
+import 'package:restart_app/restart_app.dart';
 
 
 class JoinOrganizationPage extends StatefulWidget {
@@ -38,8 +40,9 @@ class JoinOrganizationPageState extends State<JoinOrganizationPage> {
       onError: (e) => print("Error completing: $e"),
     );
     dataSave();
+    Restart.restartApp(notificationTitle: 'Restarting App',
+		notificationBody: 'Please tap here to open the app again.',);
   }
-
   
 
   void dataSave() {
@@ -80,6 +83,10 @@ class JoinOrganizationPageState extends State<JoinOrganizationPage> {
               StyledButton(child: Text("Join"), 
                 onPressed: () {
                   organizationAccess();
+                  setState(() {
+                    
+                  });
+
                 } ),
               StyledButton
               (onPressed: () async {

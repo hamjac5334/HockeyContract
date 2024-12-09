@@ -7,6 +7,7 @@ import 'package:hockey_evaluation_app/pages/new_goaltender_page.dart';
 import 'package:hockey_evaluation_app/pages/new_organization.dart';
 import 'package:hockey_evaluation_app/pages/settings.dart';
 import 'package:hockey_evaluation_app/widgets/styledButton.dart';
+import 'package:restart_app/restart_app.dart';
 
 
 class OrganizationPage extends StatefulWidget {
@@ -56,6 +57,9 @@ class OrganizationPageState extends State<OrganizationPage> {
               StyledButton
               (onPressed: (){
                 leave();
+                   Restart.restartApp(notificationTitle: 'Reloading App',
+		                notificationBody: 'Please tap here to open the app again.',);
+
               }, 
               child: Text("Leave Organization"))
             ],

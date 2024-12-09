@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:hockey_evaluation_app/objects/category_score.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
 import 'package:hockey_evaluation_app/objects/full_score.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
@@ -19,6 +20,7 @@ import 'package:firebase_auth/firebase_auth.dart'
     hide EmailAuthProvider, PhoneAuthProvider;
 import 'package:hockey_evaluation_app/objects/authentication.dart';
 import 'package:hockey_evaluation_app/widgets/app_state.dart';
+import 'package:restart_app/restart_app.dart';
 
 Color redtheme = const Color.fromRGBO(254, 48, 60, 1);
 void main() async {
@@ -184,6 +186,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         //TODO: Change this to be the scores stored on firebase
                         fullScore: FullScore());
                         evaluations.add(temp_evaluation);
+                        db.collection("Goaltenders").doc(docSnapshot.data()["Name"]).collection("Evaluations").doc(eval.id).collection("Scoring").get().then(
+                          (querySnapshotscore){
+                            for (var score in querySnapshotscore.docs){
+                              
+                            }
+                          }
+                        );   
                   }
                 }
               );
@@ -469,6 +478,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 onTap: () async {
                   await _auth.signOut();
+                  Restart.restartApp(notificationTitle: 'Restarting App',
+		              notificationBody: 'Please tap here to open the app again.',);
                   print("This should log out");
                   Navigator.pop(context);
                 },

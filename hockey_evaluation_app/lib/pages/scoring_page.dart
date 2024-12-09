@@ -38,7 +38,6 @@ class EvaluationUI extends StatelessWidget {
         //   //Only put values in for Run bc I don't know the other features
         //   EvaluationCategory(
         //       title: "See", subItems: ["Acquisition", "Tracking", "Focus"]),
-
         //   EvaluationCategory(
         //       title: "Understand",
         //       subItems: ["Play Reading", "Pattern Recognition", "Awareness"]),

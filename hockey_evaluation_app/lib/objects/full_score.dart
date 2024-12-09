@@ -60,33 +60,7 @@ class FullScore {
         name: "Error Category", itemScores: [ItemScore(name: "Error Item")]);
   }
 
-  List<ItemScore> itemScoreList = [
-      ItemScore(name: "Acquisition"),
-      ItemScore(name: "Tracking"),
-      ItemScore(name: "Focus"),
-      ItemScore(name: "Play Reading"),
-      ItemScore(name: "Pattern Recognition"),
-      ItemScore(name: "Awareness"),
-      ItemScore(name: "Compete Level"),
-      ItemScore(name: "Motivation"),
-      ItemScore(name: "Confidence"),
-      ItemScore(name: "Creativity"),
-      ItemScore(name: "Save Selection"),
-      ItemScore(name: "Playmaking"),
-      ItemScore(name: "Energy"),
-      ItemScore(name: "Skating"),
-      ItemScore(name: "Range"),
-      ItemScore(name: "Coordination"),
-      ItemScore(name: "Positioning"),
-      ItemScore(name: "Stance"),
-      ItemScore(name: "Rebound Control"),
-      ItemScore(name: "Team Orientation"),
-      ItemScore(name: "Work Ethic"),
-      ItemScore(name: "Maturity"),
-      ItemScore(name: "Athletic Habits"),
-      ItemScore(name: "Emotional Habits"),
-      ItemScore(name: "Practice Habits"),
-    ];
+
 
   /*void dataSaveScoring(goalieName, dateAndTime ) {
     var db = FirebaseFirestore.instance;
