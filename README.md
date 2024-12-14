@@ -37,6 +37,15 @@ ability on the ice to evaluate, compare, and see players' progress. We have feat
 If there are any questions, then navigate to the settings page where there is an explanation of each page of the app and 
 FAQ's to help the user better understand the application if they are lost. 
 
+Initial Wireframes:
+<img width="479" alt="Screenshot 2024-12-13 at 6 07 58 PM" src="https://github.com/user-attachments/assets/9ed277b6-e9bb-49e2-9db3-9c6cc382c109" />
+
+<img width="457" alt="Screenshot 2024-12-13 at 6 08 05 PM" src="https://github.com/user-attachments/assets/a7bbcf66-8648-46f9-9ae7-802cb3155233" />
+
+Pictures of the App:
+
+(Need to include)
+
 
 # HockeyContract
 Team Contract for Mobile final project (Hockey Goaltender Evaluation)
