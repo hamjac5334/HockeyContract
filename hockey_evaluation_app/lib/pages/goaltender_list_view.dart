@@ -34,6 +34,10 @@ class GoaltenderListViewState extends State<GoaltenderListView>
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+
+    for (Goaltender item in widget.items) {
+      print("Adapt score:  ${item.adapt}");
+    }
   }
 
   @override
@@ -57,12 +61,13 @@ class GoaltenderListViewState extends State<GoaltenderListView>
       goaltender.toggleWatchlist();
     });
   }
-   void _filtergoalies(String? filter) {
+
+  void _filtergoalies(String? filter) {
     if (filter == "A-Z") {
       widget.displayitems.sort((a, b) => a.toString().compareTo(b.toString()));
     } else if (filter == 'Z-A') {
       widget.displayitems.sort((b, a) => a.toString().compareTo(b.toString()));
-    } 
+    }
   }
 
   List<Goaltender> getGoaltenderWatchList() {
@@ -139,7 +144,6 @@ class GoaltenderListViewState extends State<GoaltenderListView>
                 child: Text(
               'Select Filter',
               style: TextStyle(color: Colors.grey),
-            
             )),
             // Hide the default underline
             underline: Container(),
@@ -197,6 +201,28 @@ class GoaltenderListViewState extends State<GoaltenderListView>
     );
   }
 
+  List<RadarDataSet> getDataSets() {
+    List<RadarDataSet> list = [];
+    for (Goaltender goaltender in widget.items) {
+      RadarDataSet dataSet = RadarDataSet(
+          borderColor: Colors.amber,
+          fillColor: Colors.amber.withOpacity(0.3),
+          dataEntries: [
+            RadarEntry(value: goaltender.adapt),
+            RadarEntry(value: goaltender.drive),
+            RadarEntry(value: goaltender.grow),
+            RadarEntry(value: goaltender.learn),
+            RadarEntry(value: goaltender.move),
+            RadarEntry(value: goaltender.save),
+            RadarEntry(value: goaltender.see),
+            RadarEntry(value: goaltender.understand)
+          ]);
+      list.add(dataSet);
+    }
+
+    return list;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -239,6 +265,7 @@ class GoaltenderListViewState extends State<GoaltenderListView>
             itemCount: widget.displayitems.length,
             itemBuilder: (BuildContext context, int index) {
               final goalie = widget.displayitems[index];
+              print("Adapt goalie: ${goalie.adapt}");
 
               //return a goalie item
               return GoaltenderItem(
@@ -248,31 +275,59 @@ class GoaltenderListViewState extends State<GoaltenderListView>
             }),
         // const Text("Waiting for firebase data to be properly stored"),
         RadarChart(RadarChartData(
+            titlePositionPercentageOffset: 0.05,
             getTitle: (index, angle) {
               switch (index) {
                 case 0:
-                  return RadarChartTitle(text: "Label 1", angle: angle);
+                  return RadarChartTitle(text: "Adapt", angle: angle);
                 case 1:
-                  return RadarChartTitle(text: "Label 2", angle: angle);
+                  return RadarChartTitle(text: "Drive", angle: angle);
                 case 2:
-                  return RadarChartTitle(text: "Label 3", angle: angle);
+                  return RadarChartTitle(text: "Grow", angle: angle);
                 case 3:
-                  return RadarChartTitle(text: "Label 4", angle: angle);
+                  return RadarChartTitle(text: "Learn", angle: angle);
+                case 4:
+                  return RadarChartTitle(text: "Move", angle: angle);
+                case 5:
+                  return RadarChartTitle(text: "Save", angle: angle);
+                case 6:
+                  return RadarChartTitle(text: "See", angle: angle);
+                case 7:
+                  return RadarChartTitle(text: "Understand", angle: angle);
                 default:
                   return RadarChartTitle(text: "Error", angle: angle);
               }
             },
-            dataSets: [
-              RadarDataSet(
-                dataEntries: [
-                  RadarEntry(value: 10),
-                  RadarEntry(value: 20),
-                  RadarEntry(value: 30),
-                  RadarEntry(value: 40),
-                  RadarEntry(value: 50)
-                ],
-              )
-            ])),
+            dataSets: getDataSets()
+            // dataSets: [
+            //   RadarDataSet(
+            //       borderColor: Colors.yellow,
+            //       fillColor: Colors.yellow.withOpacity(.5),
+            //       dataEntries: [
+            //         RadarEntry(value: 20),
+            //         RadarEntry(value: 20),
+            //         RadarEntry(value: 30),
+            //         RadarEntry(value: 50),
+            //         RadarEntry(value: 50),
+            //         RadarEntry(value: 10),
+            //         RadarEntry(value: 35),
+            //         RadarEntry(value: 30),
+            //       ]),
+            //   RadarDataSet(
+            //     fillColor: Colors.blue.withOpacity(.3),
+            //     dataEntries: [
+            //       RadarEntry(value: 12),
+            //       RadarEntry(value: 20),
+            //       RadarEntry(value: 30),
+            //       RadarEntry(value: 40),
+            //       RadarEntry(value: 50),
+            //       RadarEntry(value: 10),
+            //       RadarEntry(value: 35),
+            //       RadarEntry(value: 30),
+            //     ],
+            //   )
+            // ]
+            )),
         ListView.builder(
             itemCount: getGoaltenderWatchList().length,
             itemBuilder: (BuildContext context, int index) {
