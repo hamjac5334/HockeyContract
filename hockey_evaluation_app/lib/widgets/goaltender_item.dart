@@ -14,7 +14,6 @@ class GoaltenderItem extends StatelessWidget {
   final GoaltenderWatchlistCallback onGoaltenderWatchlist;
   @override
   Widget build(BuildContext context) {
-    print("Goaltender Adapt ${goaltender.adapt}");
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -32,7 +31,7 @@ class GoaltenderItem extends StatelessWidget {
               maxWidth: 100,
             ),
             child: Text(
-              goaltender.adapt.toString(),
+              goaltender.name,
               overflow: TextOverflow.ellipsis, // Truncate text if too long
             ),
           ),

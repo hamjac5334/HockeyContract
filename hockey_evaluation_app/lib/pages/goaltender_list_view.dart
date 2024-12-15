@@ -203,10 +203,24 @@ class GoaltenderListViewState extends State<GoaltenderListView>
 
   List<RadarDataSet> getDataSets() {
     List<RadarDataSet> list = [];
+    List<Color> colors = [
+      Colors.black,
+      Colors.yellow,
+      Colors.orange,
+      Colors.green,
+      Colors.blue,
+      Colors.purple,
+      Colors.pink,
+      Colors.red,
+      Colors.indigo,
+      Colors.deepPurple,
+      Colors.lightBlue,
+    ];
+    int colorIndex = 0;
     for (Goaltender goaltender in widget.displayitems) {
       RadarDataSet dataSet = RadarDataSet(
-          borderColor: Colors.amber,
-          fillColor: Colors.amber.withOpacity(0.3),
+          borderColor: colors[colorIndex],
+          fillColor: colors[colorIndex].withOpacity(0.05),
           dataEntries: [
             RadarEntry(value: goaltender.adapt),
             RadarEntry(value: goaltender.drive),
@@ -218,6 +232,10 @@ class GoaltenderListViewState extends State<GoaltenderListView>
             RadarEntry(value: goaltender.understand)
           ]);
       list.add(dataSet);
+      colorIndex += 1;
+      if (colorIndex == colors.length) {
+        colorIndex = 0;
+      }
     }
 
     return list;
@@ -274,6 +292,7 @@ class GoaltenderListViewState extends State<GoaltenderListView>
               );
             }),
         // const Text("Waiting for firebase data to be properly stored"),
+
         RadarChart(RadarChartData(
             titlePositionPercentageOffset: 0.05,
             getTitle: (index, angle) {
