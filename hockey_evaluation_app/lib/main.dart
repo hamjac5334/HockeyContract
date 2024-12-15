@@ -189,7 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         db.collection("Goaltenders").doc(docSnapshot.data()["Name"]).collection("Evaluations").doc(eval.id).collection("Scoring").get().then(
                           (querySnapshotscore){
                             for (var score in querySnapshotscore.docs){
-                              
+                              score.data()["score"].toString();
                             }
                           }
                         );   

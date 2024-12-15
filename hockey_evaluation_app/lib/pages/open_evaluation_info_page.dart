@@ -335,6 +335,7 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
               ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text("This button will update firebase")));
                 dataSaveScoring();
+                
             },
             child: Text("Submit"),
             shape: RoundedRectangleBorder(),
