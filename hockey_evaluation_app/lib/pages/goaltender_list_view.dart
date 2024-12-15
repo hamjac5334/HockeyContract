@@ -260,10 +260,13 @@ class GoaltenderListViewState extends State<GoaltenderListView>
       ]),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await Navigator.of(context).push(MaterialPageRoute(
+          await Navigator.of(context).push(
+            MaterialPageRoute(
               builder: (context) => NewGoaltenderPage(
-                    onGoaltenderListChanged: widget.onGoaltenderListChanged,
-                  )));
+                onGoaltenderListChanged: widget.onGoaltenderListChanged,
+              ),
+            ),
+          );
         },
         child: const Icon(Icons.add),
       ),
