@@ -293,60 +293,75 @@ class GoaltenderListViewState extends State<GoaltenderListView>
             }),
         // const Text("Waiting for firebase data to be properly stored"),
 
-        RadarChart(RadarChartData(
-            titlePositionPercentageOffset: 0.05,
-            getTitle: (index, angle) {
-              switch (index) {
-                case 0:
-                  return RadarChartTitle(text: "Adapt", angle: angle);
-                case 1:
-                  return RadarChartTitle(text: "Drive", angle: angle);
-                case 2:
-                  return RadarChartTitle(text: "Grow", angle: angle);
-                case 3:
-                  return RadarChartTitle(text: "Learn", angle: angle);
-                case 4:
-                  return RadarChartTitle(text: "Move", angle: angle);
-                case 5:
-                  return RadarChartTitle(text: "Save", angle: angle);
-                case 6:
-                  return RadarChartTitle(text: "See", angle: angle);
-                case 7:
-                  return RadarChartTitle(text: "Understand", angle: angle);
-                default:
-                  return RadarChartTitle(text: "Error", angle: angle);
-              }
-            },
-            dataSets: getDataSets()
-            // dataSets: [
-            //   RadarDataSet(
-            //       borderColor: Colors.yellow,
-            //       fillColor: Colors.yellow.withOpacity(.5),
-            //       dataEntries: [
-            //         RadarEntry(value: 20),
-            //         RadarEntry(value: 20),
-            //         RadarEntry(value: 30),
-            //         RadarEntry(value: 50),
-            //         RadarEntry(value: 50),
-            //         RadarEntry(value: 10),
-            //         RadarEntry(value: 35),
-            //         RadarEntry(value: 30),
-            //       ]),
-            //   RadarDataSet(
-            //     fillColor: Colors.blue.withOpacity(.3),
-            //     dataEntries: [
-            //       RadarEntry(value: 12),
-            //       RadarEntry(value: 20),
-            //       RadarEntry(value: 30),
-            //       RadarEntry(value: 40),
-            //       RadarEntry(value: 50),
-            //       RadarEntry(value: 10),
-            //       RadarEntry(value: 35),
-            //       RadarEntry(value: 30),
-            //     ],
-            //   )
-            // ]
-            )),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("hey"),
+                Text("hey2"),
+                AspectRatio(
+                  aspectRatio: 1,
+                  child: RadarChart(RadarChartData(
+                      titlePositionPercentageOffset: 0.05,
+                      getTitle: (index, angle) {
+                        switch (index) {
+                          case 0:
+                            return RadarChartTitle(text: "Adapt", angle: angle);
+                          case 1:
+                            return RadarChartTitle(text: "Drive", angle: angle);
+                          case 2:
+                            return RadarChartTitle(text: "Grow", angle: angle);
+                          case 3:
+                            return RadarChartTitle(text: "Learn", angle: angle);
+                          case 4:
+                            return RadarChartTitle(text: "Move", angle: angle);
+                          case 5:
+                            return RadarChartTitle(text: "Save", angle: angle);
+                          case 6:
+                            return RadarChartTitle(text: "See", angle: angle);
+                          case 7:
+                            return RadarChartTitle(
+                                text: "Understand", angle: angle);
+                          default:
+                            return RadarChartTitle(text: "Error", angle: angle);
+                        }
+                      },
+                      dataSets: getDataSets()
+                      // dataSets: [
+                      //   RadarDataSet(
+                      //       borderColor: Colors.yellow,
+                      //       fillColor: Colors.yellow.withOpacity(.5),
+                      //       dataEntries: [
+                      //         RadarEntry(value: 20),
+                      //         RadarEntry(value: 20),
+                      //         RadarEntry(value: 30),
+                      //         RadarEntry(value: 50),
+                      //         RadarEntry(value: 50),
+                      //         RadarEntry(value: 10),
+                      //         RadarEntry(value: 35),
+                      //         RadarEntry(value: 30),
+                      //       ]),
+                      //   RadarDataSet(
+                      //     fillColor: Colors.blue.withOpacity(.3),
+                      //     dataEntries: [
+                      //       RadarEntry(value: 12),
+                      //       RadarEntry(value: 20),
+                      //       RadarEntry(value: 30),
+                      //       RadarEntry(value: 40),
+                      //       RadarEntry(value: 50),
+                      //       RadarEntry(value: 10),
+                      //       RadarEntry(value: 35),
+                      //       RadarEntry(value: 30),
+                      //     ],
+                      //   )
+                      // ]
+                      )),
+                ),
+              ]),
+        ),
         ListView.builder(
             itemCount: getGoaltenderWatchList().length,
             itemBuilder: (BuildContext context, int index) {
