@@ -42,8 +42,8 @@ class OrganizationPageState extends State<OrganizationPage> {
       appBar: AppBar(
         title: Text("Organization: " + organization),
         titleTextStyle: TextStyle(
-          fontSize: 22,
-          color: Color.fromARGB(255, 80, 78, 78),
+          fontSize: 24,
+          color: Colors.black,
         ),
         centerTitle: true,
       ),
@@ -53,15 +53,18 @@ class OrganizationPageState extends State<OrganizationPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children:[
-              Text("Code: " + code),
+              Padding(padding: EdgeInsets.all(15)),
+              Text("Code: " + code, style: TextStyle(
+                fontSize: 22, color: Colors.black
+              ),),
+              Padding(padding: EdgeInsets.all(18)),
               StyledButton
               (onPressed: (){
                 leave();
                    Restart.restartApp(notificationTitle: 'Reloading App',
 		                notificationBody: 'Please tap here to open the app again.',);
-
               }, 
-              child: Text("Leave Organization"))
+              child: Text("Leave", style: TextStyle(color: Colors.black, fontSize: 18),))
             ],
           ),
         ),

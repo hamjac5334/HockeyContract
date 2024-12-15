@@ -238,6 +238,7 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
         "Catagory" :catagory.name,
         catagory.name : catagory.getAverage()
       });
+      db.collection("Goaltenders").doc(widget.evaluation.goaltender.name).collection("Evaluations").doc(widget.evaluation.evaluationDate.toString().substring(0,19)).set({"Completed" : true});
     }
   }
   @override

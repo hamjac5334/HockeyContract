@@ -64,6 +64,7 @@ class NewOrganizationPageState extends State<NewOrganizationPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Padding(padding: EdgeInsets.all(15)),
               TextField(
                 onChanged: (value) {
                   setState(() {
@@ -72,6 +73,7 @@ class NewOrganizationPageState extends State<NewOrganizationPage> {
                 },
                 decoration: const InputDecoration(labelText: "Organization Name"),
               ),
+              Padding(padding: EdgeInsets.all(15)),
               TextField(
                 onChanged: (value) {
                   setState(() {
