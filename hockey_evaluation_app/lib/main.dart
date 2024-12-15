@@ -171,63 +171,31 @@ class _MyHomePageState extends State<MyHomePage> {
         for (var docSnapshot in querySnapshot.docs) {
           if (auth.currentUser?.email == "goaltenderevaluation@gmail.com") {
             goaltenders.add(Goaltender(
-                name: docSnapshot.data()['Name'],
-                levelAge: docSnapshot.data()['Level/Age'],
-                organization: docSnapshot.data()['Organization']));
-            db
-                .collection("Goaltenders")
-                .doc(docSnapshot.data()['Name'])
-                .collection("Evaluations")
-                .get()
-                .then((querySnapshotEvals) {
-              for (var eval in querySnapshotEvals.docs) {
-                print("Adding Eval");
-                Evaluation temp_evaluation = Evaluation(
-                    goaltender: Goaltender(
-                        name: docSnapshot.data()['Name'],
-                        levelAge: docSnapshot.data()['Level/Age'],
-                        organization: docSnapshot.data()['Organization']),
-                    evaluationDate:
-                        (eval.data()["Evaluation Date"] as Timestamp).toDate(),
-                    evaluationType: eval.data()['Evaluation Type'],
-                    //TODO: Change this to be the scores stored on firebase
-                    fullScore: FullScore());
-                evaluations.add(temp_evaluation);
-              }
-            });
-          } else {
-            if (docSnapshot.data()['Organization'] == organization) {
-              goaltenders.add(Goaltender(
-                  name: docSnapshot.data()['Name'],
-                  levelAge: docSnapshot.data()['Level/Age'],
-                  organization: docSnapshot.data()['Organization']));
-              db
-                  .collection("Goaltenders")
-                  .doc(docSnapshot.data()['Name'])
-                  .collection("Evaluations")
-                  .get()
-                  .then((querySnapshotEvals) {
-                for (var eval in querySnapshotEvals.docs) {
-                  print("Adding Eval");
-                  print(docSnapshot.data()['Name'] +
-                      ' ' +
-                      docSnapshot.data()['Level/Age'] +
-                      ' ' +
-                      docSnapshot.data()['Organization'] +
-                      ' ' +
-                      eval.data()['Evaluation Type']);
-                  Evaluation temp_evaluation = Evaluation(
-                      goaltender: Goaltender(
-                          name: docSnapshot.data()['Name'],
-                          levelAge: docSnapshot.data()['Level/Age'],
-                          organization: docSnapshot.data()['Organization']),
-                      evaluationDate:
-                          (eval.data()["Evaluation Date"] as Timestamp)
-                              .toDate(),
-                      evaluationType: eval.data()['Evaluation Type'],
-                      //TODO: Change this to be the scores stored on firebase
-                      fullScore: FullScore());
-                  evaluations.add(temp_evaluation);
+              name: docSnapshot.data()['Name'],
+              levelAge: docSnapshot.data()['Level/Age'],
+              organization: docSnapshot.data()['Organization']));
+              db.collection("Goaltenders").doc(docSnapshot.data()['Name']).collection("Evaluations").get().then(
+                (querySnapshotEvals)  {
+                    for (var eval in querySnapshotEvals.docs){
+                      print("Adding Eval");
+                      Evaluation temp_evaluation = Evaluation(
+                        goaltender: Goaltender(name: docSnapshot.data()['Name'], levelAge: docSnapshot.data()['Level/Age'], organization: docSnapshot.data()['Organization']),
+                        evaluationDate: (eval.data()["Evaluation Date"] as Timestamp).toDate(),
+                        evaluationType: eval.data()['Evaluation Type'],
+                        //TODO: Change this to be the scores stored on firebase
+                        fullScore: FullScore());
+                        if (eval.data()["Completed"]){
+                          temp_evaluation.set_completed();
+                        }
+                        evaluations.add(temp_evaluation);
+                        db.collection("Goaltenders").doc(docSnapshot.data()["Name"]).collection("Evaluations").doc(eval.id).collection("Scoring").get().then(
+                          (querySnapshotscore){
+                            for (var score in querySnapshotscore.docs){
+                              score.data()["score"].toString();
+                            }
+                          }
+                        );   
+                  }
                 }
               });
             }

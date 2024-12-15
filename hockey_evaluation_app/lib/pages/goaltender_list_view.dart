@@ -57,7 +57,7 @@ class GoaltenderListViewState extends State<GoaltenderListView>
       goaltender.toggleWatchlist();
     });
   }
-   void _filtergoalies(String filter) {
+   void _filtergoalies(String? filter) {
     if (filter == "A-Z") {
       widget.displayitems.sort((a, b) => a.toString().compareTo(b.toString()));
     } else if (filter == 'Z-A') {
@@ -109,11 +109,9 @@ class GoaltenderListViewState extends State<GoaltenderListView>
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                print(_filterController.text);
                 setState(() {
                   widget.displayitems = _searchEvals(_filterController.text);
                 });
-                print(_searchEvals(_filterController.text));
               },
               child: Text('Search'),
             ),
@@ -188,7 +186,7 @@ class GoaltenderListViewState extends State<GoaltenderListView>
                 Navigator.of(context).pop();
 
                 setState(() {
-                  widget.displayitems = widget.items;
+                  _filtergoalies(_selectedFilter);
                 });
               },
               child: Text('Filter'),
