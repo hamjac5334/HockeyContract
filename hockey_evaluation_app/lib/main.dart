@@ -333,8 +333,6 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       );
     } else if (current_screen_index == 1) {
-      goaltenders[0].updateCategory("Adapt", 1.0);
-      print(goaltenders[0].adapt);
       return GoaltenderListView(
         items: goaltenders,
         onGoaltenderListChanged: _handleNewGoaltender,

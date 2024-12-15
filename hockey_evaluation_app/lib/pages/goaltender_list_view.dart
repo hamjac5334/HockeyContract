@@ -203,7 +203,7 @@ class GoaltenderListViewState extends State<GoaltenderListView>
 
   List<RadarDataSet> getDataSets() {
     List<RadarDataSet> list = [];
-    for (Goaltender goaltender in widget.items) {
+    for (Goaltender goaltender in widget.displayitems) {
       RadarDataSet dataSet = RadarDataSet(
           borderColor: Colors.amber,
           fillColor: Colors.amber.withOpacity(0.3),
