@@ -4,6 +4,7 @@ import 'package:hockey_evaluation_app/objects/category_score.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
 import 'package:hockey_evaluation_app/objects/full_score.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
+import 'package:hockey_evaluation_app/pages/FAQ.dart';
 import 'package:hockey_evaluation_app/pages/evaluation_list_view.dart';
 import 'package:hockey_evaluation_app/pages/goaltender_list_view.dart';
 import 'package:hockey_evaluation_app/objects/theme.dart';
@@ -324,7 +325,7 @@ class _MyHomePageState extends State<MyHomePage> {
     
     } else if (current_screen_index == 4) {
         //_cloudOrgPull();
-        return TheseSettings();
+        return TheseFAQ();
     
     } else if (current_screen_index == 5) {
         //_cloudOrgPull();
@@ -432,7 +433,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ListTile(
                 title: Text(
-                  "Notifications",
+                  "FAQ's",
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 onTap: () {

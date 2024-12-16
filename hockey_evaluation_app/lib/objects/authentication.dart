@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hockey_evaluation_app/objects/evaluation.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
+import 'package:hockey_evaluation_app/pages/FAQ.dart';
 import 'package:hockey_evaluation_app/pages/authentication_page.dart';
 import 'package:hockey_evaluation_app/pages/goaltender_list_view.dart';
 import 'package:hockey_evaluation_app/pages/evaluation_list_view.dart' as eval_list;
@@ -96,7 +97,7 @@ class _AuthFuncState extends State<AuthFunc> {
       //return TheseSettings();
       case 3:
       //once we have organizations, put here
-      return TheseSettings(); 
+      return TheseFAQ(); 
       case 4:
       //once we have notifications, put here
       if (organization == "No Organization"){
