@@ -93,7 +93,8 @@ class JoinOrganizationPageState extends State<JoinOrganizationPage> {
           await Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => NewOrganizationPage()));
               }, 
-              child: Text("Register New Organization"))
+              child: Text("Register New"),
+              )
             ],
           ),
         ),
