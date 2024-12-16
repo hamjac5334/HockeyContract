@@ -353,7 +353,7 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     } else if (current_screen_index == 4) {
       //_cloudOrgPull();
-      return TheseSettings();
+      return TheseFAQ();
     } else if (current_screen_index == 5) {
       //_cloudOrgPull();
       return TheseSettings();
