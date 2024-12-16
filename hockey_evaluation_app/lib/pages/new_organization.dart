@@ -29,9 +29,12 @@ class NewOrganizationPageState extends State<NewOrganizationPage> {
       "Organization" : organization
     });
   }
-
+  
+  int randomCode(){
+    return Random.secure().nextInt(999999) + 100000;
+  }
   int codeGeneration(){
-    int possibleCode = Random.secure().nextInt(999999) + 100000;
+    int possibleCode = randomCode();
     var db = FirebaseFirestore.instance;
     db.collection("Codes").get().then(
       (querySnapshot) {
@@ -46,6 +49,7 @@ class NewOrganizationPageState extends State<NewOrganizationPage> {
     );
     return possibleCode;
   }
+
 
   @override
   Widget build(BuildContext context) {
