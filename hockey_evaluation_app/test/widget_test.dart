@@ -9,12 +9,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hockey_evaluation_app/main.dart';
+import 'package:hockey_evaluation_app/objects/goaltender.dart';
+import 'package:hockey_evaluation_app/pages/goaltender_list_view.dart';
+import 'package:hockey_evaluation_app/pages/new_goaltender_page.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
-
   //   // Verify that our counter starts at 0.
   //   expect(find.text('0'), findsOneWidget);
   //   expect(find.text('1'), findsNothing);
@@ -78,10 +77,6 @@ void main() {
 
     expect(find.byType(GoaltenderListView), findsOne);
     expect(find.text("TestName"), findsNothing);
-void main() async {
-  test("Join generates 6 digit code", (){
-    var code = NewOrganizationPageState().randomCode.call();
-    expect(code.toString().length, 6);
   });
 
   //when evaluation is added, it joins the list

@@ -210,11 +210,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     var categoryScore = score.data()[category];
                     var currentGoaltenderName = currentGoaltender.name;
                     currentGoaltender.updateCategory(category, categoryScore);
-                    print("Current Goaltender: $currentGoaltenderName");
-                    print("Category: $category");
-                    print("Category Score: $categoryScore");
-                    print(
-                        "Total Evaluations:  ${currentGoaltender.totalEvaluations}");
+                    // print("Current Goaltender: $currentGoaltenderName");
+                    // print("Category: $category");
+                    // print("Category Score: $categoryScore");
+                    // print(
+                    //     "Total Evaluations:  ${currentGoaltender.totalEvaluations}");
                   }
                 });
               }
@@ -299,10 +299,17 @@ class _MyHomePageState extends State<MyHomePage> {
     _cloudGoaltenderPull();
   }
 
-  void _handleNewGoaltender(Goaltender goaltender) {
+  bool _handleNewGoaltender(Goaltender goaltender) {
+    for (Goaltender g in goaltenders) {
+      if (goaltender.name == g.name) {
+        print("Error: Already a goaltender with that name!");
+        return false;
+      }
+    }
     setState(() {
       goaltenders.add(goaltender);
     });
+    return true;
   }
 
   void _handleNewEvaluation(Evaluation evaluation) {

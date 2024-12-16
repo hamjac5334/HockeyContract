@@ -79,12 +79,15 @@ class NewGoaltenderPageState extends State<NewGoaltenderPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          dataSave();
-          widget.onGoaltenderListChanged(Goaltender(
+          var b;
+          b = widget.onGoaltenderListChanged(Goaltender(
               name: goaltenderName,
               levelAge: levelAge,
               organization: organization));
-          Navigator.pop(context);
+          if (b) {
+            dataSave();
+            Navigator.pop(context);
+          }
         },
         child: const Icon(Icons.add),
         hoverColor: Color.fromARGB(255, 122, 10, 10),
