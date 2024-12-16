@@ -1,6 +1,5 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:hockey_evaluation_app/main.dart';
 
 class Paragraph extends StatelessWidget {
   const Paragraph(this.content, {super.key});
@@ -16,48 +15,58 @@ class Paragraph extends StatelessWidget {
 }
 
 class SqaureButton extends StatefulWidget {
-  SqaureButton(this.controller, {super.key});
+  SqaureButton(this.controller, {super.key, this.color = Colors.red});
 
-  TextEditingController controller = TextEditingController();
+  final TextEditingController controller;
+  final Color color;
 
   @override
   State<SqaureButton> createState() => _SqaureButtonState();
 }
 
 class _SqaureButtonState extends State<SqaureButton> {
-final TextEditingController _textController = TextEditingController();
-String valuetext = "+";
+  final TextEditingController _textController = TextEditingController();
+  String valuetext = "+";
 
   @override
   Widget build(BuildContext context) {
     return Container(
-          margin: EdgeInsets.all(10),
-          height: 50.0,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(// text color
-              padding: EdgeInsets.all(10.0),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(0.0),
-              ),
-            ),
-            onPressed: () {
-                AlertDialog(title: const Text('Add Item'),
-                 content: Column(children: [
+      margin: EdgeInsets.all(10),
+      height: 50.0,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          // text color
+          //rgba(238, 13, 40, 0.53)
+          foregroundColor: widget.color,
+          padding: EdgeInsets.all(10.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(0.0),
+          ),
+        ),
+        onPressed: () {
+          AlertDialog(
+            title: const Text('Add Item'),
+            content: Column(
+              children: [
                 TextField(
-                onChanged: (value) {
-                 setState(() {
-                valuetext = value;
-                });
-                },
-            controller: _textController,
-            decoration: const InputDecoration(hintText: "Name"),),
-            ],
+                  onChanged: (value) {
+                    setState(() {
+                      valuetext = value;
+                    });
+                  },
+                  controller: _textController,
+                  decoration: const InputDecoration(hintText: "Name"),
+                ),
+              ],
             ),
-            );
-            },
-            child: Text(valuetext,
-              style: TextStyle(fontSize: 15),
-            ),
-          ),);
+          );
+        },
+        child: Text(
+          valuetext,
+          style:
+              TextStyle(fontSize: 15, color: Color.fromARGB(255, 255, 255, 0)),
+        ),
+      ),
+    );
   }
 }
