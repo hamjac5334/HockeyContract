@@ -49,6 +49,7 @@ class NewGoaltenderPageState extends State<NewGoaltenderPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               TextField(
+                key: const Key("GoaltenderNameTextField"),
                 onChanged: (value) {
                   setState(() {
                     goaltenderName = value;
@@ -57,6 +58,7 @@ class NewGoaltenderPageState extends State<NewGoaltenderPage> {
                 decoration: const InputDecoration(labelText: "Goaltender Name"),
               ),
               TextField(
+                key: const Key("GoaltenderAgeTextField"),
                 onChanged: (value) {
                   setState(() {
                     levelAge = value;
@@ -65,6 +67,7 @@ class NewGoaltenderPageState extends State<NewGoaltenderPage> {
                 decoration: const InputDecoration(labelText: "Level/Age"),
               ),
               TextField(
+                key: const Key("GoaltenderOrganizationTextField"),
                 onChanged: (value) {
                   organization = value;
                 },

@@ -126,7 +126,8 @@ class OpenEvaluationEvaluationInfoPageState
           child: Text(
             widget.evaluation.goaltender.name,
             //TODO: correct this color, idk how
-            style: TextStyle(fontSize: 15, color: Colors.red),
+            style: TextStyle(
+                fontSize: 15, color: const Color.fromARGB(255, 3, 1, 1)),
           ),
         ),
         Paragraph("Reassign evaluator"),
@@ -163,7 +164,8 @@ class OpenEvaluationEvaluationInfoPageState
               });
             },
             items: gameTypeItems,
-            style: TextStyle(fontSize: 15, color: Colors.red),
+            style: TextStyle(
+                fontSize: 15, color: const Color.fromARGB(255, 19, 5, 4)),
           ),
         ),
         const SizedBox(height: 10),
@@ -238,6 +240,7 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
         "Catagory" :catagory.name,
         catagory.name : catagory.getAverage()
       });
+      db.collection("Goaltenders").doc(widget.evaluation.goaltender.name).collection("Evaluations").doc(widget.evaluation.evaluationDate.toString().substring(0,19)).update({"Completed" : true});
     }
   }
   @override
@@ -335,6 +338,7 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
               ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text("This button will update firebase")));
                 dataSaveScoring();
+                
             },
             child: Text("Submit"),
             shape: RoundedRectangleBorder(),
@@ -342,5 +346,4 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
         ),
         resizeToAvoidBottomInset: false);
   }
-
 }

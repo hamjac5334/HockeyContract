@@ -93,8 +93,6 @@ class _EvaluationCategoryState extends State<EvaluationCategory> {
     }
   }
 
-  
-
   //dropdown menu: https://www.youtube.com/watch?v=6_Azs3fq9O4
   //https://api.flutter.dev/flutter/material/DropdownMenu-class.html
   @override
@@ -123,16 +121,6 @@ class _EvaluationCategoryState extends State<EvaluationCategory> {
                   children: [
                     Row(
                       children: [
-                        Text(subItem),
-                        SizedBox(width: 8),
-                        Text(
-                          '${subItemCounters[subItem]?.count ?? 0}',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
                         IconButton(
                           color: Colors.black,
                           icon: Icon(Icons.remove),
@@ -141,6 +129,12 @@ class _EvaluationCategoryState extends State<EvaluationCategory> {
                               subItemCounters[subItem]?.decrease();
                             });
                           },
+                        ),
+                        Text(subItem),
+                        SizedBox(width: 8),
+                        Text(
+                          '${subItemCounters[subItem]?.count ?? 0}',
+                          style: TextStyle(fontSize: 14),
                         ),
                         IconButton(
                           color: Colors.black,

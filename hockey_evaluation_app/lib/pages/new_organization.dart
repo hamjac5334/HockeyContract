@@ -29,9 +29,12 @@ class NewOrganizationPageState extends State<NewOrganizationPage> {
       "Organization" : organization
     });
   }
-
+  
+  int randomCode(){
+    return Random.secure().nextInt(999999) + 100000;
+  }
   int codeGeneration(){
-    int possibleCode = Random.secure().nextInt(999999) + 100000;
+    int possibleCode = randomCode();
     var db = FirebaseFirestore.instance;
     db.collection("Codes").get().then(
       (querySnapshot) {
@@ -46,6 +49,7 @@ class NewOrganizationPageState extends State<NewOrganizationPage> {
     );
     return possibleCode;
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +68,7 @@ class NewOrganizationPageState extends State<NewOrganizationPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Padding(padding: EdgeInsets.all(15)),
               TextField(
                 onChanged: (value) {
                   setState(() {
@@ -72,6 +77,7 @@ class NewOrganizationPageState extends State<NewOrganizationPage> {
                 },
                 decoration: const InputDecoration(labelText: "Organization Name"),
               ),
+              Padding(padding: EdgeInsets.all(15)),
               TextField(
                 onChanged: (value) {
                   setState(() {
