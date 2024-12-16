@@ -300,8 +300,8 @@ class GoaltenderListViewState extends State<GoaltenderListView>
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("hey"),
-                Text("hey2"),
+                // Text("hey"),
+                // Text("hey2"),
                 AspectRatio(
                   aspectRatio: 1,
                   child: RadarChart(RadarChartData(
