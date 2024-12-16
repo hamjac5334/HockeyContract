@@ -237,8 +237,10 @@ class GoaltenderListViewState extends State<GoaltenderListView>
               RadarEntry(value: goaltender.getAverageScore("Move")),
               RadarEntry(value: goaltender.getAverageScore("Save")),
               RadarEntry(value: goaltender.getAverageScore("See")),
-              RadarEntry(value: goaltender.getAverageScore("Understand"))
+              RadarEntry(value: goaltender.getAverageScore("Understand")),
             ]);
+            print(RadarEntry(value: goaltender.getAverageScore("Adapt")));
+            print("Drive" + RadarEntry(value: goaltender.getAverageScore("Drive")).toString());
         list.add(dataSet);
         colorIndex += 1;
         if (colorIndex == colors.length) {

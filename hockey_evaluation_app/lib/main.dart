@@ -183,9 +183,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 .get()
                 .then((querySnapshotEvals) {
               for (var eval in querySnapshotEvals.docs) {
-                print("Adding Eval");
+                print("Adding Evals");
                 currentGoaltender.incrementTotalEvaluations();
-
                 Evaluation temp_evaluation = Evaluation(
                     goaltender: currentGoaltender,
                     evaluationDate:
@@ -210,56 +209,67 @@ class _MyHomePageState extends State<MyHomePage> {
                     var categoryScore = score.data()[category];
                     var currentGoaltenderName = currentGoaltender.name;
                     currentGoaltender.updateCategory(category, categoryScore);
-                    // print("Current Goaltender: $currentGoaltenderName");
-                    // print("Category: $category");
-                    // print("Category Score: $categoryScore");
-                    // print(
-                    //     "Total Evaluations:  ${currentGoaltender.totalEvaluations}");
+                    print("Current Goaltender: $currentGoaltenderName");
+                    print("Category: $category");
+                    print("Category Score: $categoryScore");
+                    print(
+                        "Total Evaluations:  ${currentGoaltender.totalEvaluations}");
                   }
                 });
               }
             });
           } else {
             if (docSnapshot.data()['Organization'] == organization) {
-              goaltenders.add(Goaltender(
-                  name: docSnapshot.data()['Name'],
-                  levelAge: docSnapshot.data()['Level/Age'],
-                  organization: docSnapshot.data()['Organization']));
-              db
-                  .collection("Goaltenders")
-                  .doc(docSnapshot.data()['Name'] + docSnapshot.data()["Organization"])
-                  .collection("Evaluations")
-                  .get()
-                  .then((querySnapshotEvals) {
-                for (var eval in querySnapshotEvals.docs) {
-                  print("Adding Eval");
-                  print(docSnapshot.data()['Name'] +
-                      ' ' +
-                      docSnapshot.data()['Level/Age'] +
-                      ' ' +
-                      docSnapshot.data()['Organization'] +
-                      ' ' +
-                      eval.data()['Evaluation Type']);
-                  Evaluation temp_evaluation = Evaluation(
-                      goaltender: Goaltender(
-                          name: docSnapshot.data()['Name'],
-                          levelAge: docSnapshot.data()['Level/Age'],
-                          organization: docSnapshot.data()['Organization']),
-                      evaluationDate:
-                          (eval.data()["Evaluation Date"] as Timestamp)
-                              .toDate(),
-                      evaluationType: eval.data()['Evaluation Type'],
-                      //TODO: Change this to be the scores stored on firebase
-                      fullScore: FullScore());
-                      if (eval.data()["Completed"]){
-                        temp_evaluation.set_completed();
-                      }
-                  evaluations.add(temp_evaluation);
+              Goaltender currentGoaltender = Goaltender(
+                name: docSnapshot.data()['Name'],
+                levelAge: docSnapshot.data()['Level/Age'],
+                organization: docSnapshot.data()['Organization']);
+            goaltenders.add(currentGoaltender);
+            db
+                .collection("Goaltenders")
+                .doc(docSnapshot.data()['Name'] + docSnapshot.data()["Organization"])
+                .collection("Evaluations")
+                .get()
+                .then((querySnapshotEvals) {
+              for (var eval in querySnapshotEvals.docs) {
+                print("Adding Evals");
+                currentGoaltender.incrementTotalEvaluations();
+                Evaluation temp_evaluation = Evaluation(
+                    goaltender: currentGoaltender,
+                    evaluationDate:
+                        (eval.data()["Evaluation Date"] as Timestamp).toDate(),
+                    evaluationType: eval.data()['Evaluation Type'],
+                    //TODO: Change this to be the scores stored on firebase
+                    fullScore: FullScore());
+                if (eval.data()["Completed"]) {
+                  temp_evaluation.set_completed();
                 }
-              });
-            }
+                evaluations.add(temp_evaluation);
+                db
+                    .collection("Goaltenders")
+                    .doc(docSnapshot.data()["Name"] + docSnapshot.data()["Organization"])
+                    .collection("Evaluations")
+                    .doc(eval.id)
+                    .collection("Scoring")
+                    .get()
+                    .then((querySnapshotscore) {
+                  for (var score in querySnapshotscore.docs) {
+                    var category = score.data()["Catagory"];
+                    var categoryScore = score.data()[category];
+                    var currentGoaltenderName = currentGoaltender.name;
+                    currentGoaltender.updateCategory(category, categoryScore);
+                    print("Current Goaltender: $currentGoaltenderName");
+                    print("Category: $category");
+                    print("Category Score: $categoryScore");
+                    print(
+                        "Total Evaluations:  ${currentGoaltender.totalEvaluations}");
+                  }
+                });
+              }
+            });
           }
-        }
+          }
+        }     
       },
       onError: (e) => print("Error completing: $e"),
     );
