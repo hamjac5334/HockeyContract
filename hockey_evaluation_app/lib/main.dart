@@ -251,6 +251,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       evaluationType: eval.data()['Evaluation Type'],
                       //TODO: Change this to be the scores stored on firebase
                       fullScore: FullScore());
+                      if (eval.data()["Completed"]){
+                        temp_evaluation.set_completed();
+                      }
                   evaluations.add(temp_evaluation);
                 }
               });
