@@ -58,14 +58,14 @@ class _MyWidgetState extends State<NewEval> {
         .collection("Goaltenders")
         .doc(goalieName)
         .collection("Evaluations")
-        .doc(DateTime.now().toString().substring(0,19))
+        .doc(DateTime.now().toString().substring(0, 19))
         .set({
       "Name": goalieName,
       "Evaluator": evaluatorName,
       "Evaluation Type": evaluationType,
       "Evaluation Date": DateTime.now(),
       "Additional Notes": notes,
-      "Completed" : false
+      "Completed": false
     });
   }
 
@@ -183,6 +183,7 @@ class _MyWidgetState extends State<NewEval> {
                       builder: (ctx) => AlertDialog(
                               title: const Text('Add Evaluator'),
                               content: Column(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
                                   TextField(
                                     onChanged: (value) {

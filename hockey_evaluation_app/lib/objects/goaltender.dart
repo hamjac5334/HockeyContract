@@ -14,7 +14,7 @@ class Goaltender {
   double see = 0;
   double understand = 0;
 
-  int totalEvaluations = 1;
+  int totalEvaluations = 0;
 
   Goaltender(
       {required this.name, required this.levelAge, required this.organization});
@@ -51,6 +51,9 @@ class Goaltender {
   }
 
   double getAverageScore(String category) {
+    if (totalEvaluations == 0) {
+      return 0.0;
+    }
     switch (category) {
       case "Adapt":
         return adapt / totalEvaluations;
@@ -70,7 +73,7 @@ class Goaltender {
         return understand / totalEvaluations;
       default:
         print("error: goaltender line 72");
-        return 3.0;
+        return 0.0;
     }
   }
 }

@@ -233,14 +233,27 @@ class OpenEvaluationSubmitPage extends StatefulWidget {
 class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
   void dataSaveScoring() {
     var db = FirebaseFirestore.instance;
-    for (var catagory in widget.evaluation.fullScore.categoryScoreList){
-      db.collection("Goaltenders").doc(widget.evaluation.goaltender.name).collection("Evaluations").doc(widget.evaluation.evaluationDate.toString().substring(0,19)).collection("Scoring").doc(catagory.name).set({
-        "Catagory" :catagory.name,
-        catagory.name : catagory.getAverage()
+    for (var catagory in widget.evaluation.fullScore.categoryScoreList) {
+      db
+          .collection("Goaltenders")
+          .doc(widget.evaluation.goaltender.name)
+          .collection("Evaluations")
+          .doc(widget.evaluation.evaluationDate.toString().substring(0, 19))
+          .collection("Scoring")
+          .doc(catagory.name)
+          .set({
+        "Catagory": catagory.name,
+        catagory.name: catagory.getAverage()
       });
-      db.collection("Goaltenders").doc(widget.evaluation.goaltender.name).collection("Evaluations").doc(widget.evaluation.evaluationDate.toString().substring(0,19)).update({"Completed" : true});
+      db
+          .collection("Goaltenders")
+          .doc(widget.evaluation.goaltender.name)
+          .collection("Evaluations")
+          .doc(widget.evaluation.evaluationDate.toString().substring(0, 19))
+          .update({"Completed": true});
     }
   }
+
   @override
   Widget build(BuildContext context) {
     print("Goaltender: ${widget.evaluation.goaltender.name}");
@@ -333,10 +346,11 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
           width: 100,
           child: FloatingActionButton(
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("This button will update firebase")));
-                dataSaveScoring();
-                
+              // ScaffoldMessenger.of(context).showSnackBar(
+              // SnackBar(content: Text("This button will update firebase")));
+              dataSaveScoring();
+              widget.evaluation.set_completed();
+              Navigator.pop(context);
             },
             child: Text("Submit"),
             shape: RoundedRectangleBorder(),
@@ -344,5 +358,4 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
         ),
         resizeToAvoidBottomInset: false);
   }
-
 }

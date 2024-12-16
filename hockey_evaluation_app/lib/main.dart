@@ -207,12 +207,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   for (var score in querySnapshotscore.docs) {
                     var category = score.data()["Catagory"];
                     var categoryScore = score.data()[category];
-                    // var currentGoaltenderName = currentGoaltender.name;
+                    var currentGoaltenderName = currentGoaltender.name;
                     currentGoaltender.updateCategory(category, categoryScore);
-                    // print("Current Goaltender: $currentGoaltenderName");
+                    print("Current Goaltender: $currentGoaltenderName");
                     print("Category: $category");
                     print("Category Score: $categoryScore");
-                    print("Adapt: ${currentGoaltender.adapt}");
+                    print(
+                        "Total Evaluations:  ${currentGoaltender.totalEvaluations}");
                   }
                 });
               }

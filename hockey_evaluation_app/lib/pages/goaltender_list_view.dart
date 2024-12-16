@@ -34,10 +34,6 @@ class GoaltenderListViewState extends State<GoaltenderListView>
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-
-    for (Goaltender item in widget.items) {
-      print("Adapt score:  ${item.adapt}");
-    }
   }
 
   @override
@@ -202,6 +198,7 @@ class GoaltenderListViewState extends State<GoaltenderListView>
   }
 
   List<RadarDataSet> getDataSets() {
+    List graph_item_list = [];
     List<RadarDataSet> list = [];
     List<Color> colors = [
       Colors.black,
@@ -217,28 +214,48 @@ class GoaltenderListViewState extends State<GoaltenderListView>
       Colors.lightBlue,
     ];
     int colorIndex = 0;
-    for (Goaltender goaltender in widget.displayitems) {
-      RadarDataSet dataSet = RadarDataSet(
-          borderColor: colors[colorIndex],
-          fillColor: colors[colorIndex].withOpacity(0.05),
-          dataEntries: [
-            RadarEntry(value: goaltender.adapt),
-            RadarEntry(value: goaltender.drive),
-            RadarEntry(value: goaltender.grow),
-            RadarEntry(value: goaltender.learn),
-            RadarEntry(value: goaltender.move),
-            RadarEntry(value: goaltender.save),
-            RadarEntry(value: goaltender.see),
-            RadarEntry(value: goaltender.understand)
-          ]);
-      list.add(dataSet);
-      colorIndex += 1;
-      if (colorIndex == colors.length) {
-        colorIndex = 0;
-      }
-    }
+    List<Goaltender> goaltenderWatchList = getGoaltenderWatchList();
 
-    return list;
+    if (widget.displayitems.isNotEmpty) {
+      if (goaltenderWatchList.isNotEmpty) {
+        graph_item_list = goaltenderWatchList;
+      } else {
+        graph_item_list = widget.displayitems;
+      }
+
+      for (Goaltender goaltender in graph_item_list) {
+        // print("${goaltender.name}: ${goaltender.getAverageScore("Adapt")}");
+
+        RadarDataSet dataSet = RadarDataSet(
+            borderColor: colors[colorIndex],
+            fillColor: colors[colorIndex].withOpacity(0.05),
+            dataEntries: [
+              RadarEntry(value: goaltender.getAverageScore("Adapt")),
+              RadarEntry(value: goaltender.getAverageScore("Drive")),
+              RadarEntry(value: goaltender.getAverageScore("Grow")),
+              RadarEntry(value: goaltender.getAverageScore("Drive")),
+              RadarEntry(value: goaltender.getAverageScore("Move")),
+              RadarEntry(value: goaltender.getAverageScore("Save")),
+              RadarEntry(value: goaltender.getAverageScore("See")),
+              RadarEntry(value: goaltender.getAverageScore("Understand"))
+            ]);
+        list.add(dataSet);
+        colorIndex += 1;
+        if (colorIndex == colors.length) {
+          colorIndex = 0;
+        }
+      }
+
+      return list;
+    } else {
+      return [
+        RadarDataSet(dataEntries: [
+          RadarEntry(value: 0.0),
+          RadarEntry(value: 0.0),
+          RadarEntry(value: 0.0)
+        ])
+      ];
+    }
   }
 
   @override
@@ -283,7 +300,6 @@ class GoaltenderListViewState extends State<GoaltenderListView>
             itemCount: widget.displayitems.length,
             itemBuilder: (BuildContext context, int index) {
               final goalie = widget.displayitems[index];
-              print("Adapt goalie: ${goalie.adapt}");
 
               //return a goalie item
               return GoaltenderItem(
