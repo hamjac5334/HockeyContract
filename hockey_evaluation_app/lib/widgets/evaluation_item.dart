@@ -51,11 +51,13 @@ class EvaluationItem extends StatelessWidget {
             ],
           ),
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => OpenEvaluationInfoPage(
-                      evaluation: evaluation,
-                      goaltenders: goaltenders,
-                    )));
+            if (!evaluation.completed) {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => OpenEvaluationInfoPage(
+                        evaluation: evaluation,
+                        goaltenders: goaltenders,
+                      )));
+            }
           },
           trailing: IconButton(
             onPressed: () {
