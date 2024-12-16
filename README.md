@@ -45,6 +45,19 @@ Initial Wireframes:
 Pictures of the App:
 
 (Need to include)
+<img width="372" alt="Screenshot 2024-12-15 at 8 10 21 PM" src="https://github.com/user-attachments/assets/d7f8826c-c990-4d36-881e-e07a67c74f85" />
+<img width="377" alt="Screenshot 2024-12-15 at 8 11 01 PM" src="https://github.com/user-attachments/assets/e30aeea3-d367-4105-a07e-c2672c28183f" />
+<img width="372" alt="Screenshot 2024-12-15 at 8 11 08 PM" src="https://github.com/user-attachments/assets/4ce88327-6b2d-4be1-9237-00f556666b52" />
+<img width="370" alt="Screenshot 2024-12-15 at 8 11 12 PM" src="https://github.com/user-attachments/assets/32fe095f-6f14-401e-9fec-a1dac62437ad" />
+<img width="375" alt="Screenshot 2024-12-15 at 8 11 16 PM" src="https://github.com/user-attachments/assets/a5308d90-a59b-40ce-87b7-7382e27b7690" />
+<img width="370" alt="Screenshot 2024-12-15 at 8 11 30 PM" src="https://github.com/user-attachments/assets/6344fd52-c02a-482b-b9b0-97e6acef7317" />
+<img width="371" alt="Screenshot 2024-12-15 at 8 11 35 PM" src="https://github.com/user-attachments/assets/73fad54b-1641-47cf-b387-322b848c2b62" />
+<img width="371" alt="Screenshot 2024-12-15 at 8 11 43 PM" src="https://github.com/user-attachments/assets/4925f3b5-5c99-496b-a41d-2767402c5af1" />
+<img width="376" alt="Screenshot 2024-12-15 at 8 11 50 PM" src="https://github.com/user-attachments/assets/31884ba9-8ce1-4767-9ea7-2a6e2e4c48d8" />
+<img width="371" alt="Screenshot 2024-12-15 at 8 12 01 PM" src="https://github.com/user-attachments/assets/1b658f2c-874f-4850-ae11-bc975c3925c3" />
+
+
+
 
 
 # HockeyContract
