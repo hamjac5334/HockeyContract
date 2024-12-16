@@ -4,25 +4,16 @@
 // utility in the flutter_test package. For example, you can send tap and scroll
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
+import 'dart:math';
 
-import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:hockey_evaluation_app/main.dart';
-import 'package:hockey_evaluation_app/objects/goaltender.dart';
-import 'package:hockey_evaluation_app/pages/goaltender_list_view.dart';
-import 'package:hockey_evaluation_app/pages/new_goaltender_page.dart';
-
-typedef GoaltenderListChangedCallback = Function(Goaltender goaltender);
 
 void main() {
-  setUp(() {
-    final instance = FakeFirebaseFirestore(); // should this be used?
-  });
-  // testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-  //   // Build our app and trigger a frame.
-  //   await tester.pumpWidget(const MyApp());
+  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(const MyApp());
 
   //   // Verify that our counter starts at 0.
   //   expect(find.text('0'), findsOneWidget);
@@ -87,6 +78,10 @@ void main() {
 
     expect(find.byType(GoaltenderListView), findsOne);
     expect(find.text("TestName"), findsNothing);
+void main() async {
+  test("Join generates 6 digit code", (){
+    var code = NewOrganizationPageState().randomCode.call();
+    expect(code.toString().length, 6);
   });
 
   //when evaluation is added, it joins the list
