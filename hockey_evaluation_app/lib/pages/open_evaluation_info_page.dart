@@ -216,7 +216,9 @@ class OpenEvaluationCommentsPage extends StatelessWidget {
               evaluation.comments = _controller.text;
               print(evaluation.comments);
             },
-            child: const Text("Save comment")),
+            child: const Text("Save comment"),
+            ),
+            
       ],
     );
   }
@@ -342,6 +344,9 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
             },
             child: Text("Submit"),
             shape: RoundedRectangleBorder(),
+            hoverColor: Color.fromARGB(255, 122, 10, 10),
+            backgroundColor: Color.fromARGB(255, 122, 10, 10),
+            foregroundColor: Color.fromRGBO(255, 255, 255, 1),
           ),
         ),
         resizeToAvoidBottomInset: false);

@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
+import 'package:restart_app/restart_app.dart';
 
 class NewOrganizationPage extends StatefulWidget {
 
@@ -18,6 +20,7 @@ class NewOrganizationPageState extends State<NewOrganizationPage> {
 
   void dataSave() {
     var db = FirebaseFirestore.instance;
+    var auth = FirebaseAuth.instance;
 
     //db.collection("Goaltenders").doc(goaltenderName).collection("Evaluations").doc("Evaluation").set({"Name": goaltenderName, "Level/Age": levelAge, "Organization" : organization});
     db.collection("Organization").doc(organization).set({
@@ -28,6 +31,12 @@ class NewOrganizationPageState extends State<NewOrganizationPage> {
     db.collection("Codes").doc(code).set({
       "Organization" : organization
     });
+    db.collection("Users").doc(auth.currentUser?.email).update({
+      "Organization" : organization
+    });
+    Restart.restartApp(notificationTitle: 'Restarting App',
+		notificationBody: 'Please tap here to open the app again.',
+    );
   }
   
   int randomCode(){
@@ -97,6 +106,9 @@ class NewOrganizationPageState extends State<NewOrganizationPage> {
           Navigator.pop(context);
         },
         child: const Icon(Icons.add),
+        hoverColor: Color.fromARGB(255, 122, 10, 10),
+        backgroundColor: Color.fromARGB(255, 122, 10, 10),
+        foregroundColor: Color.fromRGBO(255, 255, 255, 1),
       ),
     );
   }

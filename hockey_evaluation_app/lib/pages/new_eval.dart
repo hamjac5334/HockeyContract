@@ -203,7 +203,7 @@ class _MyWidgetState extends State<NewEval> {
                                     Navigator.of(ctx).pop();
                                   },
                                   child: Container(
-                                    color: Colors.red,
+                                    color: Color. fromARGB(255, 122, 10, 10),
                                     padding: const EdgeInsets.all(14),
                                     child: const Text("OK",
                                         style: TextStyle(color: Colors.white)),
@@ -230,7 +230,7 @@ class _MyWidgetState extends State<NewEval> {
                   });
                 },
                 items: gameTypeItems,
-                style: TextStyle(fontSize: 15, color: Colors.red),
+                style: TextStyle(fontSize: 15, color: Color.fromARGB(255, 122, 10, 10)),
               ),
             ),
             const SizedBox(height: 10),
@@ -265,7 +265,7 @@ class _MyWidgetState extends State<NewEval> {
                     addinfotext = value;
                   });
                 },
-                style: TextStyle(fontSize: 13, color: Colors.red),
+                style: TextStyle(fontSize: 13, color: Color.fromARGB(255, 122, 10, 10)),
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4.0),
@@ -296,6 +296,9 @@ class _MyWidgetState extends State<NewEval> {
             },
             //go to open eval and add to list with new info
             child: Icon(Icons.add),
+            hoverColor: Color.fromARGB(255, 122, 10, 10),
+        backgroundColor: Color.fromARGB(255, 122, 10, 10),
+        foregroundColor: Color.fromRGBO(255, 255, 255, 1),
           ),
         ]));
   }

@@ -87,6 +87,9 @@ class NewGoaltenderPageState extends State<NewGoaltenderPage> {
           Navigator.pop(context);
         },
         child: const Icon(Icons.add),
+        hoverColor: Color.fromARGB(255, 122, 10, 10),
+        backgroundColor: Color.fromARGB(255, 122, 10, 10),
+        foregroundColor: Color.fromRGBO(255, 255, 255, 1),
       ),
     );
   }

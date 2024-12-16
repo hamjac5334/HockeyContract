@@ -320,7 +320,9 @@ class EvaluationListViewState extends State<EvaluationListView>
           );
         },
         child: const Icon(Icons.add),
-        hoverColor: Color.fromARGB(255, 32, 8, 7),
+        hoverColor: Color.fromARGB(255, 122, 10, 10),
+        backgroundColor: Color.fromARGB(255, 122, 10, 10),
+        foregroundColor: Color.fromRGBO(255, 255, 255, 1),
         //pull up the add new evaluation page.
         /*ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text("Pretend this goes to the create evaluation page")));*/
