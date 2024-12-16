@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hockey_evaluation_app/objects/goaltender.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,16 +16,37 @@ class NewGoaltenderPage extends StatefulWidget {
   }
 }
 
+
+
+
 class NewGoaltenderPageState extends State<NewGoaltenderPage> {
   String goaltenderName = "";
   String levelAge = "";
   String organization = "";
 
+  void _cloudOrgPull() async {
+    var db = FirebaseFirestore.instance;
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    await db.collection("Users").get().then(
+      (querySnapshot) {
+        for (var docSnapshot in querySnapshot.docs) {
+          ('${docSnapshot.id} => ${docSnapshot.data()}');
+          if (auth.currentUser?.email == docSnapshot.id) {
+            organization = docSnapshot.data()["Organization"];
+            
+          }
+        }
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
+}
+
+
   void dataSave() {
     var db = FirebaseFirestore.instance;
 
     //db.collection("Goaltenders").doc(goaltenderName).collection("Evaluations").doc("Evaluation").set({"Name": goaltenderName, "Level/Age": levelAge, "Organization" : organization});
-    db.collection("Goaltenders").doc(goaltenderName).set({
+    db.collection("Goaltenders").doc(goaltenderName + organization).set({
       "Name": goaltenderName,
       "Level/Age": levelAge,
       "Organization": organization
@@ -33,6 +55,7 @@ class NewGoaltenderPageState extends State<NewGoaltenderPage> {
 
   @override
   Widget build(BuildContext context) {
+    _cloudOrgPull();
     return Scaffold(
       appBar: AppBar(
         title: const Text("New Goaltender"),
@@ -66,13 +89,6 @@ class NewGoaltenderPageState extends State<NewGoaltenderPage> {
                 },
                 decoration: const InputDecoration(labelText: "Level/Age"),
               ),
-              TextField(
-                key: const Key("GoaltenderOrganizationTextField"),
-                onChanged: (value) {
-                  organization = value;
-                },
-                decoration: const InputDecoration(labelText: "Organization"),
-              )
             ],
           ),
         ),

@@ -178,7 +178,7 @@ class _MyHomePageState extends State<MyHomePage> {
             goaltenders.add(currentGoaltender);
             db
                 .collection("Goaltenders")
-                .doc(docSnapshot.data()['Name'])
+                .doc(docSnapshot.data()['Name'] + docSnapshot.data()["Organization"])
                 .collection("Evaluations")
                 .get()
                 .then((querySnapshotEvals) {
@@ -199,7 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 evaluations.add(temp_evaluation);
                 db
                     .collection("Goaltenders")
-                    .doc(docSnapshot.data()["Name"])
+                    .doc(docSnapshot.data()["Name"] + docSnapshot.data()["Organization"])
                     .collection("Evaluations")
                     .doc(eval.id)
                     .collection("Scoring")
@@ -227,7 +227,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   organization: docSnapshot.data()['Organization']));
               db
                   .collection("Goaltenders")
-                  .doc(docSnapshot.data()['Name'])
+                  .doc(docSnapshot.data()['Name'] + docSnapshot.data()["Organization"])
                   .collection("Evaluations")
                   .get()
                   .then((querySnapshotEvals) {

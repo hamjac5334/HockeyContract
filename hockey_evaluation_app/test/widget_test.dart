@@ -79,6 +79,11 @@ void main() {
     expect(find.text("TestName"), findsNothing);
   });
 
+  test("Join generates 6 digit code", (){
+    var code = NewOrganizationPageState().randomCode.call();
+    expect(code.toString().length, 6);
+  });
+
   //when evaluation is added, it joins the list
 
   //when goaltender is highlighted, it joins the highlighted list

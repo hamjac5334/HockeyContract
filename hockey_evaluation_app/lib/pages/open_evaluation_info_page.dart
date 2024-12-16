@@ -240,7 +240,7 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
     for (var catagory in widget.evaluation.fullScore.categoryScoreList) {
       db
           .collection("Goaltenders")
-          .doc(widget.evaluation.goaltender.name)
+          .doc(widget.evaluation.goaltender.name + widget.evaluation.goaltender.organization)
           .collection("Evaluations")
           .doc(widget.evaluation.evaluationDate.toString().substring(0, 19))
           .collection("Scoring")
@@ -251,7 +251,7 @@ class OpenEvaluationSubmitPageState extends State<OpenEvaluationSubmitPage> {
       });
       db
           .collection("Goaltenders")
-          .doc(widget.evaluation.goaltender.name)
+          .doc(widget.evaluation.goaltender.name + widget.evaluation.goaltender.organization)
           .collection("Evaluations")
           .doc(widget.evaluation.evaluationDate.toString().substring(0, 19))
           .update({"Completed": true});

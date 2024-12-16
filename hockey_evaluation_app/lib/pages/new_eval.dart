@@ -51,12 +51,30 @@ class _MyWidgetState extends State<NewEval> {
   String evaluationType = "Game";
   String notes = "";
   late Goaltender? selectedGoaltender;
+  String organization = "";
+
+  void _cloudOrgPull() async {
+    var db = FirebaseFirestore.instance;
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    await db.collection("Users").get().then(
+      (querySnapshot) {
+        for (var docSnapshot in querySnapshot.docs) {
+          ('${docSnapshot.id} => ${docSnapshot.data()}');
+          if (auth.currentUser?.email == docSnapshot.id) {
+            organization = docSnapshot.data()["Organization"];
+            
+          }
+        }
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
+}
 
   void dataSave() {
     var db = FirebaseFirestore.instance;
     db
         .collection("Goaltenders")
-        .doc(goalieName)
+        .doc(goalieName + organization)
         .collection("Evaluations")
         .doc(DateTime.now().toString().substring(0, 19))
         .set({
@@ -73,6 +91,7 @@ class _MyWidgetState extends State<NewEval> {
 
   @override
   Widget build(BuildContext context) {
+    _cloudOrgPull();
     return Scaffold(
         appBar: AppBar(
           title: const Text("New Evaluations"),
